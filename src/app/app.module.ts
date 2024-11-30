@@ -12,6 +12,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
+import { DepartamentosComponent } from './pages/departamentos/departamentos.component';
+import { ListComponent } from './pages/departamentos/list/list.component';
+import { ManageComponent } from './pages/departamentos/manage/manage.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { ComponentsModule } from './components/components.module';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    DepartamentosComponent,
+    ListComponent,
+    ManageComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
