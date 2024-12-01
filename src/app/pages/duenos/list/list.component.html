@@ -1,1 +1,52 @@
-<p>list works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+   
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                <div class="row">
+                    <h3 class="mb-0">Dueños</h3>
+
+                   <div class="col-8"></div>
+                   <div class="col-2">
+                    <button type="button" class="btn btn-primary" (click)="create()">Crear</button>
+                   </div>
+                </div>
+                </div>
+               <div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-1">ID</th>
+                                <!-- <th class="col-4">Usuario</th> -->
+                                <th class="col-4">Telefono</th>
+                                <th class="col-4">Fecha de nacimiento</th>
+                                <!-- <th class="col-4">Conductor</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let actual of duenos">
+                                <td>{{actual.id}}</td>
+                                <td>{{actual.telefono}}</td>
+                                <td>{{actual.fecha_nacimiento}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
+                                    <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>
+                                    <button type="button" class="btn btn-dark" (click) ="delete(actual.id)">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
