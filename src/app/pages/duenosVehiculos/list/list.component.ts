@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Administrador } from 'src/app/models/administrador/administrador.model';
+import { DuenoVehiculo } from 'src/app/models/duenoVehiculo/dueno-vehiculo.model';
+import { DuenoVehiculoService } from 'src/app/services/duenosVehiculos/duenos-vehiculos.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,8 +10,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  duenosVehiculos: Administrador[];
-  constructor(private duenosVehiculosService: DuenosVehiculosService,
+  duenosVehiculos: DuenoVehiculo[];
+  constructor(private duenosVehiculosService: DuenoVehiculoService,
                       private router: Router
   ) {
     this.duenosVehiculos=[];

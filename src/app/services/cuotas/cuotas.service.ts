@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 }) //Inyeccion como en SprinC
-export class CuotasService {
+export class CuotaService {
 
   constructor(private http:HttpClient) {}
 

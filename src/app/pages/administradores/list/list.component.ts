@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Administrador } from 'src/app/models/administrador/administrador.model';
+import { AdministradorService } from 'src/app/services/administradores/administradores.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,7 +11,7 @@ import Swal from 'sweetalert2';
 })
 export class ListComponent implements OnInit {
   administradores: Administrador[];
-  constructor(private administradoresService: AdministradoresService,
+  constructor(private administradoresService: AdministradorService,
                       private router: Router
   ) {
     this.administradores=[];

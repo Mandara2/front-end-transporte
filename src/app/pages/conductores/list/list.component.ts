@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Administrador } from 'src/app/models/administrador/administrador.model';
+import { Conductor } from 'src/app/models/conductor/conductor.model';
+import { ConductorService } from 'src/app/services/conductores/conductores.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -9,8 +11,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  conductores: Administrador[];
-  constructor(private conductoresService: ConductoresService,
+  conductores: Conductor[];
+  constructor(private conductoresService: ConductorService,
                       private router: Router
   ) {
     this.conductores=[];

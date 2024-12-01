@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 }) //Inyeccion como en Spring
-export class categoriaService {
+export class CategoriaService {
 
   constructor(private http:HttpClient) {}
 
