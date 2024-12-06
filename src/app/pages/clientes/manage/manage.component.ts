@@ -51,11 +51,11 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      telefono: [
+        '',
+        [Validators.required, Validators.minLength(8), Validators.maxLength(12)],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      cantidad_pedidos_realizados : [0, [Validators.required]],
     });
   }
 

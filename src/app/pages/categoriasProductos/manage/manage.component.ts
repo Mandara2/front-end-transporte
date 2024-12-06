@@ -26,8 +26,8 @@ export class ManageComponent implements OnInit {
   ) {
     this.categoriaProducto = {
       id: 0,
-      producto: new Producto(),
-      categoria: new Categoria(),
+      producto_id: 0,
+      categoria_id: 0,
       detalle: "",
     };
     this.mode = 0;
@@ -54,10 +54,12 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      producto_id: [0, [Validators.required],
+      producto_id: [
+        0,
+        [Validators.required, Validators.min(1)],
       ],
-      categoria_id: ["", [Validators.required]],
-      detalle: ["", Validators.required]
+      categoria_id: ["", [Validators.required,Validators.min(1)]],
+      detalle:[0,[Validators.required,Validators.maxLength(20)]]
     });
   }
 
