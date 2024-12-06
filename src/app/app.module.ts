@@ -32,13 +32,13 @@ import { NoAuthenticatedGuard } from './guards/no-authenticated.guard';
     AdminLayoutComponent,
     AuthLayoutComponent
   ],
-  providers: [{
+   providers: [/* {
     provide: HTTP_INTERCEPTORS,
     useClass: SecurityInterceptor,
     multi: true,
     },
     AuthenticatedGuard,
-    NoAuthenticatedGuard,],
+    NoAuthenticatedGuard, */], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

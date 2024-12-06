@@ -54,11 +54,10 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      producto_id: [0, [Validators.required],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      categoria_id: ["", [Validators.required]],
+      detalle: ["", Validators.required]
     });
   }
 
