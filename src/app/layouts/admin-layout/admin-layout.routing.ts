@@ -5,6 +5,7 @@ import { IconsComponent } from "../../pages/icons/icons.component";
 import { MapsComponent } from "../../pages/maps/maps.component";
 import { UserProfileComponent } from "../../pages/user-profile/user-profile.component";
 import { TablesComponent } from "../../pages/tables/tables.component";
+import { AuthenticatedGuard } from "src/app/guards/authenticated.guard";
 
 export const AdminLayoutRoutes: Routes = [
   { path: "dashboard", component: DashboardComponent },
@@ -14,6 +15,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "maps", component: MapsComponent },
   {
     path: "administradores",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -26,6 +28,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "categorias",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -38,6 +41,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "categoriasProductos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -50,6 +54,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "centrosDistribucion",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -62,6 +67,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "clientes",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -74,6 +80,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "conductores",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -86,6 +93,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "contratos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -98,6 +106,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "cuotas",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -110,6 +119,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "departamentos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -122,6 +132,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "direcciones",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -134,6 +145,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "dirListaOrdenes",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -146,6 +158,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "duenos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -158,6 +171,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "duenosVehiculos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -170,6 +184,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "empresas",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -182,6 +197,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "facturas",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -194,6 +210,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "gastos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -206,6 +223,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "hoteles",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -218,6 +236,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "lotes",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -228,6 +247,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "municipios",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -240,6 +260,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "operaciones",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -252,6 +273,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "personasNaturales",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -264,6 +286,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "productos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -276,6 +299,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "restaurantes",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -288,6 +312,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "rutas",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -298,6 +323,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "seguros",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -310,6 +336,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "servicios",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -322,6 +349,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "turnos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -334,6 +362,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "vehiculos",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
@@ -346,6 +375,7 @@ export const AdminLayoutRoutes: Routes = [
   },
   {
     path: "vehiculosConductores",
+    canActivate: [AuthenticatedGuard],
     children: [
       {
         path: "",
