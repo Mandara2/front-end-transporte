@@ -1,1 +1,114 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" *ngIf="mode == 1">Visualizar</h3>
+          <h3 class="mb-0" *ngIf="mode == 2">Crear</h3>
+          <h3 class="mb-0" *ngIf="mode == 3">Actualizar</h3>
+        </div>
+        <!-- 6. Crear etiqueta tipo form hacemos referencia a formGroup -->
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4"><label>Id:</label></div>
+              <div class="col-8">
+                <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
+                <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
+                <p>{{ categoria.id }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>nombre:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="categoria.nombre"
+                  formControlName="nombre"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.usuario_id.errors &&
+                    (getTheFormGroup.usuario_id.dirty ||
+                      getTheFormGroup.usuario_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.nombre.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.nombre.errors.minlength"
+                    class="msnError"
+                    >Debe tener mas de 2 caracteres 
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.nombre.errors.maxlength"
+                    class="msnError"
+                    >Debe tener menos de 15 caracteres 
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>descripcion</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="categoria.descripcion"
+                  formControlName="descripcion"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.tipo.errors &&
+                    (getTheFormGroup.tipo.dirty ||
+                      getTheFormGroup.tipo.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.tipo.errors.maxlength"
+                    class="msnError"
+                    >supera la maxima longitud
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.tipo.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 2"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 3"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
