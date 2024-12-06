@@ -14,7 +14,7 @@ export const AdminLayoutRoutes: Routes = [
   { path: "icons", component: IconsComponent },
   { path: "maps", component: MapsComponent },
   {
-    path: "administradores",
+    path: "administradores", //ASI SE TIENE QUE BUSCAR EN LA URL
     //canActivate: [AuthenticatedGuard],
     children: [
       {
@@ -383,6 +383,20 @@ export const AdminLayoutRoutes: Routes = [
           import(
             "src/app/pages/vehiculosConductores/vehiculos-conductores.module"
           ).then((m) => m.VehiculosConductoresModule),
+      },
+    ],
+  },
+
+  {
+    path: "usuarios",
+    //canActivate: [AuthenticatedGuard],
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import(
+            "src/app/pages/users/users.module"
+          ).then((m) => m.UserModule),
       },
     ],
   },
