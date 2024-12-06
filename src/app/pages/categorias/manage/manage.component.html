@@ -33,9 +33,9 @@
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
                 <div
                   *ngIf="
-                    getTheFormGroup.usuario_id.errors &&
-                    (getTheFormGroup.usuario_id.dirty ||
-                      getTheFormGroup.usuario_id.touched ||
+                    getTheFormGroup.nombre.errors &&
+                    (getTheFormGroup.nombre.dirty ||
+                      getTheFormGroup.nombre.touched ||
                       trySend)
                   "
                 >
@@ -68,25 +68,57 @@
                 />
                 <div
                   *ngIf="
-                    getTheFormGroup.tipo.errors &&
-                    (getTheFormGroup.tipo.dirty ||
-                      getTheFormGroup.tipo.touched ||
+                    getTheFormGroup.descripcion.errors &&
+                    (getTheFormGroup.descripcion.dirty ||
+                      getTheFormGroup.descripcion.touched ||
                       trySend)
                   "
                 >
                   <strong
-                    *ngIf="getTheFormGroup.tipo.errors.maxlength"
+                    *ngIf="getTheFormGroup.descripcion.errors.maxlength"
                     class="msnError"
                     >supera la maxima longitud
                   </strong>
                   <strong
-                    *ngIf="getTheFormGroup.tipo.errors.required"
+                    *ngIf="getTheFormGroup.descripcion.errors.required"
                     class="msnError"
                     >Requerido</strong
                   >
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-4"><label>categoria_padre</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="categoria.categoria_padre"
+                  formControlName="categoria_padre"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.categoria_padre.errors &&
+                    (getTheFormGroup.categoria_padre.dirty ||
+                      getTheFormGroup.categoria_padre.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.categoria_padre.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.categoria_padre.errors.min"
+                    class="msnError"
+                    >Debe ser mayor de 0  
+                  </strong>
+                </div>
+              </div>
+            </div>
+            
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

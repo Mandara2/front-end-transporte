@@ -78,6 +78,8 @@ export class ManageComponent implements OnInit {
       // lista, serán las reglas
       nombre:[0,[Validators.required,Validators.minLength(2),Validators.maxLength(12)]], //PARAMETROS EN ORDEN: VALOR POR DEFECTO, REQUEIRDO Y RANGO
       descripcion:[0,[Validators.required,Validators.maxLength(40)]],
+      categoria_padre:[0,[Validators.min(1)]]
+
      
     })
   }
