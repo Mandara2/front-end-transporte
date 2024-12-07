@@ -2,8 +2,7 @@ import { Conductor } from "../conductor/conductor.model";
 
 export class Turno {
     id?: number;
-    fecha_inicio: Date;
-    fecha_fin: Date;
+    fecha_inicio: string;
+    fecha_fin: string;
     conductor_id: number;
-    
 }

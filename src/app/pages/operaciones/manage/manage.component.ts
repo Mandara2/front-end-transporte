@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Municipio } from "src/app/models/municipio/municipio.model";
 import { Operacion } from "src/app/models/operacion/operacion.model";
-import { Vehiculo } from "src/app/models/vehiculo/vehiculo.model";
 import { OperacionService } from "src/app/services/operaciones/operaciones.service";
 import Swal from "sweetalert2";
 
@@ -19,15 +17,15 @@ export class ManageComponent implements OnInit {
   trySend: boolean;
 
   constructor(
-    private operacionesService: OperacionService,
+    private operacionService: OperacionService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
   ) {
     this.operacion = {
       id: 0,
-      fecha_inicio: new Date(),
-      fecha_fin: new Date(),
+      fecha_inicio: "",
+      fecha_fin: "",
       municipio_id: 0,
       vehiculo_id: 0
     };
@@ -47,42 +45,73 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.operacion.id = this.activateRoute.snapshot.params.id;
-      this.getOperacion(this.operacion.id);
+      this.getoperacion(this.operacion.id);
     }
   }
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      fecha_inicio: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+        ],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      fecha_fin: [
+        "",
+        [
+        ],
+      ],
+      vehiculo_id: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(1), // ID debe ser positivo
+        ],
+      ],
+      municipio_id: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(1), // ID debe ser positivo
+        ],
+      ],
     });
   }
+  
+  
 
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
 
-  getOperacion(id: number) {
-    this.operacionesService.view(id).subscribe((data) => {
+  getoperacion(id: number) {
+    this.operacionService.view(id).subscribe((data) => {
       this.operacion = data;
     });
   }
 
   create() {
-    this.operacionesService.create(this.operacion).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["operaciones/list"]);
-    });
+    if(this.theFormGroup.invalid) {
+      this.trySend = true
+      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
+      return
+    }
+    console.log(this.operacion);
+    
+    this.operacionService.create(this.operacion
+    ).subscribe(data=> {
+      Swal.fire("Creado", "Se ha creado el operacion existosamente", "success")
+      this.router.navigate(["operaciones/list"]) //Aqui me muevo para el theaters list 
+    })
   }
+
   update() {
-    this.operacionesService.update(this.operacion).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["operaciones/list"]);
-    });
+    this.operacionService
+      .update(this.operacion)
+      .subscribe((data) => {
+        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
+        this.router.navigate(["operaciones/list"]);
+      });
   }
 }

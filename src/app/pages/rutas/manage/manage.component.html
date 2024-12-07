@@ -1,1 +1,140 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" *ngIf="mode == 1">Visualizar</h3>
+          <h3 class="mb-0" *ngIf="mode == 2">Crear</h3>
+          <h3 class="mb-0" *ngIf="mode == 3">Actualizar</h3>
+        </div>
+        <!-- 6. Crear etiqueta tipo form hacemos referencia a formGroup -->
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4"><label>Id:</label></div>
+              <div class="col-8">
+                <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
+                <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
+                <p>{{ ruta.id }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>Punto de inicio:</label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="ruta.punto_inicio"
+                  formControlName="punto_inicio" />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div *ngIf="
+                    getTheFormGroup.punto_inicio.errors &&
+                    (getTheFormGroup.punto_inicio.dirty ||
+                      getTheFormGroup.punto_inicio.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.punto_inicio.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>Punto destino:</label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="ruta.punto_destino" formControlName="punto_destino" />
+                <div *ngIf="
+                    getTheFormGroup.punto_destino.errors &&
+                    (getTheFormGroup.punto_destino.dirty ||
+                      getTheFormGroup.punto_destino.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.punto_destino.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>Distancia:</label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="ruta.distancia"
+                  formControlName="distancia" />
+                <div *ngIf="
+                    getTheFormGroup.distancia.errors &&
+                    (getTheFormGroup.distancia.dirty ||
+                      getTheFormGroup.distancia.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.distancia.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.distancia.errors.min" class="msnError">Debe ser mayor que 1</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4"><label>Fecha de entrega:</label></div>
+                <div class="col-8">
+                  <input type="text" class="form-control" [(ngModel)]="ruta.fecha_entrega"
+                    formControlName="fecha_entrega" />
+                  <div *ngIf="
+                      getTheFormGroup.fecha_entrega.errors &&
+                      (getTheFormGroup.fecha_entrega.dirty ||
+                        getTheFormGroup.fecha_entrega.touched ||
+                        trySend)
+                    ">
+                    <strong *ngIf="getTheFormGroup.fecha_entrega.errors.required" class="msnError">Requerido</strong>
+                    
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-4"><label>Contrato ID:</label></div>
+                <div class="col-8">
+                  <input type="text" class="form-control" [(ngModel)]="ruta.contrato_id"
+                    formControlName="contrato_id" />
+                  <div *ngIf="
+                      getTheFormGroup.contrato_id.errors &&
+                      (getTheFormGroup.contrato_id.dirty ||
+                        getTheFormGroup.contrato_id.touched ||
+                        trySend)
+                    ">
+                    <strong *ngIf="getTheFormGroup.contrato_id.errors.required" class="msnError">Requerido</strong>
+                    <strong *ngIf="getTheFormGroup.contrato_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
+                    
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-4"><label>Vehiculo conductor ID:</label></div>
+                <div class="col-8">
+                  <input type="text" class="form-control" [(ngModel)]="ruta.vehiculo_conductor_id"
+                    formControlName="vehiculo_conductor_id" />
+                  <div *ngIf="
+                      getTheFormGroup.vehiculo_conductor_id.errors &&
+                      (getTheFormGroup.vehiculo_conductor_id.dirty ||
+                        getTheFormGroup.vehiculo_conductor_id.touched ||
+                        trySend)
+                    ">
+                    <strong *ngIf="getTheFormGroup.vehiculo_conductor_id.errors.required" class="msnError">Requerido</strong>
+                    <strong *ngIf="getTheFormGroup.distancia.errors.min" class="msnError">Debe ser mayor que 1</strong>
+                    
+                  </div>
+                </div>
+              </div>
+
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button class="btn btn-success btn-block" *ngIf="mode == 2" (click)="create()">
+                  Crear
+                </button>
+                <button class="btn btn-success btn-block" *ngIf="mode == 3" (click)="update()">
+                  Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

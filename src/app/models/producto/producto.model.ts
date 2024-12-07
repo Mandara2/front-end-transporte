@@ -4,7 +4,7 @@ import { Lote } from "../lote/lote.model";
 export class Producto {
     id?: number;
     nombre: string;
-    fecha_vencimiento: Date;
+    fecha_vencimiento: string;
     cliente_id: number;
-    lote: Lote;
+    lote_id: number;
 }

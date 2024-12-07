@@ -17,7 +17,7 @@ export class ManageComponent implements OnInit {
   trySend: boolean;
 
   constructor(
-    private vehiculosService: VehiculoService,
+    private vehiculoService: VehiculoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -51,13 +51,34 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      matricula: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9\-]+$/), // `alphaNum` con guion permitido
+        ],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      modelo: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9 ]+$/), // `alphaNum` con espacio permitido
+        ],
+      ],
+      capacidad_carga: [
+        "",
+        [
+          Validators.required,
+          Validators.min(1), // `unsigned`
+        ],
+      ],
+      tipo_carga: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9\- ]+$/), // `alphaNum` con espacio y guion permitidos
+        ],
+      ],
     });
   }
 
@@ -66,21 +87,32 @@ export class ManageComponent implements OnInit {
   }
 
   getVehiculo(id: number) {
-    this.vehiculosService.view(id).subscribe((data) => {
+    this.vehiculoService.view(id).subscribe((data) => {
       this.vehiculo = data;
     });
   }
 
   create() {
-    this.vehiculosService.create(this.vehiculo).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["vehiculos/list"]);
-    });
+    if(this.theFormGroup.invalid) {
+      this.trySend = true
+      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
+      return
+    }
+    console.log(this.vehiculo);
+    
+    this.vehiculoService.create(this.vehiculo
+    ).subscribe(data=> {
+      Swal.fire("Creado", "Se ha creado el vehiculo existosamente", "success")
+      this.router.navigate(["vehiculos/list"]) //Aqui me muevo para el theaters list 
+    })
   }
+
   update() {
-    this.vehiculosService.update(this.vehiculo).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["vehiculos/list"]);
-    });
+    this.vehiculoService
+      .update(this.vehiculo)
+      .subscribe((data) => {
+        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
+        this.router.navigate(["vehiculosConductores/list"]);
+      });
   }
 }

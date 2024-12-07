@@ -2,8 +2,8 @@ import { Vehiculo } from "../vehiculo/vehiculo.model";
 
 export class Seguro {
     id?: number;
-    fecha_inicio: Date;
-    fecha_fin: Date;
+    fecha_inicio: string;
+    fecha_fin: string;
     compania_aseguradora: string;
     vehiculo_id: number;
 }
