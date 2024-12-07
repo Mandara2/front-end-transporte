@@ -27,7 +27,7 @@ export class ManageComponent implements OnInit {
       id: 0,
       monto: 0,
       intereses: 0,
-      contrato: new Contrato(),
+      contrato_id:0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -53,11 +53,12 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
+      monto: [
         0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+        [Validators.required, Validators.min(1)],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      intereses: [0, [Validators.required, Validators.min(0), Validators.max(1)]],
+      contrato_id:[0,[Validators.required, Validators.min(1)]]
     });
   }
 

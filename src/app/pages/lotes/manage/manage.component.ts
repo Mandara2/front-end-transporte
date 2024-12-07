@@ -27,7 +27,7 @@ export class ManageComponent implements OnInit {
       id: 0,
       peso: 0,
       volumen: 0,
-      dis_lista_orden: new DirListaOrden(),
+      dis_lista_orden_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false

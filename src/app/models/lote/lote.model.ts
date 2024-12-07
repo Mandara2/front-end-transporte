@@ -4,5 +4,5 @@ export class Lote {
     id?: number;
     peso: number;
     volumen: number;
-    dis_lista_orden: DirListaOrden;
+    dis_lista_orden_id: number;
 }

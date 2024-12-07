@@ -28,7 +28,7 @@ export class ManageComponent implements OnInit {
       id: 0,
       nombre: "",
       fecha_vencimiento: new Date(),
-      cliente: new Cliente(),
+      cliente_id: 0,
       lote: new Lote(),
     };
     this.mode = 0;

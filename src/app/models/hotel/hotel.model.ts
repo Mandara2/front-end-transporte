@@ -5,5 +5,5 @@ export class Hotel {
     estrellas: number;
     nombre: string;
     ubicacion?: string;
-    servicio: Servicio;
+    servicio_id: number;
 }

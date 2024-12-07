@@ -5,5 +5,5 @@ export class Seguro {
     fecha_inicio: Date;
     fecha_fin: Date;
     compania_aseguradora: string;
-    vehiculo: Vehiculo;
+    vehiculo_id: number;
 }

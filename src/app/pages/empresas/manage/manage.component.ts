@@ -28,8 +28,8 @@ export class ManageComponent implements OnInit {
       id: 0,
       nit: "",
       direccion_fiscal: "",
-      cliente: new Cliente(),
-      persona_natural: new PersonaNatural(),
+      cliente_id: 0,
+      persona_natural_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -55,11 +55,13 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      nit: [
+        "",
+        [ Validators.required ,Validators.pattern(/^[\d\-]+$/)],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      direccion_fiscal: ["", [ Validators.minLength(2)]],
+      cliente_id:[0,[Validators.required, Validators.min(1)]],
+      persona_natural_id:[0,[Validators.required, Validators.min(1)]]
     });
   }
 

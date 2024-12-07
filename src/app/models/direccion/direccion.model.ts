@@ -7,5 +7,5 @@ export class Direccion {
     calle: string;
     numero_direccion: string;
     referencias?: string;
-    municipio: Municipio;
+    municipio_id: number;
 }

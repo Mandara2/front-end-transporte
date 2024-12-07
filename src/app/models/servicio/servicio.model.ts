@@ -4,6 +4,6 @@ export class Servicio {
     id?: number;
     fecha?: Date;
     descripcion?: String;
-    administrador: Administrador;
+    administrador_id: number;
     
 }

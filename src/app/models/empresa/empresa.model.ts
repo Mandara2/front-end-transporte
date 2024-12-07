@@ -5,6 +5,6 @@ export class Empresa {
     id?: number;
     nit: string
     direccion_fiscal?: string;
-    cliente: Cliente;
-    persona_natural: PersonaNatural;
+    cliente_id: number;
+    persona_natural_id: number;
 }

@@ -5,6 +5,6 @@ export class VehiculoConductor {
     id?: number;
     fecha_inico: Date;
     fecha_fin: Date;
-    vehiculo: Vehiculo;
-    conductor: Conductor;
+    vehiculo_id: number;
+    conductor_id: number;
 }

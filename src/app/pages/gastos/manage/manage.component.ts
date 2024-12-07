@@ -28,9 +28,9 @@ export class ManageComponent implements OnInit {
     this.gasto = {
       id: 0,
       detalles: "",
-      dueno: new Dueno(),
-      conductor: new Conductor(),
-      servicio: new Servicio(),
+      dueno_id:0 ,
+      conductor_id: 0,
+      servicio_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -56,11 +56,13 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
+      detalles: [
         0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+        [Validators.required, Validators.maxLength(40)],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      dueno_id: ["", [Validators.required, Validators.min(1)]],
+      conductor_id:["", [Validators.required, Validators.min(1)]],
+      servicio_id:["", [Validators.required, Validators.min(1)]]
     });
   }
 

@@ -24,7 +24,7 @@ export class ManageComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
   ) {
-    this.municipio = { id: 0, nombre: "", codigo_postal: "", departamento: new Departamento() };
+    this.municipio = { id: 0, nombre: "", codigo_postal: "", departamento_id:0 };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;

@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Cuota } from "src/app/models/cuota/cuota.model";
+
 import { Factura } from "src/app/models/factura/factura.model";
-import { Gasto } from "src/app/models/gasto/gasto.model";
+
 import { FacturaService } from "src/app/services/factura/factura.service";
 import Swal from "sweetalert2";
 
@@ -26,12 +26,12 @@ export class ManageComponent implements OnInit {
   ) {
     this.factura = {
       id: 0,
-      fecha: new Date(),
+      fecha: "",
       monto: 0,
       estado: "",
       detalles: "",
-      cuota: new Cuota(),
-      gasto: new Gasto(),
+      cuota_id: 0,
+      gasto_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -57,11 +57,15 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
+      fecha: [
         0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+        [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      monto: [0,[Validators.required, Validators.min(1)]],
+      estado:["",[Validators.required ,Validators.minLength(2)]],
+      detalles:["",[Validators.required], Validators.maxLength(40)],
+      cuota_id:[0,[Validators.required],Validators.min(1)],
+      gasto_id:[0,[Validators.required],Validators.min(1)]
     });
   }
 

@@ -30,8 +30,8 @@ export class ManageComponent implements OnInit {
       punto_destino: "",
       distancia: 0,
       fecha_entrega: new Date(),
-      contrato: new Contrato(),
-      vehiculo_conductor: new VehiculoConductor(),
+      contrato_id: 0,
+      vehiculo_conductor_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
