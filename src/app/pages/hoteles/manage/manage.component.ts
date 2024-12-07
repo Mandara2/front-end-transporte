@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Hotel } from "src/app/models/hotel/hotel.model";
-import { Servicio } from "src/app/models/servicio/servicio.model";
 import { HotelService } from "src/app/services/hoteles/hoteles.service";
 import Swal from "sweetalert2";
 
@@ -18,7 +17,7 @@ export class ManageComponent implements OnInit {
   trySend: boolean;
 
   constructor(
-    private hotelsService: HotelService,
+    private hotelService: HotelService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -28,7 +27,7 @@ export class ManageComponent implements OnInit {
       estrellas: 0,
       nombre: "",
       ubicacion: "",
-      servicio: new Servicio(),
+      servicio_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -46,42 +45,78 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.hotel.id = this.activateRoute.snapshot.params.id;
-      this.getHotel(this.hotel.id);
+      this.gethotel(this.hotel.id);
     }
   }
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      estrellas: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(0), // Valor mínimo permitido
+          Validators.max(5), // Valor máximo permitido
+        ],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      nombre: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.pattern(/^[a-zA-Z0-9 ]+$/), // Solo letras, números y espacios
+        ],
+      ],
+      ubicacion: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.pattern(/^[a-zA-Z0-9 ]+$/), // Solo letras, números y espacios
+        ],
+      ],
+      servicio_id: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(1), // ID debe ser positivo
+        
+        ],
+      ],
     });
   }
+  
+  
 
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
 
-  getHotel(id: number) {
-    this.hotelsService.view(id).subscribe((data) => {
+  gethotel(id: number) {
+    this.hotelService.view(id).subscribe((data) => {
       this.hotel = data;
     });
   }
 
   create() {
-    this.hotelsService.create(this.hotel).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["hoteles/list"]);
-    });
+    if(this.theFormGroup.invalid) {
+      this.trySend = true
+      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
+      return
+    }
+    console.log(this.hotel);
+    
+    this.hotelService.create(this.hotel
+    ).subscribe(data=> {
+      Swal.fire("Creado", "Se ha creado el hotel existosamente", "success")
+      this.router.navigate(["hoteles/list"]) //Aqui me muevo para el theaters list 
+    })
   }
+
   update() {
-    this.hotelsService.update(this.hotel).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["hoteles/list"]);
-    });
+    this.hotelService
+      .update(this.hotel)
+      .subscribe((data) => {
+        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
+        this.router.navigate(["hotelsConductores/list"]);
+      });
   }
 }

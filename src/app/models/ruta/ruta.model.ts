@@ -6,7 +6,7 @@ export class Ruta {
     punto_inicio: string;
     punto_destino: string;
     distancia: number;
-    fecha_entrega: Date;
-    contrato: Contrato;
-    vehiculo_conductor: VehiculoConductor;
+    fecha_entrega: string;
+    contrato_id: number;
+    vehiculo_conductor_id: number;
 }

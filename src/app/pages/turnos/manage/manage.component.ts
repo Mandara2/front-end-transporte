@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Conductor } from "src/app/models/conductor/conductor.model";
 import { Turno } from "src/app/models/turno/turno.model";
 import { TurnoService } from "src/app/services/turnos/turnos.service";
 import Swal from "sweetalert2";
@@ -18,16 +17,16 @@ export class ManageComponent implements OnInit {
   trySend: boolean;
 
   constructor(
-    private turnosService: TurnoService,
+    private TurnoService: TurnoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
   ) {
     this.turno = {
       id: 0,
-      fecha_inicio: new Date(),
-      fecha_fin: new Date(),
-      conductor: new Conductor(),
+      fecha_inicio: "",
+      fecha_fin: "",
+      conductor_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -45,19 +44,31 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.turno.id = this.activateRoute.snapshot.params.id;
-      this.getturno(this.turno.id);
+      this.getTurno(this.turno.id);
     }
   }
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      fecha_inicio: [
+        "",
+        [
+          Validators.required
+        ],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      fecha_fin: [
+        "",
+        [
+          Validators.required
+        ],
+      ],
+      conductor_id: [
+        "",
+        [
+          Validators.required,
+          Validators.min(1), // `unsigned`
+        ],
+      ],
     });
   }
 
@@ -65,22 +76,33 @@ export class ManageComponent implements OnInit {
     return this.theFormGroup.controls;
   }
 
-  getturno(id: number) {
-    this.turnosService.view(id).subscribe((data) => {
+  getTurno(id: number) {
+    this.TurnoService.view(id).subscribe((data) => {
       this.turno = data;
     });
   }
 
   create() {
-    this.turnosService.create(this.turno).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["turnos/list"]);
-    });
+    if(this.theFormGroup.invalid) {
+      this.trySend = true
+      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
+      return
+    }
+    console.log(this.turno);
+    
+    this.TurnoService.create(this.turno
+    ).subscribe(data=> {
+      Swal.fire("Creado", "Se ha creado el turno existosamente", "success")
+      this.router.navigate(["turnos/list"]) //Aqui me muevo para el theaters list 
+    })
   }
+
   update() {
-    this.turnosService.update(this.turno).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["turnos/list"]);
-    });
+    this.TurnoService
+      .update(this.turno)
+      .subscribe((data) => {
+        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
+        this.router.navigate(["TurnosConductores/list"]);
+      });
   }
 }

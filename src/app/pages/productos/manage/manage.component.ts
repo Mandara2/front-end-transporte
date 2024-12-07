@@ -1,8 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Cliente } from "src/app/models/cliente/cliente.model";
-import { Lote } from "src/app/models/lote/lote.model";
 import { Producto } from "src/app/models/producto/producto.model";
 import { ProductoService } from "src/app/services/productos/productos.service";
 import Swal from "sweetalert2";
@@ -19,7 +17,7 @@ export class ManageComponent implements OnInit {
   trySend: boolean;
 
   constructor(
-    private productosService: ProductoService,
+    private productoService: ProductoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -27,9 +25,9 @@ export class ManageComponent implements OnInit {
     this.producto = {
       id: 0,
       nombre: "",
-      fecha_vencimiento: new Date(),
-      cliente: new Cliente(),
-      lote: new Lote(),
+      fecha_vencimiento: "",
+      cliente_id: 0,
+      lote_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -47,42 +45,74 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.producto.id = this.activateRoute.snapshot.params.id;
-      this.getProducto(this.producto.id);
+      this.getproducto(this.producto.id);
     }
   }
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      nombre: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+        ],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      fecha_vencimiento: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+        ],
+      ],
+      cliente_id: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(1), // Asegura que sea un número positivo
+        ],
+      ],
+      lote_id: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(1), // Asegura que sea un número positivo
+        ],
+      ],
     });
   }
+  
+  
 
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
 
-  getProducto(id: number) {
-    this.productosService.view(id).subscribe((data) => {
+  getproducto(id: number) {
+    this.productoService.view(id).subscribe((data) => {
       this.producto = data;
     });
   }
 
   create() {
-    this.productosService.create(this.producto).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["productos/list"]);
-    });
+    if(this.theFormGroup.invalid) {
+      this.trySend = true
+      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
+      return
+    }
+    console.log(this.producto);
+    
+    this.productoService.create(this.producto
+    ).subscribe(data=> {
+      Swal.fire("Creado", "Se ha creado el producto existosamente", "success")
+      this.router.navigate(["productos/list"]) //Aqui me muevo para el theaters list 
+    })
   }
+
   update() {
-    this.productosService.update(this.producto).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["productos/list"]);
-    });
+    this.productoService
+      .update(this.producto)
+      .subscribe((data) => {
+        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
+        this.router.navigate(["productosConductores/list"]);
+      });
   }
 }

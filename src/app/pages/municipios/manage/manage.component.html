@@ -18,80 +18,68 @@
               <div class="col-8">
                 <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
                 <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
-                <p>{{ municipio.id }}</p>
+                <p>{{municipio.id}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Ubicación:</label></div>
+              <div class="col-4"><label>Nombre:</label></div>
               <div class="col-8">
-                <!-- <input type="text" class="form-control" [(ngModel)]="theater.location" formControlName="location" /> -->
+                <input type="text" class="form-control" [(ngModel)]="municipio.nombre"
+                  formControlName="nombre" />
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.location.errors &&
-                    (getTheFormGroup.location.dirty ||
-                      getTheFormGroup.location.touched ||
+                <div *ngIf="
+                    getTheFormGroup.nombre.errors &&
+                    (getTheFormGroup.nombre.dirty ||
+                      getTheFormGroup.nombre.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.location.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.location.errors.minlength"
-                    class="msnError"
-                    >Inválido
-                  </strong>
+                  ">
+                  <strong *ngIf="getTheFormGroup.nombre.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Capacidad:</label></div>
+              <div class="col-4">Codigo postal:</div>
               <div class="col-8">
-                <!-- <input type="number" class="form-control" [(ngModel)]="theater.capacity" formControlName="capacity" /> -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.capacity.errors &&
-                    (getTheFormGroup.capacity.dirty ||
-                      getTheFormGroup.capacity.touched ||
+                <input type="text" class="form-control" [(ngModel)]="municipio.codigo_postal" formControlName="codigo_postal" />
+                <div *ngIf="
+                    getTheFormGroup.codigo_postal.errors &&
+                    (getTheFormGroup.codigo_postal.dirty ||
+                      getTheFormGroup.codigo_postal.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.capacity.errors.min"
-                    class="msnError"
-                    >Valor mínimo debe ser 1</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.capacity.errors.max"
-                    class="msnError"
-                    >Valor máximo 100
-                  </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.capacity.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
+                  ">
+                  <strong *ngIf="getTheFormGroup.codigo_postal.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.codigo_postal.errors.pattern" class="msnError"Formato invalido></strong>
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-4"><label>Departamento ID:</label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="municipio.departamento_id"
+                  formControlName="departamento_id" />
+                <div *ngIf="
+                    getTheFormGroup.departamento_id.errors &&
+                    (getTheFormGroup.departamento_id.dirty ||
+                      getTheFormGroup.departamento_id.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.departamento_id.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.departamento_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
+                </div>
+              </div>
+            </div>
+
+
+            
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button
-                  class="btn btn-success btn-block"
-                  *ngIf="mode == 2"
-                  (click)="create()"
-                >
+                <button class="btn btn-success btn-block" *ngIf="mode == 2" (click)="create()">
                   Crear
                 </button>
-                <button
-                  class="btn btn-success btn-block"
-                  *ngIf="mode == 3"
-                  (click)="update()"
-                >
+                <button class="btn btn-success btn-block" *ngIf="mode == 3" (click)="update()">
                   Actualizar
                 </button>
               </div>

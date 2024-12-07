@@ -4,5 +4,5 @@ export class Municipio {
     id?: number;
     nombre: string;
     codigo_postal: string;
-    departamento: Departamento;
+    departamento_id: number;
 }

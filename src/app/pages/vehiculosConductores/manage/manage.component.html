@@ -13,39 +13,82 @@
         <!-- 6. Crear etiqueta tipo form hacemos referencia a formGroup -->
         <form class="form" [formGroup]="theFormGroup">
           <div class="card-body">
-
             <div class="row">
               <div class="col-4"><label>Id:</label></div>
               <div class="col-8">
                 <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
                 <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
-                <p>{{vehiculoConductor.id}}</p>
+                <p>{{ vehiculoConductor.id }}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Ubicación:</label></div>
+              <div class="col-4"><label>Fecha inicio:</label></div>
               <div class="col-8">
-                <!-- <input type="text" class="form-control" [(ngModel)]="theater.location" formControlName="location" /> -->
+                <input type="text" class="form-control" [(ngModel)]="vehiculoConductor.fecha_inicio"
+                  formControlName="fecha_inicio" />
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="getTheFormGroup.location.errors && (getTheFormGroup.location.dirty || getTheFormGroup.location.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.location.errors.required" class="msnError">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.location.errors.minlength" class="msnError">Inválido </strong>
+                <div *ngIf="
+                    getTheFormGroup.fecha_inicio.errors &&
+                    (getTheFormGroup.fecha_inicio.dirty ||
+                      getTheFormGroup.fecha_inicio.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.fecha_inicio.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.fecha_inicio.errors.pattern" class="msnError">Formato de fecha inválido
+                  </strong>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Capacidad:</label></div>
+              <div class="col-4"><label>Fecha fin:</label></div>
               <div class="col-8">
-                <!-- <input type="number" class="form-control" [(ngModel)]="theater.capacity" formControlName="capacity" /> -->
-                <div
-                  *ngIf="getTheFormGroup.capacity.errors && (getTheFormGroup.capacity.dirty || getTheFormGroup.capacity.touched || trySend)">
-                  <strong *ngIf="getTheFormGroup.capacity.errors.min" class="msnError">Valor mínimo debe ser 1</strong>
-                  <strong *ngIf="getTheFormGroup.capacity.errors.max" class="msnError">Valor máximo 100 </strong>
-                  <strong *ngIf="getTheFormGroup.capacity.errors.required" class="msnError">Requerido</strong>
+                <input type="text" class="form-control" [(ngModel)]="vehiculoConductor.fecha_fin" formControlName="fecha_fin" />
+                <div *ngIf="
+                    getTheFormGroup.fecha_fin.errors &&
+                    (getTheFormGroup.fecha_fin.dirty ||
+                      getTheFormGroup.fecha_fin.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.fecha_fin.errors.required" class="msnError">Requerido</strong>
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col-4"><label>Vehiculo ID:</label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="vehiculoConductor.vehiculo_id"
+                  formControlName="vehiculo_id" />
+                <div *ngIf="
+                    getTheFormGroup.vehiculo_id.errors &&
+                    (getTheFormGroup.vehiculo_id.dirty ||
+                      getTheFormGroup.vehiculo_id.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.vehiculo_id.errors.min" class="msnError">Debe ser mayor que uno
+                  </strong>
+                  <strong *ngIf="getTheFormGroup.vehiculo_id.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4"><label>Conductor ID:</label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="vehiculoConductor.conductor_id"
+                  formControlName="conductor_id" />
+                <div *ngIf="
+                    getTheFormGroup.conductor_id.errors &&
+                    (getTheFormGroup.conductor_id.dirty ||
+                      getTheFormGroup.conductor_id.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.conductor_id.errors.min" class="msnError">Debe ser mayor que uno
+                  </strong>
+                  <strong *ngIf="getTheFormGroup.conductor_id.errors.required" class="msnError">Requerido</strong>
+                </div>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
@@ -57,9 +100,9 @@
                 </button>
               </div>
             </div>
-        
+          </div>
+        </form>
       </div>
-    </form>
     </div>
   </div>
 </div>

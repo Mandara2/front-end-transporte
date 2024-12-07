@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Contrato } from "src/app/models/contrato/contrato.model";
 import { Ruta } from "src/app/models/ruta/ruta.model";
-import { VehiculoConductor } from "src/app/models/vehiculoConductor/vehiculo-conductor.model";
 import { RutaService } from "src/app/services/rutas/rutas.service";
 import Swal from "sweetalert2";
 
@@ -19,7 +17,7 @@ export class ManageComponent implements OnInit {
   trySend: boolean;
 
   constructor(
-    private rutasService: RutaService,
+    private rutaService: RutaService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -29,9 +27,9 @@ export class ManageComponent implements OnInit {
       punto_inicio: "",
       punto_destino: "",
       distancia: 0,
-      fecha_entrega: new Date(),
-      contrato: new Contrato(),
-      vehiculo_conductor: new VehiculoConductor(),
+      fecha_entrega: "",
+      contrato_id: 0,
+      vehiculo_conductor_id: 0
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -49,42 +47,87 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.ruta.id = this.activateRoute.snapshot.params.id;
-      this.getRuta(this.ruta.id);
+      this.getruta(this.ruta.id);
     }
   }
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      punto_inicio: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+        ],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      punto_destino: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+        ],
+      ],
+      distancia: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(0), // Solo valores positivos
+        ],
+      ],
+      fecha_entrega: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+        ],
+      ],
+      contrato_id: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(1), // Asegura que sea positivo
+        ],
+      ],
+      vehiculo_conductor_id: [
+        "",
+        [
+          Validators.required, // Campo obligatorio
+          Validators.min(1), // Asegura que sea positivo
+          
+        ],
+      ],
     });
   }
+  
 
   get getTheFormGroup() {
     return this.theFormGroup.controls;
   }
 
-  getRuta(id: number) {
-    this.rutasService.view(id).subscribe((data) => {
+  getruta(id: number) {
+    this.rutaService.view(id).subscribe((data) => {
       this.ruta = data;
     });
   }
 
   create() {
-    this.rutasService.create(this.ruta).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["rutas/list"]);
-    });
+    if(this.theFormGroup.invalid) {
+      this.trySend = true
+      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
+      return
+    }
+    console.log(this.ruta);
+    
+    this.rutaService.create(this.ruta
+    ).subscribe(data=> {
+      Swal.fire("Creado", "Se ha creado la ruta existosamente", "success")
+      this.router.navigate(["rutas/list"]) //Aqui me muevo para el theaters list 
+    })
   }
+
   update() {
-    this.rutasService.update(this.ruta).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["rutas/list"]);
-    });
+    this.rutaService
+      .update(this.ruta)
+      .subscribe((data) => {
+        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
+        this.router.navigate(["rutasConductores/list"]);
+      });
   }
 }
