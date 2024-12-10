@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>fecha</label></div>
+              <div class="col-4"><label>Fecha</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>monto:</label></div>
+              <div class="col-4"><label>Monto:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -86,7 +86,7 @@
             </div>
 
             <div class="row">
-              <div class="col-4"><label>estado:</label></div>
+              <div class="col-4"><label>Estado:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -111,14 +111,14 @@
                   <strong
                     *ngIf="getTheFormGroup.estado.errors.minLength"
                     class="msnError"
-                    >debe tener mas de 2 caracteres 
+                    >debe tener mas de 2 caracteres
                   </strong>
                 </div>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-4"><label>detalles:</label></div>
+              <div class="col-4"><label>Detalles:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -143,79 +143,75 @@
                   <strong
                     *ngIf="getTheFormGroup.detalles.errors.maxLength"
                     class="msnError"
-                    >debe tener menos de 40 caracteres 
+                    >debe tener menos de 40 caracteres
                   </strong>
                 </div>
               </div>
             </div>
 
             <div class="row">
-                <div class="col-4"><label>cuota_id:</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="factura.cuota_id"
-                    formControlName="cuota_id"
-                  />
-                  <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                  <div
-                    *ngIf="
-                      getTheFormGroup.cuota_id.errors &&
-                      (getTheFormGroup.cuota_id.dirty ||
-                        getTheFormGroup.cuota_id.touched ||
-                        trySend)
-                    "
+              <div class="col-4"><label>Cuota id:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="factura.cuota_id"
+                  formControlName="cuota_id"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.cuota_id.errors &&
+                    (getTheFormGroup.cuota_id.dirty ||
+                      getTheFormGroup.cuota_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.cuota_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.cuota_id.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.cuota_id.errors.min"
-                      class="msnError"
-                      >debe ser mayor a 0
-                    </strong>
-                    
-                    
-                  </div>
+                  <strong
+                    *ngIf="getTheFormGroup.cuota_id.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
                 </div>
               </div>
+            </div>
 
-              <div class="row">
-                <div class="col-4"><label>gasto_id:</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="factura.gasto_id"
-                    formControlName="gasto_id"
-                  />
-                  <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                  <div
-                    *ngIf="
-                      getTheFormGroup.gasto_id.errors &&
-                      (getTheFormGroup.gasto_id.dirty ||
-                        getTheFormGroup.gasto_id.touched ||
-                        trySend)
-                    "
+            <div class="row">
+              <div class="col-4"><label>Gasto id:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="factura.gasto_id"
+                  formControlName="gasto_id"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.gasto_id.errors &&
+                    (getTheFormGroup.gasto_id.dirty ||
+                      getTheFormGroup.gasto_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.gasto_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.gasto_id.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.gasto_id.errors.min"
-                      class="msnError"
-                      >debe ser mayor a 0
-                    </strong>
-                    
-                    
-                  </div>
+                  <strong
+                    *ngIf="getTheFormGroup.gasto_id.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
                 </div>
               </div>
+            </div>
 
             <div class="row">
               <div class="col-4"></div>

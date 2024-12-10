@@ -22,39 +22,37 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-4"><label>monto</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="cuota.monto"
-                    formControlName="monto"
-                  />
-                  <div
-                    *ngIf="
-                      getTheFormGroup.monto.errors &&
-                      (getTheFormGroup.monto.dirty ||
-                        getTheFormGroup.monto.touched ||
-                        trySend)
-                    "
+              <div class="col-4"><label>Monto</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="cuota.monto"
+                  formControlName="monto"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.monto.errors &&
+                    (getTheFormGroup.monto.dirty ||
+                      getTheFormGroup.monto.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.monto.errors.required"
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.monto.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.monto.errors.min"
-                      class="msnError"
-                      >debe ser mayor a 0 </strong
-                    >
-  
-              
-                  </div>
+                  <strong
+                    *ngIf="getTheFormGroup.monto.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
                 </div>
+              </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>intereses:</label></div>
+              <div class="col-4"><label>Intereses:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -79,7 +77,7 @@
                   <strong
                     *ngIf="getTheFormGroup.intereses.errors.min"
                     class="msnError"
-                    >Debe ser mayor a 0 
+                    >Debe ser mayor a 0
                   </strong>
 
                   <strong
@@ -87,12 +85,11 @@
                     class="msnError"
                     >Debe ser menor a 1
                   </strong>
-                  
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>contrato_id</label></div>
+              <div class="col-4"><label>Contrato id:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -116,14 +113,12 @@
                   <strong
                     *ngIf="getTheFormGroup.contrato_id.errors.min"
                     class="msnError"
-                    >debe ser mayor a 0 </strong
-                  >
-
-            
+                    >debe ser mayor a 0
+                  </strong>
                 </div>
               </div>
             </div>
-            
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>nombre:</label></div>
+              <div class="col-4"><label>Nombre:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -47,19 +47,21 @@
                   <strong
                     *ngIf="getTheFormGroup.nombre.errors.minlength"
                     class="msnError"
-                    >Debe tener mas de 2 caracteres 
+                    >Debe tener mas de 2 caracteres
                   </strong>
 
                   <strong
                     *ngIf="getTheFormGroup.nombre.errors.maxlength"
                     class="msnError"
-                    >No debe tener mas de 20 caracteres 
+                    >No debe tener mas de 20 caracteres
                   </strong>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>capacidad_almacenamiento</label></div>
+              <div class="col-4">
+                <label>Capacidad de almacenamiento</label>
+              </div>
               <div class="col-8">
                 <input
                   type="text"
@@ -86,7 +88,9 @@
                     >Debe ser menor de 100000
                   </strong>
                   <strong
-                    *ngIf="getTheFormGroup.capacidad_almacenamiento.errors.required"
+                    *ngIf="
+                      getTheFormGroup.capacidad_almacenamiento.errors.required
+                    "
                     class="msnError"
                     >Requerido</strong
                   >
@@ -94,7 +98,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>direccion_id</label></div>
+              <div class="col-4"><label>Direccion id:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -124,7 +128,7 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
