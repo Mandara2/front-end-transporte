@@ -30,7 +30,7 @@ export class ListComponent implements OnInit {
     })
   }
   update(id:number) {
-    this.router.navigate(["departamentos/update"+id])
+    this.router.navigate(["departamentos/update/"+id])
   }
   view(id:number) {
     this.router.navigate(["departamentos/view/"+id])

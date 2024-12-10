@@ -116,8 +116,8 @@ export class ManageComponent implements OnInit {
 
     this.departamentosService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
-        this.router.navigate(["/departamentos/list"]);
+        Swal.fire("Éxito", "Departamento actualizado exitosamente", "success");
+        this.router.navigate(["departamentos/list"]);
       },
       error: (error) => {
         Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
