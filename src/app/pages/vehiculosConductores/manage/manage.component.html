@@ -18,14 +18,14 @@
               <div class="col-4"><label>Id:</label></div>
               <div class="col-8">
                 <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
-                <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
+                <input type="text" class="form-control" disabled [(ngModel)]="vehiculoConductor.id" /> 
                 <p>{{vehiculoConductor.id}}</p>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Ubicación:</label></div>
+              <div class="col-4"><label>Fecha Inicio:</label></div>
               <div class="col-8">
-                <!-- <input type="text" class="form-control" [(ngModel)]="theater.location" formControlName="location" /> -->
+                <input type="text" class="form-control" [(ngModel)]="vehiculoConductor.fecha_inico" formControlName="location" />
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
                 <div
                   *ngIf="getTheFormGroup.location.errors && (getTheFormGroup.location.dirty || getTheFormGroup.location.touched || trySend)">
