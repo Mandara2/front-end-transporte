@@ -12,21 +12,21 @@ export class CentrosDistribucionService {
   constructor(private http:HttpClient) {}
 
   list(): Observable<CentroDistribucion[]> { //lista de teatros, observable es como una promesa
-    return this.http.get<CentroDistribucion[]>(`${environment.url_ms_negocio}/CentrosDistribucion`); //Esto devuelve una lista de teatros
+    return this.http.get<CentroDistribucion[]>(`${environment.url_ms_negocio}/centrosDistribucion`); //Esto devuelve una lista de teatros
   }
   view(id:number): Observable<CentroDistribucion> {
-    return this.http.get<CentroDistribucion>(`${environment.url_ms_negocio}/CentrosDistribucion/${id}`);
+    return this.http.get<CentroDistribucion>(`${environment.url_ms_negocio}/centrosDistribucion/${id}`);
   }
   create(centroDistribucion:CentroDistribucion): Observable<CentroDistribucion> {
-    return this.http.post<CentroDistribucion>(`${environment.url_ms_negocio}/CentrosDistribucion`,centroDistribucion); //CentrosDistribucion es el body
+    return this.http.post<CentroDistribucion>(`${environment.url_ms_negocio}/centrosDistribucion`,centroDistribucion); //CentrosDistribucion es el body
   }
   update(centroDistribucion:CentroDistribucion): Observable<CentroDistribucion> {
-    return this.http.put<CentroDistribucion>(`${environment.url_ms_negocio}/CentrosDistribucion/${centroDistribucion.id}`,centroDistribucion);
+    return this.http.put<CentroDistribucion>(`${environment.url_ms_negocio}/centrosDistribucion/${centroDistribucion.id}`,centroDistribucion);
   }
   
 
 
   delete(id: number) {
-    return this.http.delete<CentroDistribucion>(`${environment.url_ms_negocio}/CentrosDistribucion/${id}`);
+    return this.http.delete<CentroDistribucion>(`${environment.url_ms_negocio}/centrosDistribucion/${id}`);
   }
 }

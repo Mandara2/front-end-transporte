@@ -51,11 +51,15 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
+      telefono: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(12),
+        ],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      cantidad_pedidos_realizados: [0, [Validators.required]],
     });
   }
 
@@ -75,10 +79,43 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["clientes/list"]);
     });
   }
+
   update() {
-    this.clientesService.update(this.cliente).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["clientes/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.cliente.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.cliente.id;
+
+    this.clientesService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/clientes/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

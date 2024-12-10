@@ -1,1 +1,121 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" *ngIf="mode == 1">Visualizar</h3>
+          <h3 class="mb-0" *ngIf="mode == 2">Crear</h3>
+          <h3 class="mb-0" *ngIf="mode == 3">Actualizar</h3>
+        </div>
+        <!-- 6. Crear etiqueta tipo form hacemos referencia a formGroup -->
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4"><label>Id:</label></div>
+              <div class="col-8">
+                <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
+                <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
+                <p>{{ departamento.id }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>nombre</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="departamento.nombre"
+                  formControlName="nombre"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.nombre.errors &&
+                    (getTheFormGroup.nombre.dirty ||
+                      getTheFormGroup.nombre.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.nombre.errors.required"
+                    class="msnError"
+                    >Requerido
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.nombre.errors.minlength"
+                    class="msnError"
+                    >debe tener mas de 3 caracteres
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.nombre.errors.maxlength"
+                    class="msnError"
+                    >debe tener menos de 20 caracteres
+                  </strong>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>region:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="departamento.region"
+                  formControlName="region"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.region.errors &&
+                    (getTheFormGroup.region.dirty ||
+                      getTheFormGroup.region.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.region.errors.required"
+                    class="msnError"
+                    >Requerido
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.region.errors.minLength"
+                    class="msnError"
+                    >debe tener mas de 3 caracteres
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.region.errors.maxLength"
+                    class="msnError"
+                    >debe tener menos de 20 caracteres
+                  </strong>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 2"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 3"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

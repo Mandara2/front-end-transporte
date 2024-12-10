@@ -3,6 +3,6 @@ export class Conductor {
     usuario_id: string;
     telefono: string;
     numero_licencia: string;
-    fecha_vencimiento_licencia: Date;
-    fecha_nacimiento: Date;
+    fecha_vencimiento_licencia: string;
+    fecha_nacimiento: string;
 }

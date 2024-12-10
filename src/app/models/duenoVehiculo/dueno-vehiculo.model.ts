@@ -3,8 +3,8 @@ import { Vehiculo } from "../vehiculo/vehiculo.model";
 
 export class DuenoVehiculo {
     id?: number;
-    fecha_adquisicion: Date;
+    fecha_adquisicion: string;
     porcentaje_propiedad: number;
-    vehiculo: Vehiculo;
-    dueno: Dueno;
+    vehiculo_id: number;
+    dueno_id: number;
 }

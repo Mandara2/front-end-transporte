@@ -12,7 +12,7 @@ import Swal from "sweetalert2";
   styleUrls: ["./manage.component.scss"],
 })
 export class ManageComponent implements OnInit {
-  direcciones: Direccion;
+  direccion: Direccion;
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
@@ -23,14 +23,14 @@ export class ManageComponent implements OnInit {
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
   ) {
-    this.direcciones = {
+    this.direccion = {
       id: 0,
       localidad: "",
       tipo_direccion: "",
       calle: "",
       numero_direccion: "",
       referencias: "",
-      municipio: new Municipio(),
+      municipio_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -47,8 +47,8 @@ export class ManageComponent implements OnInit {
       this.mode = 3;
     }
     if (this.activateRoute.snapshot.params.id) {
-      this.direcciones.id = this.activateRoute.snapshot.params.id;
-      this.getDirecciones(this.direcciones.id);
+      this.direccion.id = this.activateRoute.snapshot.params.id;
+      this.getDirecciones(this.direccion.id);
     }
   }
 
@@ -60,7 +60,40 @@ export class ManageComponent implements OnInit {
         0,
         [Validators.required, Validators.min(1), Validators.max(100)],
       ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      localidad: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ],
+      ],
+      tipo_direccion: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
+      ],
+      calle: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
+      ],
+      numero_direccion: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
+      ],
+      referencias: ["", [Validators.minLength(2), Validators.maxLength(30)]],
+      municipio_id: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -70,20 +103,53 @@ export class ManageComponent implements OnInit {
 
   getDirecciones(id: number) {
     this.direccionesService.view(id).subscribe((data) => {
-      this.direcciones = data;
+      this.direccion = data;
     });
   }
 
   create() {
-    this.direccionesService.create(this.direcciones).subscribe((data) => {
+    this.direccionesService.create(this.direccion).subscribe((data) => {
       Swal.fire("Creado", "Se ha creado exitosamente", "success");
       this.router.navigate(["direcciones/list"]);
     });
   }
+
   update() {
-    this.direccionesService.update(this.direcciones).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["direcciones/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.direccion.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.direccion.id;
+
+    this.direccionesService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/direcciones/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

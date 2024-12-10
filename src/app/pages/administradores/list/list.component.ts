@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { log } from 'console';
 import { Administrador } from 'src/app/models/administrador/administrador.model';
 import { AdministradorService } from 'src/app/services/administradores/administradores.service';
 import Swal from 'sweetalert2';
@@ -26,6 +27,8 @@ export class ListComponent implements OnInit {
   list() {
     this.administradoresService.list().subscribe(data => {
       this.administradores = data
+      console.log("si entra");
+      
     })
   }
   update(id:number) {

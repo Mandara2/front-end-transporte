@@ -26,10 +26,10 @@ export class ManageComponent implements OnInit {
   ) {
     this.vehiculoConductor = {
       id: 0,
-      fecha_inico: new Date(),
-      fecha_fin: new Date(),
-      vehiculo: new Vehiculo(),
-      conductor: new Conductor(),
+      fecha_inicio: "",
+      fecha_fin: "",
+      vehiculo_id: 0,
+      conductor_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -55,11 +55,10 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      capacity: [
-        0,
-        [Validators.required, Validators.min(1), Validators.max(100)],
-      ],
-      location: ["", [Validators.required, Validators.minLength(2)]],
+      fecha_inicio: [" ", [Validators.required]],
+      fecha_fin: [" ", [Validators.required]],
+      vehiculo_id: [" ", [Validators.required, Validators.min(1)]],
+      conductor_id: [" ", [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -74,19 +73,65 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        " Ingrese correctamente los datos solicitados",
+        "error"
+      );
+      return;
+    }
+    console.log(this.vehiculoConductor);
+
     this.vehiculosConductoresService
       .create(this.vehiculoConductor)
       .subscribe((data) => {
-        Swal.fire("Creado", "Se ha creado exitosamente", "success");
-        this.router.navigate(["vehiculosConductores/list"]);
+        Swal.fire(
+          "Creado",
+          "Se ha creado la relacin entre vehiculo y conductor existosamente",
+          "success"
+        );
+        this.router.navigate(["vehiculosConductores/list"]); //Aqui me muevo para el theaters list
       });
   }
+
   update() {
-    this.vehiculosConductoresService
-      .update(this.vehiculoConductor)
-      .subscribe((data) => {
-        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["vehiculosConductores/list"]);
-      });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.vehiculoConductor.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updateData.id = this.vehiculoConductor.id;
+
+    this.vehiculosConductoresService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/vehiculos/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
+    });
   }
 }

@@ -4,5 +4,5 @@ export class CentroDistribucion {
     id?: number;
     nombre: string;
     capacidad_almacenamiento: number
-    direccion: Direccion;
+    direccion_id: number;
 }

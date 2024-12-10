@@ -1,1 +1,176 @@
-<p>manage works!</p>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" *ngIf="mode == 1">Visualizar</h3>
+          <h3 class="mb-0" *ngIf="mode == 2">Crear</h3>
+          <h3 class="mb-0" *ngIf="mode == 3">Actualizar</h3>
+        </div>
+        <!-- 6. Crear etiqueta tipo form hacemos referencia a formGroup -->
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4"><label>Id:</label></div>
+              <div class="col-8">
+                <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
+                <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
+                <p>{{ gasto.id }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>dueno_id</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="gasto.dueno_id"
+                  formControlName="dueno_id"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.dueno_id.errors &&
+                    (getTheFormGroup.dueno_id.dirty ||
+                      getTheFormGroup.dueno_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.dueno_id.errors.required"
+                    class="msnError"
+                    >Requerido
+                  </strong>
+
+                  <strong
+                    *ngIf="getTheFormGroup.dueno_id.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>conductor_id:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="gasto.conductor_id"
+                  formControlName="conductor_id"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.conductor_id.errors &&
+                    (getTheFormGroup.conductor_id.dirty ||
+                      getTheFormGroup.conductor_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.conductor_id.errors.required"
+                    class="msnError"
+                    >Requerido
+                  </strong>
+
+                  <strong
+                    *ngIf="getTheFormGroup.conductor_id.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4"><label>servicio_id:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="gasto.servicio_id"
+                  formControlName="servicio_id"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.servicio_id.errors &&
+                    (getTheFormGroup.servicio_id.dirty ||
+                      getTheFormGroup.servicio_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.servicio_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.servicio_id.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4"><label>detalles:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="gasto.detalles"
+                  formControlName="detalles"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.detalles.errors &&
+                    (getTheFormGroup.detalles.dirty ||
+                      getTheFormGroup.detalles.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.detalles.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.detalles.errors.maxlength"
+                    class="msnError"
+                    >debe tener menos de 40 caracteres 
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 2"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 3"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,6 +5,6 @@ export class DirListaOrden {
     id?: number;
     orden: string;
     descripcion?: string;
-    ruta: Ruta;
-    direccion: Direccion;
+    ruta_id: number;
+    direccion_id: number;
 }
