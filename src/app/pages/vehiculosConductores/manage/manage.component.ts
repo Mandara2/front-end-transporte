@@ -89,10 +89,10 @@ export class ManageComponent implements OnInit {
       .subscribe((data) => {
         Swal.fire(
           "Creado",
-          "Se ha creado la relacin entre vehiculo y conductor existosamente",
+          "Se ha creado la relación entre vehiculo y conductor existosamente",
           "success"
         );
-        this.router.navigate(["vehiculosConductores/list"]); //Aqui me muevo para el theaters list
+        this.router.navigate(["/vehiculosConductores/list"]); //Aqui me muevo para el theaters list
       });
   }
 
@@ -111,7 +111,7 @@ export class ManageComponent implements OnInit {
     if (!this.vehiculoConductor.id) {
       Swal.fire(
         "Error",
-        "No se pudo encontrar el vehículo para actualizar",
+        "No se pudo encontrar la relación para actualizar",
         "error"
       );
       return;
@@ -125,11 +125,11 @@ export class ManageComponent implements OnInit {
 
     this.vehiculosConductoresService.update(updateData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
-        this.router.navigate(["/vehiculos/list"]);
+        Swal.fire("Éxito", "Relación actualizado exitosamente", "success");
+        this.router.navigate(["/vehiculosConductores/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar la relación", "error");
         console.error("Error al actualizar:", error);
       },
     });

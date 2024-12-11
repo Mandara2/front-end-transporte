@@ -115,7 +115,7 @@ export class ManageComponent implements OnInit {
         "Se ha creado la persona natural existosamente",
         "success"
       );
-      this.router.navigate(["personaNaturales/list"]); //Aqui me muevo para el theaters list
+      this.router.navigate(["personasNaturales/list"]); //Aqui me muevo para el theaters list
     });
   }
 

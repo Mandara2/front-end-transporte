@@ -68,6 +68,8 @@ export class ManageComponent implements OnInit {
 
   getTurno(id: number) {
     this.TurnoService.view(id).subscribe((data) => {
+      console.log(data);
+      
       this.turno = data;
     });
   }
