@@ -1,4 +1,3 @@
-import { Conductor } from "../conductor/conductor.model";
 
 export class Dueno {
     id?: number;

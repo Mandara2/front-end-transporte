@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import Swal from "sweetalert2";
 import { Administrador } from "../../../models/administrador/administrador.model";
 import { AdministradorService } from "src/app/services/administradores/administradores.service";
+import { log } from "console";
 
 /* 
 1. INYECTAR FORMBUILDER: ESTABLECE LAS LEYES 
@@ -93,6 +94,7 @@ export class ManageComponent implements OnInit {
 
   getAdministrador(id: number) {
     this.administradorService.view(id).subscribe((data) => {
+      console.log(data)
       this.administrador = data;
     });
   }

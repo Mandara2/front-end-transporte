@@ -60,10 +60,9 @@ export class ManageComponent implements OnInit {
         [Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)],
       ],
       monto: [0, [Validators.required, Validators.min(1)]],
-      estado: ["", [Validators.required, Validators.minLength(2)]],
-      detalles: ["", [Validators.required, Validators.maxLength(40)]],
-      cuota_id: [0, [Validators.required, Validators.min(1)]],
-      gasto_id: [0, [Validators.required, Validators.min(1)]],
+      detalles: ["", [Validators.maxLength(40)]],
+      cuota_id: [0, [Validators.min(1)]],
+      gasto_id: [0, [Validators.min(1)]],
     });
   }
 
@@ -86,6 +85,8 @@ export class ManageComponent implements OnInit {
 
   update() {
     if (this.theFormGroup.invalid) {
+      console.log(this.trySend);
+      
       this.trySend = true;
       Swal.fire(
         "Formulario invalido",

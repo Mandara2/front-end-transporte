@@ -92,7 +92,9 @@ export class ManageComponent implements OnInit {
 
   getTheater(id: number) {
     this.categoriaService.view(id).subscribe((data) => {
+      console.log(data)
       this.categoria = data;
+
     });
   }
 

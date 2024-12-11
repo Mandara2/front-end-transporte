@@ -69,6 +69,8 @@ export class ManageComponent implements OnInit {
 
   getCliente(id: number) {
     this.clientesService.view(id).subscribe((data) => {
+      console.log(data);
+      
       this.cliente = data;
     });
   }

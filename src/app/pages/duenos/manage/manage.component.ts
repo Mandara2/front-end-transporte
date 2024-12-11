@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { log } from "console";
 import { Conductor } from "src/app/models/conductor/conductor.model";
 import { Dueno } from "src/app/models/dueno/dueno.model";
 import { DuenoService } from "src/app/services/duenos/duenos.service";
@@ -78,6 +79,7 @@ export class ManageComponent implements OnInit {
 
   getDueno(id: number) {
     this.duenosService.view(id).subscribe((data) => {
+      console.log(data);
       this.dueno = data;
     });
   }

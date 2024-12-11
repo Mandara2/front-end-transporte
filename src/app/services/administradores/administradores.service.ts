@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Administrador} from 'src/app/models/administrador/administrador.model';
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +15,9 @@ export class AdministradorService {
     return this.http.get<Administrador[]>(`${environment.url_ms_negocio}/administrador`); //Esto devuelve una lista de teatros
   }
   view(id:number): Observable<Administrador> {
-    return this.http.get<Administrador>(`${environment.url_ms_negocio}/administrador/${id}`);
+    return this.http.get<any>(`${environment.url_ms_negocio}/administrador/${id}`).pipe(
+      map(response => response.administrador)  // Extraemos solo el objeto administrador
+    );
   }
   create(administrador:Administrador): Observable<Administrador> {
     return this.http.post<Administrador>(`${environment.url_ms_negocio}/administrador`,administrador); //Administrador es el body
