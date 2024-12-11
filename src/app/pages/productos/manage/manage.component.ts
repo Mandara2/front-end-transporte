@@ -25,15 +25,9 @@ export class ManageComponent implements OnInit {
     this.producto = {
       id: 0,
       nombre: "",
-<<<<<<< HEAD
-      fecha_vencimiento: new Date(),
-      cliente_id: 0,
-      lote: new Lote(),
-=======
       fecha_vencimiento: "",
       cliente_id: 0,
       lote_id: 0
->>>>>>> 9f720464274cecf0e2e8ba357d2669cf6f29a1a9
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false

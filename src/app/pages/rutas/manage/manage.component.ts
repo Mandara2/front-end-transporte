@@ -27,11 +27,7 @@ export class ManageComponent implements OnInit {
       punto_inicio: "",
       punto_destino: "",
       distancia: 0,
-<<<<<<< HEAD
-      fecha_entrega: new Date(),
-=======
       fecha_entrega: "",
->>>>>>> 9f720464274cecf0e2e8ba357d2669cf6f29a1a9
       contrato_id: 0,
       vehiculo_conductor_id: 0
     };
