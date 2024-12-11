@@ -57,7 +57,7 @@ export class ManageComponent implements OnInit {
       // lista, serán las reglas
       porcentaje_propiedad: [
         0,
-        [Validators.required, Validators.min(0), Validators.max(1)],
+        [Validators.required, Validators.min(0)],
       ],
       fecha_adquisicion: [
         "",
@@ -81,7 +81,7 @@ export class ManageComponent implements OnInit {
   create() {
     this.duenoVehiculosService.create(this.duenoVehiculo).subscribe((data) => {
       Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["duenoVehiculos/list"]);
+      this.router.navigate(["duenosVehiculos/list"]);
     });
   }
   update() {
@@ -99,7 +99,7 @@ export class ManageComponent implements OnInit {
     if (!this.duenoVehiculo.id) {
       Swal.fire(
         "Error",
-        "No se pudo encontrar el vehículo para actualizar",
+        "No se pudo encontrar la relación para actualizar",
         "error"
       );
       return;
@@ -113,11 +113,11 @@ export class ManageComponent implements OnInit {
 
     this.duenoVehiculosService.update(updateData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Relación actualizado exitosamente", "success");
         this.router.navigate(["/duenosVehiculos/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar la relación", "error");
         console.error("Error al actualizar:", error);
       },
     });

@@ -25,8 +25,8 @@
                                 <th class="col-1">ID</th>
                                 <th class="col-4">Orden</th>
                                 <th class="col-4">Descripcion</th>
-                                <!-- <th class="col-4">Ruta</th> -->
-                                 <!-- <th class="col-4">Dirección</th> -->
+                                 <th class="col-4">ID Ruta</th>
+                                  <th class="col-4">ID Dirección</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +34,8 @@
                                 <td>{{actual.id}}</td>
                                 <td>{{actual.orden}}</td>
                                 <td>{{actual.descripcion}}</td>
+                                <td>{{actual.ruta_id}}</td>
+                                <td>{{actual.direccion_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                     <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>

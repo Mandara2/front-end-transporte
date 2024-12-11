@@ -28,7 +28,7 @@
                                 <th class="col-4">Calle</th>
                                 <th class="col-4">Número de dirección</th>
                                 <th class="col-4">Referencias</th>
-                                <!-- <th class="col-4">Municcipio</th> -->
+                                <th class="col-4">ID Municipio</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,6 +39,7 @@
                                 <td>{{actual.calle}}</td>
                                 <td>{{actual.numero_direccion}}</td>
                                 <td>{{actual.referencias}}</td>
+                                <td>{{actual.municipio_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                     <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>

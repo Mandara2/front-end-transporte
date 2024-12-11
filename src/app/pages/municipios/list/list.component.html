@@ -25,7 +25,7 @@
                                 <th class="col-1">ID</th>
                                 <th class="col-4">Nombre</th>
                                 <th class="col-4">Codigo postal</th>
-                                <!-- <th class="col-4">Departamento</th> -->
+                                <th class="col-4">ID Departamento</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +33,7 @@
                                 <td>{{actual.id}}</td>
                                 <td>{{actual.nombre}}</td>
                                 <td>{{actual.codigo_postal}}</td>
+                                <td>{{actual.departamento_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                     <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>

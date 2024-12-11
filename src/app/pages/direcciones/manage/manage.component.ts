@@ -129,7 +129,7 @@ export class ManageComponent implements OnInit {
     if (!this.direccion.id) {
       Swal.fire(
         "Error",
-        "No se pudo encontrar el vehículo para actualizar",
+        "No se pudo encontrar la direccion para actualizar",
         "error"
       );
       return;
@@ -147,7 +147,7 @@ export class ManageComponent implements OnInit {
         this.router.navigate(["/direcciones/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar la direccion", "error");
         console.error("Error al actualizar:", error);
       },
     });

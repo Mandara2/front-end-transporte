@@ -25,7 +25,7 @@
                                 <th class="col-1">ID</th>
                                 <th class="col-4">Fecha de realización</th>
                                 <th class="col-4">Descripción</th>
-                                  <!-- <th class="col-4">Administrador</th> -->
+                                <th class="col-4">ID Administrador</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +33,7 @@
                                 <td>{{actual.id}}</td>
                                 <td>{{actual.fecha}}</td>
                                 <td>{{actual.descripcion}}</td>
+                                <td>{{actual.administrador_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                     <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>

@@ -27,6 +27,7 @@ export class ManageComponent implements OnInit {
     this.empresa = {
       id: 0,
       nit: "",
+      tipo_empresa: "",
       direccion_fiscal: "",
       cliente_id: 0,
       persona_natural_id: 0,
@@ -56,6 +57,9 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       nit: ["", [Validators.required, Validators.pattern(/^[\d\-]+$/)]],
+      tipo_empresa: ["", [
+        Validators.required,
+        Validators.pattern(/^[a-zA-Z0-9 _-]+$/)] ],
       direccion_fiscal: ["", [Validators.minLength(2)]],
       cliente_id: [0, [Validators.required, Validators.min(1)]],
       persona_natural_id: [0, [Validators.required, Validators.min(1)]],
@@ -107,11 +111,11 @@ export class ManageComponent implements OnInit {
 
     this.empresasService.update(updateData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Empresa actualizado exitosamente", "success");
         this.router.navigate(["/empresas/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar el empresa", "error");
         console.error("Error al actualizar:", error);
       },
     });

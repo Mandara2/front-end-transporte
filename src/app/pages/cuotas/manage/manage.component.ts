@@ -27,6 +27,7 @@ export class ManageComponent implements OnInit {
       id: 0,
       monto: 0,
       intereses: 0,
+      numero: 0,
       contrato_id: 0,
     };
     this.mode = 0;
@@ -54,9 +55,10 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       monto: [0, [Validators.required, Validators.min(1)]],
+      numero: [0, [Validators.required, Validators.min(1)]],
       intereses: [
         0,
-        [Validators.required, Validators.min(0), Validators.max(1)],
+        [Validators.required, Validators.min(0)],
       ],
       contrato_id: [0, [Validators.required, Validators.min(1)]],
     });
@@ -107,11 +109,11 @@ export class ManageComponent implements OnInit {
 
     this.cuotasService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Cuota actualizado exitosamente", "success");
         this.router.navigate(["/cuotas/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar la cuota", "error");
         console.error("Error al actualizar:", error);
       },
     });

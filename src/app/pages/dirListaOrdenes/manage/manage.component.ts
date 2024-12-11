@@ -96,7 +96,7 @@ export class ManageComponent implements OnInit {
     if (!this.dirListaOrden.id) {
       Swal.fire(
         "Error",
-        "No se pudo encontrar el vehículo para actualizar",
+        "No se pudo encontrar la relación para actualizar",
         "error"
       );
       return;
@@ -110,11 +110,11 @@ export class ManageComponent implements OnInit {
 
     this.dirListaOrdenesService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Relación actualizada exitosamente", "success");
         this.router.navigate(["/dirListaOrdenes/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar la relación", "error");
         console.error("Error al actualizar:", error);
       },
     });

@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>porcentaje_propiedad</label></div>
+              <div class="col-4"><label>Porcentaje de propiedad</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -48,50 +48,14 @@
                     class="msnError"
                     >debe ser mayor a 0
                   </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.porcentaje_propiedad.errors.max"
-                    class="msnError"
-                    >debe ser menor a 1
-                  </strong>
 
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-4"><label>vehiculo_id:</label></div>
-              <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="duenoVehiculo.vehiculo_id"
-                  formControlName="vehiculo_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.vehiculo_id.errors &&
-                    (getTheFormGroup.vehiculo_id.dirty ||
-                      getTheFormGroup.vehiculo_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.vehiculo_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.vehiculo_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                  
-                </div>
-              </div>
-            </div>
+            
 
             <div class="row">
-              <div class="col-4"><label>fecha_adquisicion:</label></div>
+              <div class="col-4"><label>Fecha de adquisicion:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -125,7 +89,7 @@
             </div>
 
             <div class="row">
-              <div class="col-4"><label>dueno_id:</label></div>
+              <div class="col-4"><label>ID Dueno:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -157,6 +121,39 @@
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col-4"><label>ID Vehiculo:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="duenoVehiculo.vehiculo_id"
+                  formControlName="vehiculo_id"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.vehiculo_id.errors &&
+                    (getTheFormGroup.vehiculo_id.dirty ||
+                      getTheFormGroup.vehiculo_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.vehiculo_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.vehiculo_id.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
+                  
+                </div>
+              </div>
+            </div> 
 
             <div class="row">
               <div class="col-4"></div>

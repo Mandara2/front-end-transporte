@@ -27,8 +27,8 @@
                                 <th class="col-4">Monto</th>
                                 <th class="col-4">Estado</th>
                                 <th class="col-4">Detalles</th>
-                                <!-- <th class="col-4">Cuota</th> -->
-                                 <!-- <th class="col-4">Gastos</th> -->
+                                <th class="col-4">ID Cuota</th>
+                                <th class="col-4">ID Gastos</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,6 +38,8 @@
                                 <td>{{actual.monto}}</td>
                                 <td>{{actual.estado}}</td>
                                 <td>{{actual.detalles}}</td>
+                                <td>{{actual.cuota_id}}</td>
+                                <td>{{actual.gasto_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                     <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>

@@ -30,6 +30,7 @@
                   [(ngModel)]="direccion.localidad"
                   formControlName="localidad"
                 />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
                 <div
                   *ngIf="
                     getTheFormGroup.localidad.errors &&
@@ -60,11 +61,27 @@
               <div class="col-4"><label>Tipo de direccion:</label></div>
               <div class="col-8">
                 <input
+                  list="tiposDireccion"
                   type="text"
                   class="form-control"
                   [(ngModel)]="direccion.tipo_direccion"
                   formControlName="tipo_direccion"
                 />
+                <datalist id="tiposDireccion">
+                  <option value="Avenida"></option>
+                  <option value="Av. Calle"></option>
+                  <option value="Av. Carrera"></option>
+                  <option value="Av. Diagonal"></option>
+                  <option value="Calle"></option>
+                  <option value="Carrera"></option>
+                  <option value="Circular"></option>
+                  <option value="Circunvalar"></option>
+                  <option value="Diagonal"></option>
+                  <option value="Manzana"></option>
+                  <option value="Transversal"></option>
+                  <option value="Via"></option>
+                </datalist>
+
                 <div
                   *ngIf="
                     getTheFormGroup.tipo_direccion.errors &&

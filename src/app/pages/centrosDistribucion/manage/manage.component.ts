@@ -84,7 +84,7 @@ export class ManageComponent implements OnInit {
       .create(this.centroDistribucion)
       .subscribe((data) => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
-        this.router.navigate(["centroDistribuciones/list"]);
+        this.router.navigate(["centrosDistribucion/list"]);
       });
   }
   update() {
@@ -116,11 +116,11 @@ export class ManageComponent implements OnInit {
 
     this.centrosDistribucionesService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Centro de distribucion actualizado exitosamente", "success");
         this.router.navigate(["/centrosDistribucion/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar el centro de distribucion", "error");
         console.error("Error al actualizar:", error);
       },
     });

@@ -23,17 +23,19 @@
                         <thead>
                             <tr>
                                 <th class="col-1">ID</th>
-                                <!-- <th class="col-4">Usuario</th> -->
+                                <th class="col-4">ID Usuario</th>
                                 <th class="col-4">Telefono</th>
                                 <th class="col-4">Fecha de nacimiento</th>
-                                <!-- <th class="col-4">Conductor</th> -->
+                                <th class="col-4">ID Conductor</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let actual of duenos">
                                 <td>{{actual.id}}</td>
+                                <td>{{actual.usuario_id}}<td>
                                 <td>{{actual.telefono}}</td>
                                 <td>{{actual.fecha_nacimiento}}</td>
+                                <td>{{actual.conductor_id}}<td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                     <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>

@@ -25,8 +25,8 @@
                                 <th class="col-1">ID</th>
                                 <th class="col-4">Fecha de inicio</th>
                                 <th class="col-4">Fecha fin</th>
-                                <!-- <th class="col-4">Municipio</th> -->
-                                 <!-- <th class="col-4">Vehiculo</th> -->
+                                <th class="col-4">ID Municipio</th>
+                                <th class="col-4">ID Vehiculo</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +34,8 @@
                                 <td>{{actual.id}}</td>
                                 <td>{{actual.fecha_inicio}}</td>
                                 <td>{{actual.fecha_fin}}</td>
+                                <td>{{actual.municipio_id}}</td>
+                                <td>{{actual.vehiculo_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
                                     <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>
