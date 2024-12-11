@@ -13,7 +13,9 @@
 
                    <div class="col-8"></div>
                    <div class="col-2">
-                    <button type="button" class="btn btn-primary" (click)="create()">Crear</button>
+                    <button type="button" class="btn btn-primary" (click)="create()">
+                        <i class="bi bi-plus fa-lg"></i>
+                    </button>
                    </div>
                 </div>
                 </div>
@@ -35,11 +37,16 @@
                                 <td>{{actual.fecha_inicio}}</td>
                                 <td>{{actual.fecha_fin}}</td>
                                 <td>{{actual.compania_aseguradora}}</td>
-                                <td>{{actual.vehiculo_id}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-primary" (click)="view(actual.id)">Ver</button>
-                                    <button type="button" class="btn btn-primary" (click)="update(actual.id)">Editar</button>
-                                    <button type="button" class="btn btn-dark" (click) ="delete(actual.id)">Eliminar</button>
+                                 <td>
+                                    <button type="button" class="btn btn-primary" (click)="view(actual.id)">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary" (click)="update(actual.id)">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-dark" (click)="delete(actual.id)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

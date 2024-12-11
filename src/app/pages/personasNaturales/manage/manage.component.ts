@@ -29,6 +29,7 @@ export class ManageComponent implements OnInit {
       tipo_documento: "",
       fecha_nacimiento: "",
       cliente_id: 0,
+     
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
