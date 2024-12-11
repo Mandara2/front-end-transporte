@@ -28,7 +28,7 @@ export class ManageComponent implements OnInit {
     this.gasto = {
       id: 0,
       detalles: "",
-      dueno_id:0 ,
+      dueno_id: 0,
       conductor_id: 0,
       servicio_id: 0,
     };
@@ -56,13 +56,10 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      detalles: [
-        0,
-        [Validators.required, Validators.maxLength(40)],
-      ],
+      detalles: [0, [Validators.required, Validators.maxLength(40)]],
       dueno_id: ["", [Validators.required, Validators.min(1)]],
-      conductor_id:["", [Validators.required, Validators.min(1)]],
-      servicio_id:["", [Validators.required, Validators.min(1)]]
+      conductor_id: ["", [Validators.required, Validators.min(1)]],
+      servicio_id: ["", [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -82,10 +79,43 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["gastos/list"]);
     });
   }
+
   update() {
-    this.gastosService.update(this.gasto).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["gastos/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.gasto.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updateData.id = this.gasto.id;
+
+    this.gastosService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/gastos/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

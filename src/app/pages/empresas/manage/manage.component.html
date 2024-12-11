@@ -22,156 +22,120 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>nit</label></div>
+              <div class="col-4"><label>NIT: </label></div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="empresa.nit"
-                  formControlName="nit"
-                />
-                <div
-                  *ngIf="
+                <input type="text" class="form-control" [(ngModel)]="empresa.nit" formControlName="nit" />
+                <div *ngIf="
                     getTheFormGroup.nit.errors &&
                     (getTheFormGroup.nit.dirty ||
                       getTheFormGroup.nit.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.nit.errors.required"
-                    class="msnError"
-                    >Requerido
+                  ">
+                  <strong *ngIf="getTheFormGroup.nit.errors.required" class="msnError">Requerido
                   </strong>
-                  
-                  <strong
-                    *ngIf="getTheFormGroup.nit.errors.pattern"
-                    class="msnError"
-                    >no cumple el formato 
+
+                  <strong *ngIf="getTheFormGroup.nit.errors.pattern" class="msnError">no cumple el formato
                   </strong>
 
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>direccion_fiscal:</label></div>
-              <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="empresa.direccion_fiscal"
-                  formControlName="direccion_fiscal"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
+            <div class="col-4"><label>Tipo empresa: </label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.tipo_empresa" formControlName="tipo_empresa" />
+              <div *ngIf="
+                    getTheFormGroup.nit.errors &&
+                    (getTheFormGroup.nit.dirty ||
+                      getTheFormGroup.nit.touched ||
+                      trySend)
+                  ">
+                <strong *ngIf="getTheFormGroup.tipo_empresa.errors.required" class="msnError">Requerido
+                </strong>
+
+                <strong *ngIf="getTheFormGroup.tipo_empresa.errors.pattern" class="msnError">No cumple el formato
+                </strong>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4"><label>Dirección fiscal:</label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.direccion_fiscal"
+                formControlName="direccion_fiscal" />
+              <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+              <div *ngIf="
                     getTheFormGroup.direccion_fiscal.errors &&
                     (getTheFormGroup.direccion_fiscal.dirty ||
                       getTheFormGroup.direccion_fiscal.touched ||
                       trySend)
-                  "
-                >
-            
-                  <strong
-                    *ngIf="getTheFormGroup.direccion_fiscal.errors.minlength"
-                    class="msnError"
-                    >debe tener mas de caracteres
-                  </strong>
-                  
-                </div>
+                  ">
+
+                <strong *ngIf="getTheFormGroup.direccion_fiscal.errors.minlength" class="msnError">debe tener mas de
+                  caracteres
+                </strong>
+
               </div>
             </div>
+          </div>
 
-            <div class="row">
-              <div class="col-4"><label>cliente_id:</label></div>
-              <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="empresa.cliente_id"
-                  formControlName="cliente_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
+          <div class="row">
+            <div class="col-4"><label>ID Cliente:</label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.cliente_id" formControlName="cliente_id" />
+              <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+              <div *ngIf="
                     getTheFormGroup.cliente_id.errors &&
                     (getTheFormGroup.cliente_id.dirty ||
                       getTheFormGroup.cliente_id.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.cliente_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.cliente_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                  
-                  
-                </div>
+                  ">
+                <strong *ngIf="getTheFormGroup.cliente_id.errors.required" class="msnError">Requerido</strong>
+                <strong *ngIf="getTheFormGroup.cliente_id.errors.min" class="msnError">debe ser mayor a 0
+                </strong>
+
+
               </div>
             </div>
+          </div>
 
-            <div class="row">
-              <div class="col-4"><label>persona_natural_id:</label></div>
-              <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="empresa.persona_natural_id"
-                  formControlName="persona_natural_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
+          <div class="row">
+            <div class="col-4"><label>ID Persona:</label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.persona_natural_id"
+                formControlName="persona_natural_id" />
+              <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+              <div *ngIf="
                     getTheFormGroup.persona_natural_id.errors &&
                     (getTheFormGroup.persona_natural_id.dirty ||
                       getTheFormGroup.persona_natural_id.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.persona_natural_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.persona_natural_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                  
-                  
-                </div>
-              </div>
-            </div>
+                  ">
+                <strong *ngIf="getTheFormGroup.persona_natural_id.errors.required" class="msnError">Requerido</strong>
+                <strong *ngIf="getTheFormGroup.persona_natural_id.errors.min" class="msnError">debe ser mayor a 0
+                </strong>
 
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col-8">
-                <button
-                  class="btn btn-success btn-block"
-                  *ngIf="mode == 2"
-                  (click)="create()"
-                >
-                  Crear
-                </button>
-                <button
-                  class="btn btn-success btn-block"
-                  *ngIf="mode == 3"
-                  (click)="update()"
-                >
-                  Actualizar
-                </button>
+
               </div>
             </div>
           </div>
-        </form>
+
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-8">
+              <button class="btn btn-success btn-block" *ngIf="mode == 2" (click)="create()">
+                Crear
+              </button>
+              <button class="btn btn-success btn-block" *ngIf="mode == 3" (click)="update()">
+                Actualizar
+              </button>
+            </div>
+          </div>
       </div>
+      </form>
     </div>
   </div>
+</div>
 </div>

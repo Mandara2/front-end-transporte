@@ -28,7 +28,7 @@ export class ManageComponent implements OnInit {
       telefono: "",
       numero_licencia: "",
       fecha_vencimiento_licencia: "",
-      fecha_nacimiento: ""
+      fecha_nacimiento: "",
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -54,16 +54,28 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      usuario_id: [
-        0,
-        [Validators.required],
+      usuario_id: [0, [Validators.required]],
+      telefono: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(20),
+          Validators.pattern(/^[\d\-]+$/),
+        ],
       ],
-      telefono: ["", [Validators.required, Validators.minLength(8), Validators.maxLength(20), Validators.pattern(/^[\d\-]+$/) ]],
-      numero_licencia:["",[Validators.required, Validators.pattern(/^[\d\-]+$/) ]],
-      fecha_vencimiento_licencia:["",[Validators.required,  Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)]],
-      fecha_nacimiento:["",[Validators.required,  Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)]]
-
-
+      numero_licencia: [
+        "",
+        [Validators.required, Validators.pattern(/^[\d\-]+$/)],
+      ],
+      fecha_vencimiento_licencia: [
+        "",
+        [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
+      ],
+      fecha_nacimiento: [
+        "",
+        [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
+      ],
     });
   }
 
@@ -83,10 +95,43 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["conductores/list"]);
     });
   }
+
   update() {
-    this.conductoresService.update(this.conductor).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["conductores/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.conductor.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el conductor para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.conductor.id;
+
+    this.conductoresService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Conductor actualizado exitosamente", "success");
+        this.router.navigate(["/conductores/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el conductor", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

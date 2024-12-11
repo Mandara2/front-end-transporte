@@ -4,6 +4,7 @@ export class Cuota {
     id?: number;
     monto: number;
     intereses?: number;
+    numero: number;
     contrato_id: number;
 
 }

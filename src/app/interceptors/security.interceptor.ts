@@ -47,6 +47,7 @@ export class SecurityInterceptor implements HttpInterceptor {
       const authRequest = request.clone({ //cloneme  esa carta
         setHeaders: {
           Authorization: `Bearer ${token}`, //Hacemos un cambio de encabezado
+          
         },
       });
 

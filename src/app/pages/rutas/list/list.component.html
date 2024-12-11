@@ -29,8 +29,8 @@
                                 <th class="col-4">Punto destino</th>
                                 <th class="col-4">Distancia</th>
                                 <th class="col-4">Fecha de entrega</th>
-                                 <!-- <th class="col-4">Contrato</th> -->
-                                  <!-- <th class="col-4">Vehiculo y conductor</th> -->
+                                <th class="col-4">ID Contrato</th>
+                                <th class="col-4">ID Vehiculo y conductor</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -40,6 +40,8 @@
                                 <td>{{actual.punto_destino}}</td>
                                 <td>{{actual.distancia}}</td>
                                 <td>{{actual.fecha_entrega}}</td>
+                                <td>{{actual.contrato_id}}</td>
+                                <td>{{actual.vehiculo_conductor_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">
                                         <i class="bi bi-eye"></i>

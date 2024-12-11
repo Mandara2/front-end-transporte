@@ -22,39 +22,37 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-4"><label>distancia_total</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="contrato.distancia_total"
-                    formControlName="distancia_total"
-                  />
-                  <div
-                    *ngIf="
-                      getTheFormGroup.distancia_total.errors &&
-                      (getTheFormGroup.distancia_total.dirty ||
-                        getTheFormGroup.distancia_total.touched ||
-                        trySend)
-                    "
+              <div class="col-4"><label>Distancia total:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="contrato.distancia_total"
+                  formControlName="distancia_total"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.distancia_total.errors &&
+                    (getTheFormGroup.distancia_total.dirty ||
+                      getTheFormGroup.distancia_total.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.distancia_total.errors.required"
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.distancia_total.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.distancia_total.errors.min"
-                      class="msnError"
-                      >debe ser mayor a 0 </strong
-                    >
-  
-              
-                  </div>
+                  <strong
+                    *ngIf="getTheFormGroup.distancia_total.errors.min"
+                    class="msnError"
+                    >debe ser mayor a 0
+                  </strong>
                 </div>
+              </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>costo_total:</label></div>
+              <div class="col-4"><label>Costo total (km):</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -74,19 +72,18 @@
                   <strong
                     *ngIf="getTheFormGroup.costo_total.errors.required"
                     class="msnError"
-                    >Requerido 
+                    >Requerido
                   </strong>
                   <strong
                     *ngIf="getTheFormGroup.costo_total.errors.min"
                     class="msnError"
-                    >Debe ser mayor a 0 
+                    >Debe ser mayor a 0
                   </strong>
-                  
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>cliente_id</label></div>
+              <div class="col-4"><label>Cliente id:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -110,47 +107,43 @@
                   <strong
                     *ngIf="getTheFormGroup.cliente_id.errors.min"
                     class="msnError"
-                    >debe ser mayor a 0 </strong
-                  >
-
-            
+                    >debe ser mayor a 0
+                  </strong>
                 </div>
               </div>
             </div>
 
             <div class="row">
-                <div class="col-4"><label>fecha</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="contrato.fecha"
-                    formControlName="fecha"
-                  />
-                  <div
-                    *ngIf="
-                      getTheFormGroup.fecha.errors &&
-                      (getTheFormGroup.fecha.dirty ||
-                        getTheFormGroup.fecha.touched ||
-                        trySend)
-                    "
+              <div class="col-4"><label>Fecha:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="contrato.fecha"
+                  formControlName="fecha"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.fecha.errors &&
+                    (getTheFormGroup.fecha.dirty ||
+                      getTheFormGroup.fecha.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.fecha.errors.required"
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.fecha.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.fecha.errors.pattern"
-                      class="msnError"
-                      >no cumple con el formato de fecha</strong
-                    >
-  
-              
-                  </div>
+                  <strong
+                    *ngIf="getTheFormGroup.fecha.errors.pattern"
+                    class="msnError"
+                    >no cumple con el formato de fecha</strong
+                  >
                 </div>
+              </div>
             </div>
-            
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

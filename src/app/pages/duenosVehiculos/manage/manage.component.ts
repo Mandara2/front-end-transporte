@@ -29,7 +29,7 @@ export class ManageComponent implements OnInit {
       fecha_adquisicion: "",
       porcentaje_propiedad: 0,
       vehiculo_id: 0,
-      dueno_id:0
+      dueno_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -57,11 +57,14 @@ export class ManageComponent implements OnInit {
       // lista, serán las reglas
       porcentaje_propiedad: [
         0,
-        [Validators.required, Validators.min(0), Validators.max(1)],
+        [Validators.required, Validators.min(0)],
       ],
-      fecha_adquisicion:["",[Validators.required,  Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)]],
-      vehiculo_id:[0,[Validators.required, Validators.min(1)]],
-      dueno_id:[0,[Validators.required, Validators.min(1)]]
+      fecha_adquisicion: [
+        "",
+        [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
+      ],
+      vehiculo_id: [0, [Validators.required, Validators.min(1)]],
+      dueno_id: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -78,13 +81,45 @@ export class ManageComponent implements OnInit {
   create() {
     this.duenoVehiculosService.create(this.duenoVehiculo).subscribe((data) => {
       Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["duenoVehiculos/list"]);
+      this.router.navigate(["duenosVehiculos/list"]);
     });
   }
   update() {
-    this.duenoVehiculosService.update(this.duenoVehiculo).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["duenoVehiculos/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.duenoVehiculo.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar la relación para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updateData.id = this.duenoVehiculo.id;
+
+    this.duenoVehiculosService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Relación actualizado exitosamente", "success");
+        this.router.navigate(["/duenosVehiculos/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar la relación", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

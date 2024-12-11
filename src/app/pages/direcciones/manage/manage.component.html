@@ -22,14 +22,66 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>tipo_direccion</label></div>
+              <div class="col-4"><label>Localidad:</label></div>
               <div class="col-8">
                 <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="direccion.localidad"
+                  formControlName="localidad"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.localidad.errors &&
+                    (getTheFormGroup.localidad.dirty ||
+                      getTheFormGroup.localidad.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.localidad.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.localidad.errors.minlength"
+                    class="msnError"
+                    >debe tener mas de 2 caracteres
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.localidad.errors.maxlength"
+                    class="msnError"
+                    >debe tener menos de 20 caracteres
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>Tipo de direccion:</label></div>
+              <div class="col-8">
+                <input
+                  list="tiposDireccion"
                   type="text"
                   class="form-control"
                   [(ngModel)]="direccion.tipo_direccion"
                   formControlName="tipo_direccion"
                 />
+                <datalist id="tiposDireccion">
+                  <option value="Avenida"></option>
+                  <option value="Av. Calle"></option>
+                  <option value="Av. Carrera"></option>
+                  <option value="Av. Diagonal"></option>
+                  <option value="Calle"></option>
+                  <option value="Carrera"></option>
+                  <option value="Circular"></option>
+                  <option value="Circunvalar"></option>
+                  <option value="Diagonal"></option>
+                  <option value="Manzana"></option>
+                  <option value="Transversal"></option>
+                  <option value="Via"></option>
+                </datalist>
+
                 <div
                   *ngIf="
                     getTheFormGroup.tipo_direccion.errors &&
@@ -57,7 +109,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>calle:</label></div>
+              <div class="col-4"><label>Calle:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -95,7 +147,7 @@
             </div>
 
             <div class="row">
-              <div class="col-4"><label>numero_direccion:</label></div>
+              <div class="col-4"><label>Número de dirección:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -127,13 +179,12 @@
                     class="msnError"
                     >debe tener menos de 15 caracteres
                   </strong>
-                  
                 </div>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-4"><label>refrencias:</label></div>
+              <div class="col-4"><label>Referencias:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -165,13 +216,12 @@
                     class="msnError"
                     >debe tener menos de 15 caracteres
                   </strong>
-                  
                 </div>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-4"><label>municipio_id:</label></div>
+              <div class="col-4"><label>Municipio id:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -198,8 +248,6 @@
                     class="msnError"
                     >debe ser mayor a 0
                   </strong>
-
-                  
                 </div>
               </div>
             </div>

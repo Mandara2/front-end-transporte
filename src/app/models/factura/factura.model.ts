@@ -3,7 +3,7 @@ import { Gasto } from "../gasto/gasto.model";
 
 export class Factura {
     id?: number;
-    fecha: string;
+    fecha_hora: string;
     monto: number;
     estado: string;
     detalles?: string;

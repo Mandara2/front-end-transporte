@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>usuario id:</label></div>
+              <div class="col-4"><label>Usuario id:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>tipo:</label></div>
+              <div class="col-4"><label>Tipo:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -83,45 +83,45 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-4"><label>telefono:</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="administrador.telefono"
-                    formControlName="telefono"
-                  />
-                  <div
-                    *ngIf="
-                      getTheFormGroup.telefono.errors &&
-                      (getTheFormGroup.telefono.dirty ||
-                        getTheFormGroup.telefono.touched ||
-                        trySend)
-                    "
+              <div class="col-4"><label>Telefono:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="administrador.telefono"
+                  formControlName="telefono"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.telefono.errors &&
+                    (getTheFormGroup.telefono.dirty ||
+                      getTheFormGroup.telefono.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.telefono.errors.maxlength"
+                    class="msnError"
+                    >debe tener maximo 12 numeros
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.telefono.errors.minlength"
+                    class="msnError"
+                    >debe tener minimo 7 numeros
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.telefono.errors.pattern"
+                    class="msnError"
+                    >debe contener solo numeros o guiones
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.telefono.errors.required"
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.telefono.errors.maxlength"
-                      class="msnError"
-                      >debe tener maximo 12 numeros 
-                    </strong>
-                    <strong
-                      *ngIf="getTheFormGroup.telefono.errors.minlength"
-                      class="msnError"
-                      >debe tener minimo 7 numeros
-                    </strong>
-                    <strong
-                      *ngIf="getTheFormGroup.telefono.errors.pattern"
-                      class="msnError"
-                      >debe contener solo numeros o guiones 
-                    </strong>
-                    <strong
-                      *ngIf="getTheFormGroup.telefono.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                  </div>
                 </div>
               </div>
+            </div>
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

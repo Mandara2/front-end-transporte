@@ -29,7 +29,7 @@ export class ManageComponent implements OnInit {
       orden: "",
       descripcion: "",
       ruta_id: 0,
-      direccion_id: 0
+      direccion_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -60,8 +60,8 @@ export class ManageComponent implements OnInit {
         [Validators.required, Validators.minLength(1), Validators.maxLength(4)],
       ],
       descripcion: ["", [Validators.maxLength(20)]],
-      ruta_id:[0,[Validators.required, Validators.min(1)]],
-      direccion_id:[0,[Validators.required, Validators.min(1)]]
+      ruta_id: [0, [Validators.required, Validators.min(1)]],
+      direccion_id: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -82,9 +82,41 @@ export class ManageComponent implements OnInit {
     });
   }
   update() {
-    this.dirListaOrdenesService.update(this.dirListaOrden).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["dirListaOrdenes/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.dirListaOrden.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar la relación para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.dirListaOrden.id;
+
+    this.dirListaOrdenesService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Relación actualizada exitosamente", "success");
+        this.router.navigate(["/dirListaOrdenes/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar la relación", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

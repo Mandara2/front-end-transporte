@@ -22,39 +22,37 @@
               </div>
             </div>
             <div class="row">
-                <div class="col-4"><label>usuario_id</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="conductor.usuario_id"
-                    formControlName="usuario_id"
-                  />
-                  <div
-                    *ngIf="
-                      getTheFormGroup.usuario_id.errors &&
-                      (getTheFormGroup.usuario_id.dirty ||
-                        getTheFormGroup.usuario_id.touched ||
-                        trySend)
-                    "
+              <div class="col-4"><label>Usuario id:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="conductor.usuario_id"
+                  formControlName="usuario_id"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.usuario_id.errors &&
+                    (getTheFormGroup.usuario_id.dirty ||
+                      getTheFormGroup.usuario_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.usuario_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.usuario_id.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.usuario_id.errors.pattern"
-                      class="msnError"
-                      >no cumple con el formato de fecha</strong
-                    >
-  
-              
-                  </div>
+                  <strong
+                    *ngIf="getTheFormGroup.usuario_id.errors.pattern"
+                    class="msnError"
+                    >no cumple con el formato de fecha</strong
+                  >
                 </div>
+              </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>telefono:</label></div>
+              <div class="col-4"><label>Telefono:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -79,24 +77,24 @@
                   <strong
                     *ngIf="getTheFormGroup.telefono.errors.minlength"
                     class="msnError"
-                    >Debe tener mas de 8 caracteres 
+                    >Debe tener mas de 8 caracteres
                   </strong>
 
                   <strong
                     *ngIf="getTheFormGroup.telefono.errors.maxlength"
                     class="msnError"
-                    >No debe tener mas de 20 caracteres 
+                    >No debe tener mas de 20 caracteres
                   </strong>
                   <strong
                     *ngIf="getTheFormGroup.telefono.errors.pattern"
                     class="msnError"
-                    >no cumple con el formato </strong
-                  >
+                    >no cumple con el formato
+                  </strong>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>numero_licencia</label></div>
+              <div class="col-4"><label>Número de licencia</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -120,81 +118,80 @@
                   <strong
                     *ngIf="getTheFormGroup.numero_licencia.errors.pattern"
                     class="msnError"
-                    >no cumple con el formato </strong
-                  >
-
-            
+                    >no cumple con el formato
+                  </strong>
                 </div>
               </div>
             </div>
 
             <div class="row">
-                <div class="col-4"><label>fecha_vencimiento_licencia</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="conductor.fecha_vencimiento_licencia"
-                    formControlName="fecha_vencimiento_licencia"
-                  />
-                  <div
+              <div class="col-4">
+                <label>Fecha de vencimiento licencia</label>
+              </div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="conductor.fecha_vencimiento_licencia"
+                  formControlName="fecha_vencimiento_licencia"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.fecha_vencimiento_licencia.errors &&
+                    (getTheFormGroup.fecha_vencimiento_licencia.dirty ||
+                      getTheFormGroup.fecha_vencimiento_licencia.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
                     *ngIf="
-                      getTheFormGroup.fecha_vencimiento_licencia.errors &&
-                      (getTheFormGroup.fecha_vencimiento_licencia.dirty ||
-                        getTheFormGroup.fecha_vencimiento_licencia.touched ||
-                        trySend)
+                      getTheFormGroup.fecha_vencimiento_licencia.errors.required
                     "
+                    class="msnError"
+                    >Requerido</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.fecha_vencimiento_licencia.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.fecha_vencimiento_licencia.errors.pattern"
-                      class="msnError"
-                      >no cumple con el formato de fecha</strong
-                    >
-  
-              
-                  </div>
-                </div>
-            </div>
-
-             <div class="row">
-                <div class="col-4"><label>fecha_nacimiento</label></div>
-                <div class="col-8">
-                  <input
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="conductor.fecha_nacimiento"
-                    formControlName="fecha_nacimiento"
-                  />
-                  <div
+                  <strong
                     *ngIf="
-                      getTheFormGroup.fecha_nacimiento.errors &&
-                      (getTheFormGroup.fecha_nacimiento.dirty ||
-                        getTheFormGroup.fecha_nacimiento.touched ||
-                        trySend)
+                      getTheFormGroup.fecha_vencimiento_licencia.errors.pattern
                     "
+                    class="msnError"
+                    >no cumple con el formato de fecha</strong
                   >
-                    <strong
-                      *ngIf="getTheFormGroup.fecha_nacimiento.errors.required"
-                      class="msnError"
-                      >Requerido</strong
-                    >
-                    <strong
-                      *ngIf="getTheFormGroup.fecha_nacimiento.errors.pattern"
-                      class="msnError"
-                      >no cumple con el formato de fecha</strong
-                    >
-  
-              
-                  </div>
                 </div>
               </div>
-            
-            
+            </div>
+
+            <div class="row">
+              <div class="col-4"><label>Fecha de nacimiento</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="conductor.fecha_nacimiento"
+                  formControlName="fecha_nacimiento"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.fecha_nacimiento.errors &&
+                    (getTheFormGroup.fecha_nacimiento.dirty ||
+                      getTheFormGroup.fecha_nacimiento.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.fecha_nacimiento.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.fecha_nacimiento.errors.pattern"
+                    class="msnError"
+                    >no cumple con el formato de fecha</strong
+                  >
+                </div>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

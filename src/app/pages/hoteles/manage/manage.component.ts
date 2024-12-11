@@ -27,7 +27,7 @@ export class ManageComponent implements OnInit {
       estrellas: 0,
       nombre: "",
       ubicacion: "",
-      servicio_id: 0
+      servicio_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -78,13 +78,10 @@ export class ManageComponent implements OnInit {
         [
           Validators.required, // Campo obligatorio
           Validators.min(1), // ID debe ser positivo
-        
         ],
       ],
     });
   }
-  
-  
 
   get getTheFormGroup() {
     return this.theFormGroup.controls;
@@ -97,26 +94,59 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    if(this.theFormGroup.invalid) {
-      this.trySend = true
-      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
-      return
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        " Ingrese correctamente los datos solicitados",
+        "error"
+      );
+      return;
     }
     console.log(this.hotel);
-    
-    this.hotelService.create(this.hotel
-    ).subscribe(data=> {
-      Swal.fire("Creado", "Se ha creado el hotel existosamente", "success")
-      this.router.navigate(["hoteles/list"]) //Aqui me muevo para el theaters list 
-    })
+
+    this.hotelService.create(this.hotel).subscribe((data) => {
+      Swal.fire("Creado", "Se ha creado el hotel existosamente", "success");
+      this.router.navigate(["hoteles/list"]); //Aqui me muevo para el theaters list
+    });
   }
 
   update() {
-    this.hotelService
-      .update(this.hotel)
-      .subscribe((data) => {
-        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["hotelsConductores/list"]);
-      });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.hotel.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updateData.id = this.hotel.id;
+
+    this.hotelService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/hoteles/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
+    });
   }
 }

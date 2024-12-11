@@ -54,11 +54,18 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       nombre: [
-        '',
-        [Validators.required, Validators.minLength(2), Validators.maxLength(15)],
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
       ],
-      capacidad_almacenamiento: [0, [Validators.required, Validators.min(1),Validators.max(100000)]],
-      direccion_id: [0,[Validators.required, Validators.min(1)]]
+      capacidad_almacenamiento: [
+        0,
+        [Validators.required, Validators.min(1), Validators.max(100000)],
+      ],
+      direccion_id: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -77,15 +84,45 @@ export class ManageComponent implements OnInit {
       .create(this.centroDistribucion)
       .subscribe((data) => {
         Swal.fire("Creado", "Se ha creado exitosamente", "success");
-        this.router.navigate(["centroDistribuciones/list"]);
+        this.router.navigate(["centrosDistribucion/list"]);
       });
   }
   update() {
-    this.centrosDistribucionesService
-      .update(this.centroDistribucion)
-      .subscribe((data) => {
-        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["centroDistribuciones/list"]);
-      });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.centroDistribucion.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.centroDistribucion.id;
+
+    this.centrosDistribucionesService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Centro de distribucion actualizado exitosamente", "success");
+        this.router.navigate(["/centrosDistribucion/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el centro de distribucion", "error");
+        console.error("Error al actualizar:", error);
+      },
+    });
   }
 }

@@ -26,7 +26,7 @@ export class ManageComponent implements OnInit {
       id: 0,
       fecha: "",
       descripcion: "",
-      administrador_id: 0
+      administrador_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -50,12 +50,7 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      fecha: [
-        "",
-        [
-          Validators.required
-        ],
-      ],
+      fecha: ["", [Validators.required]],
       descripcion: [
         "",
         [
@@ -84,26 +79,59 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    if(this.theFormGroup.invalid) {
-      this.trySend = true
-      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
-      return
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        " Ingrese correctamente los datos solicitados",
+        "error"
+      );
+      return;
     }
     console.log(this.servicio);
-    
-    this.servicioService.create(this.servicio
-    ).subscribe(data=> {
-      Swal.fire("Creado", "Se ha creado el servicio existosamente", "success")
-      this.router.navigate(["servicios/list"]) //Aqui me muevo para el theaters list 
-    })
+
+    this.servicioService.create(this.servicio).subscribe((data) => {
+      Swal.fire("Creado", "Se ha creado el servicio existosamente", "success");
+      this.router.navigate(["servicios/list"]); //Aqui me muevo para el theaters list
+    });
   }
 
   update() {
-    this.servicioService
-      .update(this.servicio)
-      .subscribe((data) => {
-        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["serviciosConductores/list"]);
-      });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.servicio.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updateData.id = this.servicio.id;
+
+    this.servicioService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/servicios/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
+    });
   }
 }

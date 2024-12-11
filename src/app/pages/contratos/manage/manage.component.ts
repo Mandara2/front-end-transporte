@@ -56,11 +56,11 @@ export class ManageComponent implements OnInit {
       // lista, serán las reglas
       fecha: [
         0,
-        [Validators.required,Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
+        [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
       ],
       distancia_total: [0, [Validators.required, Validators.min(0)]],
-      costo_total:[0,[Validators.required, Validators.min(0)]],
-      cliente_id:[0, [Validators.required, Validators.min(0)] ]
+      costo_total: [0, [Validators.required, Validators.min(0)]],
+      cliente_id: [0, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -81,9 +81,41 @@ export class ManageComponent implements OnInit {
     });
   }
   update() {
-    this.contratosService.update(this.contrato).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["contratos/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.contrato.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el contrato para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.contrato.id;
+
+    this.contratosService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Contrato actualizado exitosamente", "success");
+        this.router.navigate(["/contratos/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el contrato", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

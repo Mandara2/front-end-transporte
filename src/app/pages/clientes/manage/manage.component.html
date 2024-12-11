@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>telefono:</label></div>
+              <div class="col-4"><label>Telefono:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -47,19 +47,21 @@
                   <strong
                     *ngIf="getTheFormGroup.telefono.errors.minlength"
                     class="msnError"
-                    >Debe tener mas de 8 caracteres 
+                    >Debe tener mas de 8 caracteres
                   </strong>
 
                   <strong
                     *ngIf="getTheFormGroup.telefono.errors.maxlength"
                     class="msnError"
-                    >No debe tener mas de 12 caracteres 
+                    >No debe tener mas de 12 caracteres
                   </strong>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>cantidad_pedidos_realizados</label></div>
+              <div class="col-4">
+                <label>Cantidad de pedidos realizados</label>
+              </div>
               <div class="col-8">
                 <input
                   type="text"
@@ -76,15 +78,17 @@
                   "
                 >
                   <strong
-                    *ngIf="getTheFormGroup.cantidad_pedidos_realizados.errors.required"
+                    *ngIf="
+                      getTheFormGroup.cantidad_pedidos_realizados.errors
+                        .required
+                    "
                     class="msnError"
                     >Requerido</strong
                   >
                 </div>
               </div>
             </div>
-            
-            
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">

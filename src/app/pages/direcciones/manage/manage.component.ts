@@ -60,12 +60,40 @@ export class ManageComponent implements OnInit {
         0,
         [Validators.required, Validators.min(1), Validators.max(100)],
       ],
-      localidad: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(20)]],
-      tipo_direccion: ["", [ Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      calle:["", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      numero_direccion:["", [Validators.required, Validators.minLength(2), Validators.maxLength(15)]],
-      referencias:["", [ Validators.minLength(2), Validators.maxLength(30)]],
-      municipio_id:[0,[Validators.required, Validators.min(1)]]
+      localidad: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ],
+      ],
+      tipo_direccion: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
+      ],
+      calle: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
+      ],
+      numero_direccion: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(15),
+        ],
+      ],
+      referencias: ["", [Validators.minLength(2), Validators.maxLength(30)]],
+      municipio_id: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -85,10 +113,43 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["direcciones/list"]);
     });
   }
+
   update() {
-    this.direccionesService.update(this.direccion).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["direcciones/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.direccion.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar la direccion para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.direccion.id;
+
+    this.direccionesService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Direccion actualizado exitosamente", "success");
+        this.router.navigate(["/direcciones/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar la direccion", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

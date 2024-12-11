@@ -93,26 +93,57 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    if(this.theFormGroup.invalid) {
-      this.trySend = true
-      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
-      return
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        " Ingrese correctamente los datos solicitados",
+        "error"
+      );
+      return;
     }
     console.log(this.vehiculo);
-    
-    this.vehiculoService.create(this.vehiculo
-    ).subscribe(data=> {
-      Swal.fire("Creado", "Se ha creado el vehiculo existosamente", "success")
-      this.router.navigate(["vehiculos/list"]) //Aqui me muevo para el theaters list 
-    })
+
+    this.vehiculoService.create(this.vehiculo).subscribe((data) => {
+      Swal.fire("Creado", "Se ha creado el vehiculo existosamente", "success");
+      this.router.navigate(["vehiculos/list"]); //Aqui me muevo para el theaters list
+    });
   }
 
   update() {
-    this.vehiculoService
-      .update(this.vehiculo)
-      .subscribe((data) => {
-        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["vehiculosConductores/list"]);
-      });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    if (!this.vehiculo.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    updateData.id = this.vehiculo.id;
+
+    this.vehiculoService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/vehiculos/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
+    });
   }
 }

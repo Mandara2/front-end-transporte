@@ -22,19 +22,19 @@ export class ManageComponent implements OnInit {
     private facturasService: FacturaService,
     private router: Router,
     private activateRoute: ActivatedRoute,
-    private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
+    private theFormBuilder: FormBuilder
   ) {
     this.factura = {
       id: 0,
-      fecha: "",
+      fecha_hora: "",
       monto: 0,
       estado: "",
       detalles: "",
       cuota_id: 0,
-      gasto_id: 0
+      gasto_id: 0,
     };
     this.mode = 0;
-    this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
+    this.configFormGroup();
     this.trySend = false;
   }
 
@@ -55,17 +55,15 @@ export class ManageComponent implements OnInit {
 
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
-      // primer elemento del vector, valor por defecto
-      // lista, serán las reglas
-      fecha: [
-        0,
-        [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
+      fecha_hora: [
+        "",
+        [Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)],
       ],
-      monto: [0,[Validators.required, Validators.min(1)]],
-      estado:["",[Validators.required ,Validators.minLength(2)]],
-      detalles:["",[Validators.required], Validators.maxLength(40)],
-      cuota_id:[0,[Validators.required],Validators.min(1)],
-      gasto_id:[0,[Validators.required],Validators.min(1)]
+      monto: [0, [Validators.required, Validators.min(1)]],
+      estado: ["", [Validators.required, Validators.minLength(2)]],
+      detalles: ["", [Validators.required, Validators.maxLength(40)]],
+      cuota_id: [0, [Validators.required, Validators.min(1)]],
+      gasto_id: [0, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -85,10 +83,38 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["facturas/list"]);
     });
   }
+
   update() {
-    this.facturasService.update(this.factura).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["facturas/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    if (!this.factura.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    const updateData = { ...this.theFormGroup.value, id: this.factura.id };
+
+    this.facturasService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/facturas/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

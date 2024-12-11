@@ -25,16 +25,16 @@
                         <thead>
                             <tr>
                                 <th class="col-1">ID</th>
-                                <!-- <th class="col-3">ID Producto</th>
-                                <th class="col-4">ID Categoria</th> -->
+                                <th class="col-3">ID Producto</th>
+                                <th class="col-4">ID Categoria</th>
                                 <th class="col-4">Deatalles</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let actual of categoriasProductos">
                                 <td>{{actual.id}}</td>
-                                <!-- <td>{{actual.producto_id}}</td>
-                                <td>{{actual.categoria_id}}</td> -->
+                                <td>{{actual.producto_id}}</td>
+                                <td>{{actual.categoria_id}}</td>
                                 <td>{{actual.detalle}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">

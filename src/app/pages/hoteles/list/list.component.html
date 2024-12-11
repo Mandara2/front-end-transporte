@@ -28,7 +28,7 @@
                                 <th class="col-4">Estrellas</th>
                                 <th class="col-4">Nombre</th>
                                 <th class="col-4">Ubicacion</th>
-                                <!-- <th class="col-4">Servicio</th> -->
+                                <th class="col-4">ID Servicio</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -37,6 +37,7 @@
                                 <td>{{actual.estrellas}}</td>
                                 <td>{{actual.nombre}}</td>
                                 <td>{{actual.ubicacion}}</td>
+                                <td>{{actual.servicio_id}}</td>
                                 <td>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">
                                         <i class="bi bi-eye"></i>

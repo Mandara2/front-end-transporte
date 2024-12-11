@@ -73,8 +73,6 @@ export class ManageComponent implements OnInit {
       ],
     });
   }
-  
-  
 
   get getTheFormGroup() {
     return this.theFormGroup.controls;
@@ -87,26 +85,59 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    if(this.theFormGroup.invalid) {
-      this.trySend = true
-      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
-      return
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        " Ingrese correctamente los datos solicitados",
+        "error"
+      );
+      return;
     }
     console.log(this.municipio);
-    
-    this.municipioService.create(this.municipio
-    ).subscribe(data=> {
-      Swal.fire("Creado", "Se ha creado el municipio existosamente", "success")
-      this.router.navigate(["municipios/list"]) //Aqui me muevo para el theaters list 
-    })
+
+    this.municipioService.create(this.municipio).subscribe((data) => {
+      Swal.fire("Creado", "Se ha creado el municipio existosamente", "success");
+      this.router.navigate(["municipios/list"]); //Aqui me muevo para el theaters list
+    });
   }
 
   update() {
-    this.municipioService
-      .update(this.municipio)
-      .subscribe((data) => {
-        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["municipiosConductores/list"]);
-      });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.municipio.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updateData.id = this.municipio.id;
+
+    this.municipioService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/municipios/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
+    });
   }
 }

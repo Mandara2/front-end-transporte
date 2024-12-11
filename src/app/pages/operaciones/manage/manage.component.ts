@@ -27,7 +27,7 @@ export class ManageComponent implements OnInit {
       fecha_inicio: "",
       fecha_fin: "",
       municipio_id: 0,
-      vehiculo_id: 0
+      vehiculo_id: 0,
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
@@ -57,11 +57,7 @@ export class ManageComponent implements OnInit {
           Validators.required, // Campo obligatorio
         ],
       ],
-      fecha_fin: [
-        "",
-        [
-        ],
-      ],
+      fecha_fin: ["", []],
       vehiculo_id: [
         "",
         [
@@ -78,8 +74,6 @@ export class ManageComponent implements OnInit {
       ],
     });
   }
-  
-  
 
   get getTheFormGroup() {
     return this.theFormGroup.controls;
@@ -92,26 +86,59 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    if(this.theFormGroup.invalid) {
-      this.trySend = true
-      Swal.fire("Error en el formulario", " Ingrese correctamente los datos solicitados", "error")
-      return
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Error en el formulario",
+        " Ingrese correctamente los datos solicitados",
+        "error"
+      );
+      return;
     }
     console.log(this.operacion);
-    
-    this.operacionService.create(this.operacion
-    ).subscribe(data=> {
-      Swal.fire("Creado", "Se ha creado el operacion existosamente", "success")
-      this.router.navigate(["operaciones/list"]) //Aqui me muevo para el theaters list 
-    })
+
+    this.operacionService.create(this.operacion).subscribe((data) => {
+      Swal.fire("Creado", "Se ha creado el operacion existosamente", "success");
+      this.router.navigate(["operaciones/list"]); //Aqui me muevo para el theaters list
+    });
   }
 
   update() {
-    this.operacionService
-      .update(this.operacion)
-      .subscribe((data) => {
-        Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-        this.router.navigate(["operaciones/list"]);
-      });
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.operacion.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updateData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updateData.id = this.operacion.id;
+
+    this.operacionService.update(updateData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        this.router.navigate(["/operaciones/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
+    });
   }
 }

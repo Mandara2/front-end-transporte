@@ -53,9 +53,20 @@ export class ManageComponent implements OnInit {
       // lista, serán las reglas
       nombre: [
         "",
-        [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
       ],
-      region: ["", [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
+      region: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.maxLength(20),
+        ],
+      ],
     });
   }
 
@@ -75,10 +86,43 @@ export class ManageComponent implements OnInit {
       this.router.navigate(["departamentos/list"]);
     });
   }
+
   update() {
-    this.departamentosService.update(this.departamento).subscribe((data) => {
-      Swal.fire("Actualizado", "Se ha actualizado exitosamente", "success");
-      this.router.navigate(["departamentos/list"]);
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario invalido",
+        "Ingrese correctamente los datos",
+        "error"
+      );
+      return;
+    }
+
+    // Verifica si el vehículo tiene un id antes de realizar la actualización
+    if (!this.departamento.id) {
+      Swal.fire(
+        "Error",
+        "No se pudo encontrar el vehículo para actualizar",
+        "error"
+      );
+      return;
+    }
+
+    // Obtiene los valores del formulario
+    const updatedData = this.theFormGroup.value;
+
+    // Asegura que el id esté presente en el objeto de actualización
+    updatedData.id = this.departamento.id;
+
+    this.departamentosService.update(updatedData).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Departamento actualizado exitosamente", "success");
+        this.router.navigate(["departamentos/list"]);
+      },
+      error: (error) => {
+        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        console.error("Error al actualizar:", error);
+      },
     });
   }
 }

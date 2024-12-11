@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>nombre:</label></div>
+              <div class="col-4"><label>Nombre:</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -47,18 +47,18 @@
                   <strong
                     *ngIf="getTheFormGroup.nombre.errors.minlength"
                     class="msnError"
-                    >Debe tener mas de 2 caracteres 
+                    >Debe tener mas de 2 caracteres
                   </strong>
                   <strong
                     *ngIf="getTheFormGroup.nombre.errors.maxlength"
                     class="msnError"
-                    >Debe tener menos de 15 caracteres 
+                    >Debe tener menos de 15 caracteres
                   </strong>
                 </div>
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>descripcion</label></div>
+              <div class="col-4"><label>Descripcion</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -77,7 +77,7 @@
                   <strong
                     *ngIf="getTheFormGroup.descripcion.errors.maxlength"
                     class="msnError"
-                    >supera la maxima longitud
+                    >Supera la maxima longitud
                   </strong>
                   <strong
                     *ngIf="getTheFormGroup.descripcion.errors.required"
@@ -88,7 +88,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>categoria_padre</label></div>
+              <div class="col-4"><label>Categoria padre</label></div>
               <div class="col-8">
                 <input
                   type="text"
@@ -113,12 +113,12 @@
                   <strong
                     *ngIf="getTheFormGroup.categoria_padre.errors.min"
                     class="msnError"
-                    >Debe ser mayor de 0  
+                    >Debe ser mayor de 0
                   </strong>
                 </div>
               </div>
             </div>
-            
+
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
