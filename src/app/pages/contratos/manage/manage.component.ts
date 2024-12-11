@@ -95,7 +95,7 @@ export class ManageComponent implements OnInit {
     if (!this.contrato.id) {
       Swal.fire(
         "Error",
-        "No se pudo encontrar el vehículo para actualizar",
+        "No se pudo encontrar el contrato para actualizar",
         "error"
       );
       return;
@@ -109,11 +109,11 @@ export class ManageComponent implements OnInit {
 
     this.contratosService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Contrato actualizado exitosamente", "success");
         this.router.navigate(["/contratos/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar el contrato", "error");
         console.error("Error al actualizar:", error);
       },
     });

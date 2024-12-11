@@ -67,14 +67,14 @@ export class ManageComponent implements OnInit {
     }
     if (this.activateRoute.snapshot.params.id) {
       this.administrador.id = this.activateRoute.snapshot.params.id;
-      this.getTheater(this.administrador.id);
+      this.getAdministrador(this.administrador.id);
     }
   }
   configFormGroup() {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      usuario_id: [0, [Validators.required, Validators.minLength(10)]], //PARAMETROS EN ORDEN: VALOR POR DEFECTO, REQUEIRDO Y RANGO
+      usuario_id: [0, [Validators.required, Validators.minLength(1)]], //PARAMETROS EN ORDEN: VALOR POR DEFECTO, REQUEIRDO Y RANGO
       tipo: [0, [Validators.required, Validators.maxLength(20)]],
       telefono: [
         0,
@@ -91,7 +91,7 @@ export class ManageComponent implements OnInit {
     return this.theFormGroup.controls;
   }
 
-  getTheater(id: number) {
+  getAdministrador(id: number) {
     this.administradorService.view(id).subscribe((data) => {
       this.administrador = data;
     });
@@ -108,8 +108,8 @@ export class ManageComponent implements OnInit {
       return;
     }
     this.administradorService.create(this.administrador).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado el teatro existosamente", "success");
-      this.router.navigate(["adminitrador/list"]); //Aqui me muevo para el theaters list
+      Swal.fire("Creado", "Se ha creado el administrador existosamente", "success");
+      this.router.navigate(["administradores/list"]); //Aqui me muevo para el theaters list
     });
   }
 
@@ -128,7 +128,7 @@ export class ManageComponent implements OnInit {
     if (!this.administrador.id) {
       Swal.fire(
         "Error",
-        "No se pudo encontrar el vehículo para actualizar",
+        "No se pudo encontrar el administrador para actualizar",
         "error"
       );
       return;
@@ -142,11 +142,11 @@ export class ManageComponent implements OnInit {
 
     this.administradorService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Administrador actualizado exitosamente", "success");
         this.router.navigate(["/administradores/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
+        Swal.fire("Error", "No se pudo actualizar el administrador", "error");
         console.error("Error al actualizar:", error);
       },
     });

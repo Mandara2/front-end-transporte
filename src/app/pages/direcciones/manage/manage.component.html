@@ -22,36 +22,59 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-4"><label>Localidad:</label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="direccion.localidad"
+                  formControlName="localidad" />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div *ngIf="
+                    getTheFormGroup.localidad.errors &&
+                    (getTheFormGroup.localidad.dirty ||
+                      getTheFormGroup.localidad.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.localidad.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.localidad.errors.minlength" class="msnError">debe tener mas de 2
+                    caracteres
+                  </strong>
+                  <strong *ngIf="getTheFormGroup.localidad.errors.maxlength" class="msnError">debe tener menos de
+                    20 caracteres
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-4"><label>Tipo de direccion:</label></div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="direccion.tipo_direccion"
-                  formControlName="tipo_direccion"
-                />
-                <div
-                  *ngIf="
-                    getTheFormGroup.tipo_direccion.errors &&
-                    (getTheFormGroup.tipo_direccion.dirty ||
-                      getTheFormGroup.tipo_direccion.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.tipo_direccion.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.tipo_direccion.errors.minlength"
-                    class="msnError"
-                    >debe tener mas de 2 caracteres
+                <input list="tiposDireccion" type="text" class="form-control" [(ngModel)]="direccion.tipo_direccion"
+                  formControlName="tipo_direccion" />
+                <datalist id="tiposDireccion">
+                  <option value="Avenida"></option>
+                  <option value="Av. Calle"></option>
+                  <option value="Av. Carrera"></option>
+                  <option value="Av. Diagonal"></option>
+                  <option value="Calle"></option>
+                  <option value="Carrera"></option>
+                  <option value="Circular"></option>
+                  <option value="Circunvalar"></option>
+                  <option value="Diagonal"></option>
+                  <option value="Manzana"></option>
+                  <option value="Transversal"></option>
+                  <option value="Via"></option>
+                </datalist>
+            
+                <div *ngIf="
+                  getTheFormGroup.tipo_direccion.errors &&
+                  (getTheFormGroup.tipo_direccion.dirty ||
+                    getTheFormGroup.tipo_direccion.touched ||
+                    trySend)
+                ">
+                  <strong *ngIf="getTheFormGroup.tipo_direccion.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.tipo_direccion.errors.minlength" class="msnError">debe tener mas de 2
+                    caracteres
                   </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.tipo_direccion.errors.maxlength"
-                    class="msnError"
-                    >debe tener menos de 20 caracteres
+                  <strong *ngIf="getTheFormGroup.tipo_direccion.errors.maxlength" class="msnError">debe tener menos de
+                    20 caracteres
                   </strong>
                 </div>
               </div>
@@ -59,35 +82,20 @@
             <div class="row">
               <div class="col-4"><label>Calle:</label></div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="direccion.calle"
-                  formControlName="tipo_direccion"
-                />
+                <input type="text" class="form-control" [(ngModel)]="direccion.calle"
+                  formControlName="tipo_direccion" />
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
+                <div *ngIf="
                     getTheFormGroup.calle.errors &&
                     (getTheFormGroup.calle.dirty ||
                       getTheFormGroup.calle.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.calle.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.calle.errors.minlength"
-                    class="msnError"
-                    >debe tener mas de 2 caracteres
+                  ">
+                  <strong *ngIf="getTheFormGroup.calle.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.calle.errors.minlength" class="msnError">debe tener mas de 2 caracteres
                   </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.calle.errors.maxlength"
-                    class="msnError"
-                    >debe tener menos de 15 caracteres
+                  <strong *ngIf="getTheFormGroup.calle.errors.maxlength" class="msnError">debe tener menos de 15
+                    caracteres
                   </strong>
                   >
                 </div>
@@ -97,35 +105,21 @@
             <div class="row">
               <div class="col-4"><label>Número de dirección:</label></div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="direccion.numero_direccion"
-                  formControlName="numero_direccion"
-                />
+                <input type="text" class="form-control" [(ngModel)]="direccion.numero_direccion"
+                  formControlName="numero_direccion" />
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
+                <div *ngIf="
                     getTheFormGroup.numero_direccion.errors &&
                     (getTheFormGroup.numero_direccion.dirty ||
                       getTheFormGroup.numero_direccion.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.numero_direccion.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.numero_direccion.errors.minlength"
-                    class="msnError"
-                    >debe tener mas de 2 caracteres
+                  ">
+                  <strong *ngIf="getTheFormGroup.numero_direccion.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.numero_direccion.errors.minlength" class="msnError">debe tener mas de 2
+                    caracteres
                   </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.numero_direccion.errors.maxlength"
-                    class="msnError"
-                    >debe tener menos de 15 caracteres
+                  <strong *ngIf="getTheFormGroup.numero_direccion.errors.maxlength" class="msnError">debe tener menos de
+                    15 caracteres
                   </strong>
                 </div>
               </div>
@@ -134,35 +128,21 @@
             <div class="row">
               <div class="col-4"><label>Referencias:</label></div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="direccion.referencias"
-                  formControlName="referencias"
-                />
+                <input type="text" class="form-control" [(ngModel)]="direccion.referencias"
+                  formControlName="referencias" />
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
+                <div *ngIf="
                     getTheFormGroup.referencias.errors &&
                     (getTheFormGroup.referencias.dirty ||
                       getTheFormGroup.referencias.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.referencias.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.referencias.errors.minlength"
-                    class="msnError"
-                    >debe tener mas de 2 caracteres
+                  ">
+                  <strong *ngIf="getTheFormGroup.referencias.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.referencias.errors.minlength" class="msnError">debe tener mas de 2
+                    caracteres
                   </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.referencias.errors.maxlength"
-                    class="msnError"
-                    >debe tener menos de 15 caracteres
+                  <strong *ngIf="getTheFormGroup.referencias.errors.maxlength" class="msnError">debe tener menos de 15
+                    caracteres
                   </strong>
                 </div>
               </div>
@@ -171,30 +151,17 @@
             <div class="row">
               <div class="col-4"><label>Municipio id:</label></div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="direccion.municipio_id"
-                  formControlName="municipio_id"
-                />
+                <input type="text" class="form-control" [(ngModel)]="direccion.municipio_id"
+                  formControlName="municipio_id" />
                 <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
+                <div *ngIf="
                     getTheFormGroup.municipio_id.errors &&
                     (getTheFormGroup.municipio_id.dirty ||
                       getTheFormGroup.municipio_id.touched ||
                       trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.municipio_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.municipio_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
+                  ">
+                  <strong *ngIf="getTheFormGroup.municipio_id.errors.required" class="msnError">Requerido</strong>
+                  <strong *ngIf="getTheFormGroup.municipio_id.errors.min" class="msnError">debe ser mayor a 0
                   </strong>
                 </div>
               </div>
@@ -203,18 +170,10 @@
             <div class="row">
               <div class="col-4"></div>
               <div class="col-8">
-                <button
-                  class="btn btn-success btn-block"
-                  *ngIf="mode == 2"
-                  (click)="create()"
-                >
+                <button class="btn btn-success btn-block" *ngIf="mode == 2" (click)="create()">
                   Crear
                 </button>
-                <button
-                  class="btn btn-success btn-block"
-                  *ngIf="mode == 3"
-                  (click)="update()"
-                >
+                <button class="btn btn-success btn-block" *ngIf="mode == 3" (click)="update()">
                   Actualizar
                 </button>
               </div>
