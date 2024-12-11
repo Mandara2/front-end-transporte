@@ -22,6 +22,41 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-4"><label>Localidad:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="direccion.localidad"
+                  formControlName="localidad"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.localidad.errors &&
+                    (getTheFormGroup.localidad.dirty ||
+                      getTheFormGroup.localidad.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.localidad.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.localidad.errors.minlength"
+                    class="msnError"
+                    >debe tener mas de 2 caracteres
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.localidad.errors.maxlength"
+                    class="msnError"
+                    >debe tener menos de 20 caracteres
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
               <div class="col-4"><label>Tipo de direccion:</label></div>
               <div class="col-8">
                 <input

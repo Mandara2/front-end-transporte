@@ -143,7 +143,7 @@ export class ManageComponent implements OnInit {
 
     this.direccionesService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
+        Swal.fire("Éxito", "Direccion actualizado exitosamente", "success");
         this.router.navigate(["/direcciones/list"]);
       },
       error: (error) => {
