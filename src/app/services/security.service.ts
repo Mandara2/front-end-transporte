@@ -22,7 +22,7 @@ export class SecurityService { //varuable global , necesita que se subscriban a 
   * @returns Respuesta HTTP la cual indica si el usuario tiene permiso de acceso
   */
   login(user: User): Observable<any> {
-    return this.http.post<any>(`${environment.url_ms_security}/api/public/security/loginOld`, user);
+    return this.http.post<any>(`${environment.url_ms_security}/api/public/security/login2`, user);
   }
   /*
   Guardar la información de usuario en el local storage
@@ -34,7 +34,8 @@ export class SecurityService { //varuable global , necesita que se subscriban a 
       email: dataSesion["user"]["email"],
       password: "",
       //role:dataSesion["user"]["role"],
-      token: dataSesion["token"]
+      token: dataSesion["token"],
+      captchaToken: dataSesion["user"]["captchaToken"]
     };
     localStorage.setItem('sesion', JSON.stringify(data)); //guardamos en el local storage
     this.setUser(data);
