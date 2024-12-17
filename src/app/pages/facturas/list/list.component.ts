@@ -56,4 +56,8 @@ export class ListComponent implements OnInit {
       }
     });
   }
+  pay(id: number) {
+    console.log("Redirecting to payments with facturaId:", id); // Para depuración
+    this.router.navigate(["/payments"], { queryParams: { facturaId: id } });
+  }
 }

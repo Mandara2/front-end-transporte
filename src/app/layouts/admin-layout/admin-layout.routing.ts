@@ -394,10 +394,15 @@ export const AdminLayoutRoutes: Routes = [
       {
         path: "",
         loadChildren: () =>
-          import(
-            "src/app/pages/users/users.module"
-          ).then((m) => m.UserModule),
+          import("src/app/pages/users/users.module").then((m) => m.UserModule),
       },
     ],
+  },
+  {
+    path: "payments",
+    loadChildren: () =>
+      import("src/app/pages/payments/payments.module").then(
+        (m) => m.PaymentsModule
+      ),
   },
 ];

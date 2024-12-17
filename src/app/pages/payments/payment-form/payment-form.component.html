@@ -1,0 +1,31 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0 text-white">Pago de Factura</h4>
+      </div>
+      <div class="card-body">
+        <!-- Mostrar detalles de la factura -->
+        <div *ngIf="factura; else noFactura">
+          <p><strong>Factura ID:</strong> {{ factura.id }}</p>
+          <p><strong>Fecha de generación:</strong> {{ factura.fecha_hora }}</p>
+          <p><strong>Monto:</strong> ${{ factura.monto }}</p>
+          <p><strong>Detalles:</strong> {{ factura.detalles }}</p>
+
+          <!-- Botón de pago -->
+          <button class="btn btn-success btn-block" (click)="procesarPago()">
+            Pagar
+          </button>
+        </div>
+
+        <!-- Mensaje cuando no hay factura -->
+        <ng-template #noFactura>
+          <p class="text-danger">
+            No se ha encontrado la factura. Por favor, regrese e inténtelo de
+            nuevo.
+          </p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
