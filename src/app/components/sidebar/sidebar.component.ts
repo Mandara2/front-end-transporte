@@ -14,12 +14,12 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'ni-tv-2 text-primary', class: '', type: 2},
     { path: '/icons', title: 'Icons',  icon:'ni-planet text-blue', class: '', type: 1},
+    { path: '/maps', title: 'Maps',  icon:'ni-pin-3 text-orange', class: '', type: 1},
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' , type: 1},
     { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '', type: 1},
     { path: '/login', title: 'Login',  icon:'ni-key-25 text-info', class: '', type: 0},
     { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '', type: 0},
-    { path: '/thaters/list', title: 'Register',  icon:'ni-circle-08 text-pink', class: '', type: 1},
-    { path: '/map', title:'Map', icon:"bi bi-truck text-red" ,class: '', type: 1 }
+    { path: '/thaters/list', title: 'Register',  icon:'ni-circle-08 text-pink', class: '', type: 1}
 ];
 
 @Component({
