@@ -7,17 +7,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { LoginComponent } from '../../pages/login/login.component';
 import { RegisterComponent } from '../../pages/register/register.component';
+import { GmapComponent } from '../../pages/Gmap/gmap/gmap.component';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AuthLayoutRoutes),
     FormsModule,
     RecaptchaModule,
-    RecaptchaFormsModule
-    // NgbModule
+    RecaptchaFormsModule,
+    NgbModule
   ],
   declarations: [
     LoginComponent,
+    GmapComponent,
+    
     RegisterComponent
   ]
 })

@@ -18,6 +18,8 @@ import { SecurityInterceptor } from './interceptors/security.interceptor';
 import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { NoAuthenticatedGuard } from './guards/no-authenticated.guard';
 import { LoginComponent } from './pages/login/login.component';
+import { WebSocketService } from './services/web-socket.service';
+//import { GmapComponent } from './page/Gmap/gmap/gmap.component';
 
 
 @NgModule({
@@ -30,11 +32,13 @@ import { LoginComponent } from './pages/login/login.component';
     RouterModule,
     AppRoutingModule,
     
+    
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    //GmapComponent,
     
   ],
    providers: [/* {
