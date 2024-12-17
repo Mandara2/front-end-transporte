@@ -1,0 +1,48 @@
+<!-- Ícono de chat -->
+<div *ngIf="usuarioLogueado && !mostrarChat" class="chatIconContainer" (click)="abrirChat()">
+  <img src="https://images.vexels.com/content/139959/preview/cloud-chat-round-icon-295457.png" class="chatIcon" alt="chat icon">
+</div>
+
+<!-- Contenedor del chat -->
+<div class="card text-center cardContainer" *ngIf="usuarioLogueado && mostrarChat">
+  <div class="card-header">
+    CHAT
+    <div class="closeIcon" (click)="mostrarChat = false">X</div>
+    <div *ngIf="chatIniciado" class="volverIcon" (click)="volverASeleccionarDestinatario()"><-</div>
+  </div>
+
+  <!-- Solo muestra el formulario de selección de destinatario si el chat no ha iniciado -->
+  <div *ngIf="!chatIniciado" class="card-body">
+    <form (ngSubmit)="iniciarChat()">
+      <div class="form-group">
+        <label for="destinatario">Seleccionar destinatario:</label>
+        <input type="text" id="destinatario" class="form-control" 
+               [(ngModel)]="destinatarioSeleccionado" name="destinatarioSeleccionado" required>
+      </div>
+      <button type="submit" class="btn btn-primary mt-2">Iniciar Chat</button>
+    </form>
+  </div>
+
+  <!-- Contenedor de mensajes solo cuando el chat ha iniciado -->
+  <div *ngIf="chatIniciado" class="card-body">
+
+    <div class="contenedorMensajes h-100" id="contenedorDeMensajes">
+      <p *ngFor="let mensaje of mensajes" class="msj p-2" 
+         [ngClass]="{'enviado': telefonoUsuarioLogueado == mensaje.telefono_remitente, 'recibido': destinatarioSeleccionado != mensaje.telefono_destinatario}">
+        {{mensaje.contenido}}
+        <span class="fechaMensaje">{{ formatFecha(mensaje.created_at) }}</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Formulario para enviar mensajes, solo si el chat ha iniciado -->
+  <form *ngIf="chatIniciado" class="card-footer text-muted input-group" (ngSubmit)="enviarMensaje()">
+    <input type="text" class="form-control" placeholder="Ingrese su mensaje" 
+           [(ngModel)]="nuevoMensaje" name="nuevoMensaje" required>
+    <div class="input-group-append">
+      <button type="submit" class="input-group-text">
+        <img class="imgEnviar" src="" width="20px" alt="Enviar">
+      </button>
+    </div>
+  </form>
+</div>
