@@ -1,0 +1,62 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+   
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                <div class="row">
+                    <h3 class="mb-0">Dueños</h3>
+
+                   <div class="col-8"></div>
+                   <div class="col-2">
+                    <button type="button" class="btn btn-primary" (click)="create()">
+                        <i class="bi bi-plus fa-lg"></i>
+                    </button>
+                   </div>
+                </div>
+                </div>
+               <div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="col-1">ID</th>
+                                <th class="col-4">ID Usuario</th>
+                                <th class="col-4">Telefono</th>
+                                <th class="col-4">Fecha de nacimiento</th>
+                                <th class="col-4">ID Conductor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let actual of duenos">
+                                <td>{{actual.id}}</td>
+                                <td>{{actual.usuario_id}}<td>
+                                <td>{{actual.telefono}}</td>
+                                <td>{{actual.fecha_nacimiento}}</td>
+                                <td>{{actual.conductor_id}}<td>
+                                <td>
+                                    <button type="button" class="btn btn-primary" (click)="view(actual.id)">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary" (click)="update(actual.id)">
+                                        <i class="bi bi-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-dark" (click)="delete(actual.id)">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,141 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" *ngIf="mode == 1">Visualizar</h3>
+          <h3 class="mb-0" *ngIf="mode == 2">Crear</h3>
+          <h3 class="mb-0" *ngIf="mode == 3">Actualizar</h3>
+        </div>
+        <!-- 6. Crear etiqueta tipo form hacemos referencia a formGroup -->
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4"><label>Id:</label></div>
+              <div class="col-8">
+                <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
+                <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
+                <p>{{ empresa.id }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>NIT: </label></div>
+              <div class="col-8">
+                <input type="text" class="form-control" [(ngModel)]="empresa.nit" formControlName="nit" />
+                <div *ngIf="
+                    getTheFormGroup.nit.errors &&
+                    (getTheFormGroup.nit.dirty ||
+                      getTheFormGroup.nit.touched ||
+                      trySend)
+                  ">
+                  <strong *ngIf="getTheFormGroup.nit.errors.required" class="msnError">Requerido
+                  </strong>
+
+                  <strong *ngIf="getTheFormGroup.nit.errors.pattern" class="msnError">no cumple el formato
+                  </strong>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+            <div class="col-4"><label>Tipo empresa: </label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.tipo_empresa" formControlName="tipo_empresa" />
+              <div *ngIf="
+                    getTheFormGroup.nit.errors &&
+                    (getTheFormGroup.nit.dirty ||
+                      getTheFormGroup.nit.touched ||
+                      trySend)
+                  ">
+                <strong *ngIf="getTheFormGroup.tipo_empresa.errors.required" class="msnError">Requerido
+                </strong>
+
+                <strong *ngIf="getTheFormGroup.tipo_empresa.errors.pattern" class="msnError">No cumple el formato
+                </strong>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4"><label>Dirección fiscal:</label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.direccion_fiscal"
+                formControlName="direccion_fiscal" />
+              <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+              <div *ngIf="
+                    getTheFormGroup.direccion_fiscal.errors &&
+                    (getTheFormGroup.direccion_fiscal.dirty ||
+                      getTheFormGroup.direccion_fiscal.touched ||
+                      trySend)
+                  ">
+
+                <strong *ngIf="getTheFormGroup.direccion_fiscal.errors.minlength" class="msnError">debe tener mas de
+                  caracteres
+                </strong>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4"><label>ID Cliente:</label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.cliente_id" formControlName="cliente_id" />
+              <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+              <div *ngIf="
+                    getTheFormGroup.cliente_id.errors &&
+                    (getTheFormGroup.cliente_id.dirty ||
+                      getTheFormGroup.cliente_id.touched ||
+                      trySend)
+                  ">
+                <strong *ngIf="getTheFormGroup.cliente_id.errors.required" class="msnError">Requerido</strong>
+                <strong *ngIf="getTheFormGroup.cliente_id.errors.min" class="msnError">debe ser mayor a 0
+                </strong>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4"><label>ID Persona:</label></div>
+            <div class="col-8">
+              <input type="text" class="form-control" [(ngModel)]="empresa.persona_natural_id"
+                formControlName="persona_natural_id" />
+              <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+              <div *ngIf="
+                    getTheFormGroup.persona_natural_id.errors &&
+                    (getTheFormGroup.persona_natural_id.dirty ||
+                      getTheFormGroup.persona_natural_id.touched ||
+                      trySend)
+                  ">
+                <strong *ngIf="getTheFormGroup.persona_natural_id.errors.required" class="msnError">Requerido</strong>
+                <strong *ngIf="getTheFormGroup.persona_natural_id.errors.min" class="msnError">debe ser mayor a 0
+                </strong>
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4"></div>
+            <div class="col-8">
+              <button class="btn btn-success btn-block" *ngIf="mode == 2" (click)="create()">
+                Crear
+              </button>
+              <button class="btn btn-success btn-block" *ngIf="mode == 3" (click)="update()">
+                Actualizar
+              </button>
+            </div>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

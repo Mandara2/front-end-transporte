@@ -1,0 +1,141 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8"></div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" *ngIf="mode == 1">Visualizar</h3>
+          <h3 class="mb-0" *ngIf="mode == 2">Crear</h3>
+          <h3 class="mb-0" *ngIf="mode == 3">Actualizar</h3>
+        </div>
+        <!-- 6. Crear etiqueta tipo form hacemos referencia a formGroup -->
+        <form class="form" [formGroup]="theFormGroup">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4"><label>Id:</label></div>
+              <div class="col-8">
+                <!-- 7. Cada uno de los elementos tipo input y select, deben de tener un formControlName -->
+                <!--<input type="text" class="form-control" disabled [(ngModel)]="theater.id" /> -->
+                <p>{{ categoriaProducto.id }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>Categoria Id:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="categoriaProducto.categoria_id"
+                  formControlName="categoria_id"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.categoria_id.errors &&
+                    (getTheFormGroup.categoria_id.dirty ||
+                      getTheFormGroup.categoria_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.categoria_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.categoria_id.errors.min"
+                    class="msnError"
+                    >Debe tener ser mayor a 0
+                  </strong>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>Producto id:</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="categoriaProducto.producto_id"
+                  formControlName="producto_id"
+                />
+                <div
+                  *ngIf="
+                    getTheFormGroup.producto_id.errors &&
+                    (getTheFormGroup.producto_id.dirty ||
+                      getTheFormGroup.producto_id.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.producto_id.errors.min"
+                    class="msnError"
+                    >Debe ser mayor de 0
+                  </strong>
+                  <strong
+                    *ngIf="getTheFormGroup.producto_id.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-4"><label>Detalles</label></div>
+              <div class="col-8">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="categoriaProducto.detalle"
+                  formControlName="detalle"
+                />
+                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
+                <div
+                  *ngIf="
+                    getTheFormGroup.detalle.errors &&
+                    (getTheFormGroup.detalle.dirty ||
+                      getTheFormGroup.detalle.touched ||
+                      trySend)
+                  "
+                >
+                  <strong
+                    *ngIf="getTheFormGroup.detalle.errors.required"
+                    class="msnError"
+                    >Requerido</strong
+                  >
+                  <strong
+                    *ngIf="getTheFormGroup.detalle.errors.maxlength"
+                    class="msnError"
+                    >Maxima longitud exedida
+                  </strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col-8">
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 2"
+                  (click)="create()"
+                >
+                  Crear
+                </button>
+                <button
+                  class="btn btn-success btn-block"
+                  *ngIf="mode == 3"
+                  (click)="update()"
+                >
+                  Actualizar
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
