@@ -7,6 +7,6 @@ export class Factura {
     monto: number;
     estado: string;
     detalles?: string;
-    cuota_id: number;
-    gasto_id: number;
+    cuota_id: Cuota;
+    gasto_id: Gasto;
 }
