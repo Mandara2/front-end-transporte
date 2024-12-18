@@ -22,98 +22,32 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>ID Dueno:</label></div>
-              <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="gasto.dueno_id"
-                  formControlName="dueno_id"
-                />
-                <div
-                  *ngIf="
-                    getTheFormGroup.dueno_id.errors &&
-                    (getTheFormGroup.dueno_id.dirty ||
-                      getTheFormGroup.dueno_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.dueno_id.errors.required"
-                    class="msnError"
-                    >Requerido
-                  </strong>
-
-                  <strong
-                    *ngIf="getTheFormGroup.dueno_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                </div>
+              <div class="col-4">Dueño:
               </div>
-            </div>
-            <div class="row">
-              <div class="col-4"><label>ID Conductor:</label></div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="gasto.conductor_id"
-                  formControlName="conductor_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.conductor_id.errors &&
-                    (getTheFormGroup.conductor_id.dirty ||
-                      getTheFormGroup.conductor_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.conductor_id.errors.required"
-                    class="msnError"
-                    >Requerido
-                  </strong>
-
-                  <strong
-                    *ngIf="getTheFormGroup.conductor_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="dueno_id" [(ngModel)]="gasto.dueno_id">
+                  <option *ngFor="let option of duenos" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-4"><label>ID Servicio:</label></div>
+              <div class="col-4">Conductor:
+              </div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="gasto.servicio_id"
-                  formControlName="servicio_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.servicio_id.errors &&
-                    (getTheFormGroup.servicio_id.dirty ||
-                      getTheFormGroup.servicio_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.servicio_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.servicio_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="conductor_id" [(ngModel)]="gasto.conductor_id">
+                  <option *ngFor="let option of conductores" [value]="option.id">{{option.id}}</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-4">Servicio:
+              </div>
+              <div class="col-8">
+                <select class="form-control" formControlName="servicio_id" [(ngModel)]="gasto.servicio_id">
+                  <option *ngFor="let option of servicios" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 

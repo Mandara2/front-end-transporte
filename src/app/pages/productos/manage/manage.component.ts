@@ -1,7 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Cliente } from "src/app/models/cliente/cliente.model";
+import { Lote } from "src/app/models/lote/lote.model";
 import { Producto } from "src/app/models/producto/producto.model";
+import { ClienteService } from "src/app/services/cliente/cliente.service";
+import { LoteService } from "src/app/services/lotes/lotes.service";
 import { ProductoService } from "src/app/services/productos/productos.service";
 import Swal from "sweetalert2";
 
@@ -12,12 +16,16 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   producto: Producto;
+  lotes: Lote[]
+  clientes: Cliente[]
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private productoService: ProductoService,
+    private loteService: LoteService,
+    private clienteService: ClienteService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -26,16 +34,47 @@ export class ManageComponent implements OnInit {
       id: 0,
       nombre: "",
       fecha_vencimiento: "",
-      cliente_id: 0,
-      lote_id: 0,
+      cliente_id: {
+        id: null,
+        telefono: "",
+        cantidad_pedidos_realizados: 0
+      },
+      lote_id: {
+        id: null,
+        peso: 0,
+        volumen: 0,
+        dir_lista_orden_id: null
+      },
       
     };
     this.mode = 0;
+    this.clientes = []
+    this.lotes= [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  lotesList(){
+    this.loteService.list().subscribe(data => {
+      
+      this.lotes=data
+      console.log(this.lotes);
+      
+    })
+  }
+
+  clientesList(){
+    this.clienteService.list().subscribe(data => {
+      
+      this.clientes=data
+      console.log(this.clientes);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.lotesList()
+    this.clientesList()
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -65,17 +104,16 @@ export class ManageComponent implements OnInit {
         ],
       ],
       cliente_id: [
-        "",
+        null,
         [
-          Validators.required, // Campo obligatorio
-          Validators.min(1), // Asegura que sea un número positivo
+          Validators.required, // Campo obligatorio // Asegura que sea un número positivo
         ],
       ],
       lote_id: [
-        "",
+        null,
         [
           Validators.required, // Campo obligatorio
-          Validators.min(1), // Asegura que sea un número positivo
+          // Asegura que sea un número positivo
         ],
       ],
     });
@@ -92,6 +130,7 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+
     if (this.theFormGroup.invalid) {
       this.trySend = true;
       Swal.fire(

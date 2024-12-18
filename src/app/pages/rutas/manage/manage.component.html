@@ -86,38 +86,22 @@
               </div>
 
               <div class="row">
-                <div class="col-4"><label>Contrato ID:</label></div>
+                <div class="col-4">Contrato:
+                </div>
                 <div class="col-8">
-                  <input type="text" class="form-control" [(ngModel)]="ruta.contrato_id"
-                    formControlName="contrato_id" />
-                  <div *ngIf="
-                      getTheFormGroup.contrato_id.errors &&
-                      (getTheFormGroup.contrato_id.dirty ||
-                        getTheFormGroup.contrato_id.touched ||
-                        trySend)
-                    ">
-                    <strong *ngIf="getTheFormGroup.contrato_id.errors.required" class="msnError">Requerido</strong>
-                    <strong *ngIf="getTheFormGroup.contrato_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                    
-                  </div>
+                  <select class="form-control" formControlName="contrato_id" [(ngModel)]="ruta.contrato_id">
+                    <option *ngFor="let option of contratos" [value]="option.id">{{option.id}}</option>
+                  </select>
                 </div>
               </div>
 
               <div class="row">
-                <div class="col-4"><label>Vehiculo conductor ID:</label></div>
+                <div class="col-4">Relación vehículo y conductor:
+                </div>
                 <div class="col-8">
-                  <input type="text" class="form-control" [(ngModel)]="ruta.vehiculo_conductor_id"
-                    formControlName="vehiculo_conductor_id" />
-                  <div *ngIf="
-                      getTheFormGroup.vehiculo_conductor_id.errors &&
-                      (getTheFormGroup.vehiculo_conductor_id.dirty ||
-                        getTheFormGroup.vehiculo_conductor_id.touched ||
-                        trySend)
-                    ">
-                    <strong *ngIf="getTheFormGroup.vehiculo_conductor_id.errors.required" class="msnError">Requerido</strong>
-                    <strong *ngIf="getTheFormGroup.distancia.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                    
-                  </div>
+                  <select class="form-control" formControlName="vehiculo_conductor_id" [(ngModel)]="ruta.vehiculo_conductor_id">
+                    <option *ngFor="let option of vehiculosConductores" [value]="option.id">{{option.id}}</option>
+                  </select>
                 </div>
               </div>
 

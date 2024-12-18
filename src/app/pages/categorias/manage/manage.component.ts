@@ -40,6 +40,7 @@ PARA RELACIONES
 })
 export class ManageComponent implements OnInit {
   categoria: Categoria;
+  categorias: Categoria[];
   //Si mode es igual 1 --> view, mode=2 --> create, mode=3 --> update
   mode: number;
   theFormGroup: FormGroup;
@@ -50,13 +51,24 @@ export class ManageComponent implements OnInit {
     private activateRoute: ActivatedRoute, //toma foto de la URl para sacar informacion de ella
     private theFormBuilder: FormBuilder
   ) {
-    this.categoria = { id: 0, nombre: "", descripcion: "" };
+    this.categoria = { id: 0, nombre: "", descripcion: "", categoria_padre: null };
     this.mode = 0;
+    this.categorias = [];
     this.configFormGroup();
     this.trySend = false;
   }
 
+  categoriasList(){
+    this.categoriaService.list().subscribe(data => {
+      
+      this.categorias=data
+      console.log(this.categorias);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.categoriasList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -83,7 +95,7 @@ export class ManageComponent implements OnInit {
         ],
       ], //PARAMETROS EN ORDEN: VALOR POR DEFECTO, REQUEIRDO Y RANGO
       descripcion: [0, [Validators.required, Validators.maxLength(40)]],
-      categoria_padre: [0, [Validators.min(1)]],
+      categoria_padre: [null],
     });
   }
   get getTheFormGroup() {

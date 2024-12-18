@@ -83,33 +83,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Cliente id:</label></div>
+              <div class="col-4">Cliente:
+              </div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="contrato.cliente_id"
-                  formControlName="cliente_id"
-                />
-                <div
-                  *ngIf="
-                    getTheFormGroup.cliente_id.errors &&
-                    (getTheFormGroup.cliente_id.dirty ||
-                      getTheFormGroup.cliente_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.cliente_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.cliente_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="cliente_id" [(ngModel)]="contrato.cliente_id">
+                  <option *ngFor="let option of clientes" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 

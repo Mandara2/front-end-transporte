@@ -5,6 +5,6 @@ export class Cuota {
     monto: number;
     intereses?: number;
     numero: number;
-    contrato_id: number;
+    contrato_id: Contrato;
 
 }

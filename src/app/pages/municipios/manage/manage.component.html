@@ -54,24 +54,14 @@
             </div>
 
             <div class="row">
-              <div class="col-4"><label>Departamento ID:</label></div>
+              <div class="col-4">Departamento:
+              </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="municipio.departamento_id"
-                  formControlName="departamento_id" />
-                <div *ngIf="
-                    getTheFormGroup.departamento_id.errors &&
-                    (getTheFormGroup.departamento_id.dirty ||
-                      getTheFormGroup.departamento_id.touched ||
-                      trySend)
-                  ">
-                  <strong *ngIf="getTheFormGroup.departamento_id.errors.required" class="msnError">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.departamento_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                </div>
+                <select class="form-control" formControlName="departamento_id" [(ngModel)]="municipio.departamento_id">
+                  <option *ngFor="let option of departamentos" [value]="option.id">{{option.nombre}}</option>
+                </select>
               </div>
             </div>
-
-
-            
 
             <div class="row">
               <div class="col-4"></div>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Cliente } from "src/app/models/cliente/cliente.model";
 import { Contrato } from "src/app/models/contrato/contrato.model";
+import { ClienteService } from "src/app/services/cliente/cliente.service";
 import { ContratoService } from "src/app/services/contratos/contratos.service";
 import Swal from "sweetalert2";
 
@@ -13,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   contrato: Contrato;
+  clientes: Cliente[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private contratosService: ContratoService,
+    private clienteService: ClienteService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -28,14 +31,28 @@ export class ManageComponent implements OnInit {
       fecha: "",
       distancia_total: 0,
       costo_total: 0,
-      cliente_id: 0,
+      cliente_id: {
+        id: null,
+        telefono: "",
+        cantidad_pedidos_realizados: 0
+      },
     };
     this.mode = 0;
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  clientesList(){
+    this.clienteService.list().subscribe(data => {
+      
+      this.clientes=data
+      console.log(this.clientes);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.clientesList()
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -60,7 +77,7 @@ export class ManageComponent implements OnInit {
       ],
       distancia_total: [0, [Validators.required, Validators.min(0)]],
       costo_total: [0, [Validators.required, Validators.min(0)]],
-      cliente_id: [0, [Validators.required, Validators.min(0)]],
+      cliente_id: [null, [Validators.required]],
     });
   }
 

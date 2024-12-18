@@ -3,8 +3,8 @@ import { Producto } from "../producto/producto.model";
 
 export class CategoriaProducto {
   id?: number;
-  producto_id: number;
-  categoria_id: number;
+  producto_id: Producto;
+  categoria_id: Categoria;
   detalle?: string;
 }
 /*update() {

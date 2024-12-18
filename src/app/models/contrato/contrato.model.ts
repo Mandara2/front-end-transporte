@@ -5,5 +5,5 @@ export class Contrato {
     fecha: string;
     distancia_total: number;
     costo_total: number;
-    cliente_id: number;
+    cliente_id: Cliente;
 }

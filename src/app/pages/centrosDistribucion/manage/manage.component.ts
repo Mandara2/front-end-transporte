@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CentroDistribucion } from "src/app/models/centroDistribucion/centro-distribucion.model";
 import { Direccion } from "src/app/models/direccion/direccion.model";
 import { CentrosDistribucionService } from "src/app/services/centrosDistribucion/centros-distribucion.service";
+import { DireccionService } from "src/app/services/direcciones/direcciones.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -13,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   centroDistribucion: CentroDistribucion;
+  direcciones: Direccion[]
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private centrosDistribucionesService: CentrosDistribucionService,
+    private direccionService: DireccionService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -27,14 +30,33 @@ export class ManageComponent implements OnInit {
       id: 0,
       nombre: "",
       capacidad_almacenamiento: 0,
-      direccion_id: 0,
+      direccion_id: {
+        id: null,
+        localidad: "",
+        tipo_direccion: "",
+        calle: "",
+        numero_direccion: "",
+        referencias: "",
+        municipio_id: null
+      },
     };
     this.mode = 0;
+    this.direcciones = []
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  direccionesList(){
+    this.direccionService.list().subscribe(data => {
+      
+      this.direcciones=data
+      console.log(this.direcciones);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.direccionesList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -65,7 +87,7 @@ export class ManageComponent implements OnInit {
         0,
         [Validators.required, Validators.min(1), Validators.max(100000)],
       ],
-      direccion_id: [0, [Validators.required, Validators.min(1)]],
+      direccion_id: [null, [Validators.required]],
     });
   }
 
@@ -80,48 +102,86 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    this.centrosDistribucionesService
-      .create(this.centroDistribucion)
-      .subscribe((data) => {
-        Swal.fire("Creado", "Se ha creado exitosamente", "success");
+    if (this.theFormGroup.invalid) {
+      this.trySend = true;
+      Swal.fire(
+        "Formulario inválido",
+        "Por favor complete correctamente todos los campos.",
+        "error"
+      );
+      return;
+    }
+  
+    this.centrosDistribucionesService.create(this.centroDistribucion).subscribe({
+      next: (data) => {
+        Swal.fire("Éxito", "Se ha creado el centro de distribución exitosamente", "success");
         this.router.navigate(["centrosDistribucion/list"]);
-      });
+      },
+      error: (error) => {
+        if (error.status === 409) {
+          Swal.fire(
+            "Error",
+            error.error.error || "La dirección ya está asignada a otro centro de distribución.",
+            "error"
+          );
+        } else {
+          Swal.fire(
+            "Error",
+            "Ocurrió un problema al crear el centro de distribución.",
+            "error"
+          );
+          console.error("Error en la creación:", error);
+        }
+      },
+    });
   }
   update() {
     if (this.theFormGroup.invalid) {
       this.trySend = true;
       Swal.fire(
-        "Formulario invalido",
-        "Ingrese correctamente los datos",
+        "Formulario inválido",
+        "Ingrese correctamente los datos.",
         "error"
       );
       return;
     }
-
-    // Verifica si el vehículo tiene un id antes de realizar la actualización
+  
     if (!this.centroDistribucion.id) {
       Swal.fire(
         "Error",
-        "No se pudo encontrar el vehículo para actualizar",
+        "No se pudo encontrar el centro de distribución para actualizar.",
         "error"
       );
       return;
     }
-
-    // Obtiene los valores del formulario
+  
     const updatedData = this.theFormGroup.value;
-
-    // Asegura que el id esté presente en el objeto de actualización
     updatedData.id = this.centroDistribucion.id;
-
+  
     this.centrosDistribucionesService.update(updatedData).subscribe({
       next: (data) => {
-        Swal.fire("Éxito", "Centro de distribucion actualizado exitosamente", "success");
-        this.router.navigate(["/centrosDistribucion/list"]);
+        Swal.fire(
+          "Éxito",
+          "Centro de distribución actualizado exitosamente.",
+          "success"
+        );
+        this.router.navigate(["centrosDistribucion/list"]);
       },
       error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el centro de distribucion", "error");
-        console.error("Error al actualizar:", error);
+        if (error.status === 409) {
+          Swal.fire(
+            "Error",
+            error.error.error || "La dirección ya está asignada a otro centro de distribución.",
+            "error"
+          );
+        } else {
+          Swal.fire(
+            "Error",
+            "No se pudo actualizar el centro de distribución.",
+            "error"
+          );
+          console.error("Error en la actualización:", error);
+        }
       },
     });
   }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Conductor } from "src/app/models/conductor/conductor.model";
 import { Turno } from "src/app/models/turno/turno.model";
+import { ConductorService } from "src/app/services/conductores/conductores.service";
 import { TurnoService } from "src/app/services/turnos/turnos.service";
 import Swal from "sweetalert2";
 
@@ -12,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   turno: Turno;
+  conductores: Conductor[]
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private TurnoService: TurnoService,
+    private conductorService: ConductorService, 
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -26,14 +30,34 @@ export class ManageComponent implements OnInit {
       id: 0,
       fecha_inicio: "",
       fecha_fin: "",
-      conductor_id: 0,
+      conductor_id: {
+        id: null,
+        usuario_id: "",
+        telefono: "",
+        numero_licencia: "",
+        fecha_vencimiento_licencia: "",
+        fecha_nacimiento: ""
+      },
     };
     this.mode = 0;
+    this.conductores = [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  conductoresList(){
+    this.conductorService.list().subscribe(data => {
+      console.log("ola");
+      
+      this.conductores=data
+      console.log(this.conductores);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.conductoresList();
+
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -53,11 +77,10 @@ export class ManageComponent implements OnInit {
       fecha_inicio: ["", [Validators.required]],
       fecha_fin: ["", [Validators.required]],
       conductor_id: [
-        "",
+        null,
         [
           Validators.required,
-          Validators.min(1), // `unsigned`
-        ],
+         ],
       ],
     });
   }

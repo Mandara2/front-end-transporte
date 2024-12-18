@@ -52,19 +52,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Conductor ID:</label></div>
+              <div class="col-4">Conductor:
+              </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="turno.conductor_id"
-                  formControlName="conductor_id" />
-                <div *ngIf="
-                    getTheFormGroup.conductor_id.errors &&
-                    (getTheFormGroup.conductor_id.dirty ||
-                      getTheFormGroup.conductor_id.touched ||
-                      trySend)
-                  ">
-                  <strong *ngIf="getTheFormGroup.conductor_id.errors.required" class="msnError">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.conductor_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                </div>
+                <select class="form-control" formControlName="conductor_id" [(ngModel)]="turno.conductor_id">
+                  <option *ngFor="let option of conductores" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 

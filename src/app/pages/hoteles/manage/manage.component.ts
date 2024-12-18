@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Hotel } from "src/app/models/hotel/hotel.model";
+import { Servicio } from "src/app/models/servicio/servicio.model";
 import { HotelService } from "src/app/services/hoteles/hoteles.service";
+import { ServicioService } from "src/app/services/servicios/servicios.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -12,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   hotel: Hotel;
+  servicios: Servicio[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private hotelService: HotelService,
+    private servicioService: ServicioService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -27,14 +31,30 @@ export class ManageComponent implements OnInit {
       estrellas: 0,
       nombre: "",
       ubicacion: "",
-      servicio_id: 0,
+      servicio_id: {
+        id: null,
+        fecha: "",
+        descripcion: "",
+        administrador_id: null
+      },
     };
     this.mode = 0;
+    this.servicios = [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  serviciosList(){
+    this.servicioService.list().subscribe(data => {
+      
+      this.servicios=data
+      console.log(this.servicios);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.serviciosList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -74,10 +94,9 @@ export class ManageComponent implements OnInit {
         ],
       ],
       servicio_id: [
-        "",
+        null,
         [
           Validators.required, // Campo obligatorio
-          Validators.min(1), // ID debe ser positivo
         ],
       ],
     });
@@ -94,59 +113,88 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    if (this.theFormGroup.invalid) {
-      this.trySend = true;
-      Swal.fire(
-        "Error en el formulario",
-        " Ingrese correctamente los datos solicitados",
-        "error"
-      );
-      return;
+      if (this.theFormGroup.invalid) {
+        this.trySend = true;
+        Swal.fire(
+          "Formulario inválido",
+          "Por favor complete correctamente todos los campos.",
+          "error"
+        );
+        return;
+      }
+    
+      this.hotelService.create(this.hotel).subscribe({
+        next: (data) => {
+          Swal.fire("Éxito", "Se ha creado el hotel exitosamente", "success");
+          this.router.navigate(["hoteles/list"]);
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            Swal.fire(
+              "Error",
+              error.error.error || "El servicio ya está asignado a otro centro de distribución.",
+              "error"
+            );
+          } else {
+            Swal.fire(
+              "Error",
+              "Ocurrió un problema al crear el hotel.",
+              "error"
+            );
+            console.error("Error en la creación:", error);
+          }
+        },
+      });
     }
-    console.log(this.hotel);
-
-    this.hotelService.create(this.hotel).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado el hotel existosamente", "success");
-      this.router.navigate(["hoteles/list"]); //Aqui me muevo para el theaters list
-    });
-  }
 
   update() {
-    if (this.theFormGroup.invalid) {
-      this.trySend = true;
-      Swal.fire(
-        "Formulario invalido",
-        "Ingrese correctamente los datos",
-        "error"
-      );
-      return;
+      if (this.theFormGroup.invalid) {
+        this.trySend = true;
+        Swal.fire(
+          "Formulario inválido",
+          "Ingrese correctamente los datos.",
+          "error"
+        );
+        return;
+      }
+    
+      if (!this.hotel.id) {
+        Swal.fire(
+          "Error",
+          "No se pudo encontrar el centro de distribución para actualizar.",
+          "error"
+        );
+        return;
+      }
+    
+      const updatedData = this.theFormGroup.value;
+      updatedData.id = this.hotel.id;
+    
+      this.hotelService.update(updatedData).subscribe({
+        next: (data) => {
+          Swal.fire(
+            "Éxito",
+            "Hotel actualizado exitosamente.",
+            "success"
+          );
+          this.router.navigate(["hoteles/list"]);
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            Swal.fire(
+              "Error",
+              error.error.error || "El servicio ya está asignado a otro centro de distribución.",
+              "error"
+            );
+          } else {
+            Swal.fire(
+              "Error",
+              "No se pudo actualizar el hotel.",
+              "error"
+            );
+            console.error("Error en la actualización:", error);
+          }
+        },
+      });
     }
-
-    // Verifica si el vehículo tiene un id antes de realizar la actualización
-    if (!this.hotel.id) {
-      Swal.fire(
-        "Error",
-        "No se pudo encontrar el vehículo para actualizar",
-        "error"
-      );
-      return;
-    }
-
-    // Obtiene los valores del formulario
-    const updateData = this.theFormGroup.value;
-
-    // Asegura que el id esté presente en el objeto de actualización
-    updateData.id = this.hotel.id;
-
-    this.hotelService.update(updateData).subscribe({
-      next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
-        this.router.navigate(["/hoteles/list"]);
-      },
-      error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
-        console.error("Error al actualizar:", error);
-      },
-    });
-  }
 }

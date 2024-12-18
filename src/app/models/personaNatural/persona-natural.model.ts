@@ -6,5 +6,5 @@ export class PersonaNatural {
     identificacion: string;
     tipo_documento: string;
     fecha_nacimiento: string;
-    cliente_id: number;
+    cliente_id: Cliente;
 }

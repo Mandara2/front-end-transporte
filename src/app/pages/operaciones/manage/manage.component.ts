@@ -1,8 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Municipio } from "src/app/models/municipio/municipio.model";
 import { Operacion } from "src/app/models/operacion/operacion.model";
+import { Vehiculo } from "src/app/models/vehiculo/vehiculo.model";
+import { MunicipioService } from "src/app/services/municipios/municipios.service";
 import { OperacionService } from "src/app/services/operaciones/operaciones.service";
+import { VehiculoService } from "src/app/services/vehiculos/vehiculos.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -12,12 +16,16 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   operacion: Operacion;
+  municipios: Municipio[];
+  vehiculos: Vehiculo[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private operacionService: OperacionService,
+    private municipioService: MunicipioService,
+    private vehiculoService: VehiculoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -26,15 +34,47 @@ export class ManageComponent implements OnInit {
       id: 0,
       fecha_inicio: "",
       fecha_fin: "",
-      municipio_id: 0,
-      vehiculo_id: 0,
+      municipio_id: {
+        id: null,
+        nombre: "",
+        codigo_postal: ""
+      },
+      vehiculo_id: {
+        id: null,
+        matricula: "",
+        modelo: "",
+        capacidad_carga: 0,
+        tipo_carga: ""
+      },
     };
     this.mode = 0;
+    this.municipios = [];
+    this.vehiculos= [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  municipiosList(){
+    this.municipioService.list().subscribe(data => {
+      
+      this.municipios=data
+      console.log(this.municipios);
+      
+    })
+  }
+
+  vehiculosList(){
+    this.vehiculoService.list().subscribe(data => {
+      
+      this.vehiculos=data
+      console.log(this.vehiculos);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.municipiosList();
+    this.vehiculosList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -59,17 +99,15 @@ export class ManageComponent implements OnInit {
       ],
       fecha_fin: ["", []],
       vehiculo_id: [
-        "",
+        null,
         [
           Validators.required, // Campo obligatorio
-          Validators.min(1), // ID debe ser positivo
         ],
       ],
       municipio_id: [
-        "",
+        null,
         [
           Validators.required, // Campo obligatorio
-          Validators.min(1), // ID debe ser positivo
         ],
       ],
     });

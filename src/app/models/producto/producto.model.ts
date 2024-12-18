@@ -5,6 +5,6 @@ export class Producto {
     id?: number;
     nombre: string;
     fecha_vencimiento: string;
-    cliente_id: number;
-    lote_id: number;
+    cliente_id: Cliente;
+    lote_id: Lote;
 }

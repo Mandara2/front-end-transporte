@@ -5,6 +5,6 @@ export class Operacion {
     id?: number;
     fecha_inicio: string;
     fecha_fin?: string;
-    municipio_id: number;
-    vehiculo_id: number;
+    municipio_id: Municipio;
+    vehiculo_id: Vehiculo;
 }

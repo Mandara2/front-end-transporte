@@ -3,8 +3,8 @@ import { Ruta } from "../ruta/ruta.model";
 
 export class DirListaOrden {
     id?: number;
-    orden: string;
+    orden: number;
     descripcion?: string;
-    ruta_id: number;
-    direccion_id: number;
+    ruta_id: Ruta;
+    direccion_id: Direccion;
 }

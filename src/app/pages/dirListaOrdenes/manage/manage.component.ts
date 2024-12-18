@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Direccion } from "src/app/models/direccion/direccion.model";
 import { DirListaOrden } from "src/app/models/dirListaOrden/dir-lista-orden.model";
 import { Ruta } from "src/app/models/ruta/ruta.model";
+import { DireccionService } from "src/app/services/direcciones/direcciones.service";
 import { DirListaOrdenService } from "src/app/services/dirListaOrden/dir-lista-orden.service";
+import { RutaService } from "src/app/services/rutas/rutas.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -14,29 +16,71 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   dirListaOrden: DirListaOrden;
+  rutas: Ruta[];
+  direcciones: Direccion[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private dirListaOrdenesService: DirListaOrdenService,
+    private rutaService: RutaService,
+    private direccionService: DireccionService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
   ) {
     this.dirListaOrden = {
       id: 0,
-      orden: "",
+      orden: 0,
       descripcion: "",
-      ruta_id: 0,
-      direccion_id: 0,
+      ruta_id: {
+        id: null,
+        punto_inicio: "",
+        punto_destino: "",
+        distancia: 0,
+        fecha_entrega: "",
+        contrato_id: null,
+        vehiculo_conductor_id: null
+      },
+      direccion_id: {
+        id: null,
+        localidad: "",
+        tipo_direccion: "",
+        calle: "",
+        numero_direccion: "",
+        referencias: "",
+        municipio_id: null
+      },
     };
     this.mode = 0;
+    this.direcciones = [];
+    this.rutas = [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  rutasList(){
+    this.rutaService.list().subscribe(data => {
+      
+      this.rutas=data
+      console.log(this.rutas);
+      
+    })
+  }
+
+  direccionesList(){
+    this.direccionService.list().subscribe(data => {
+      
+      this.direcciones=data
+      console.log(this.direcciones);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.direccionesList();
+    this.rutasList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -60,8 +104,8 @@ export class ManageComponent implements OnInit {
         [Validators.required, Validators.minLength(1), Validators.maxLength(4)],
       ],
       descripcion: ["", [Validators.maxLength(20)]],
-      ruta_id: [0, [Validators.required, Validators.min(1)]],
-      direccion_id: [0, [Validators.required, Validators.min(1)]],
+      ruta_id: [null, [Validators.required]],
+      direccion_id: [null, [Validators.required]],
     });
   }
 

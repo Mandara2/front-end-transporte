@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Conductor } from "src/app/models/conductor/conductor.model";
 import { Vehiculo } from "src/app/models/vehiculo/vehiculo.model";
 import { VehiculoConductor } from "src/app/models/vehiculoConductor/vehiculo-conductor.model";
+import { ConductorService } from "src/app/services/conductores/conductores.service";
+import { VehiculoService } from "src/app/services/vehiculos/vehiculos.service";
 import { VehiculoConductorService } from "src/app/services/vehiculosConductores/vehiculos-conductores.service";
 import Swal from "sweetalert2";
 
@@ -14,12 +16,16 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   vehiculoConductor: VehiculoConductor;
+  vehiculos: Vehiculo[];
+  conductores: Conductor[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private vehiculosConductoresService: VehiculoConductorService,
+    private vehiculoService: VehiculoService,
+    private conductorService: ConductorService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -28,15 +34,51 @@ export class ManageComponent implements OnInit {
       id: 0,
       fecha_inicio: "",
       fecha_fin: "",
-      vehiculo_id: 0,
-      conductor_id: 0,
+      vehiculo_id: {
+        id: null,
+        matricula: "",
+        modelo: "",
+        capacidad_carga: 0,
+        tipo_carga: ""
+      },
+      conductor_id: {
+        id: null,
+        usuario_id: "",
+        numero_licencia: "",
+        fecha_vencimiento_licencia: "",
+        telefono: "",
+        fecha_nacimiento: ""
+      },
     };
     this.mode = 0;
+    this.conductores = [];
+    this.vehiculos = [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  vehiculosList(){
+    this.vehiculoService.list().subscribe(data => {
+      
+      this.vehiculos=data
+      console.log(this.vehiculos);
+      
+    })
+  }
+
+
+  conductoresList(){
+    this.conductorService.list().subscribe(data => {
+      
+      this.conductores=data
+      console.log(this.conductores);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.conductoresList()
+    this.vehiculosList()
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -57,8 +99,8 @@ export class ManageComponent implements OnInit {
       // lista, serán las reglas
       fecha_inicio: [" ", [Validators.required]],
       fecha_fin: [" ", [Validators.required]],
-      vehiculo_id: [" ", [Validators.required, Validators.min(1)]],
-      conductor_id: [" ", [Validators.required, Validators.min(1)]],
+      vehiculo_id: [null, [Validators.required]],
+      conductor_id: [null, [Validators.required]],
     });
   }
 

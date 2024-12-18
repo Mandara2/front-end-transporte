@@ -52,19 +52,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Administrador ID:</label></div>
+              <div class="col-4">Administrador:
+              </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="servicio.administrador_id"
-                  formControlName="administrador_id" />
-                <div *ngIf="
-                    getTheFormGroup.administrador_id.errors &&
-                    (getTheFormGroup.administrador_id.dirty ||
-                      getTheFormGroup.administrador_id.touched ||
-                      trySend)
-                  ">
-                  <strong *ngIf="getTheFormGroup.administrador_id.errors.required" class="msnError">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.administrador_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                </div>
+                <select class="form-control" formControlName="administrador_id" [(ngModel)]="servicio.administrador_id">
+                  <option *ngFor="let option of administradores" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 

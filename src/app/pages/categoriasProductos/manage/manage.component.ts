@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Categoria } from "src/app/models/categoria/categoria.model";
 import { CategoriaProducto } from "src/app/models/categoriaProducto/categoria-producto.model";
 import { Producto } from "src/app/models/producto/producto.model";
+import { CategoriaService } from "src/app/services/categorias/catorias.service";
 import { CategoriaProductoService } from "src/app/services/categoriasProductos/catagorias-productos.service";
+import { ProductoService } from "src/app/services/productos/productos.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -14,28 +16,65 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   categoriaProducto: CategoriaProducto;
+  productos: Producto[];
+  categorias: Categoria[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private categoriasProductosService: CategoriaProductoService,
+    private productoService: ProductoService,
+    private categoriaService: CategoriaService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
   ) {
     this.categoriaProducto = {
       id: 0,
-      producto_id: 0,
-      categoria_id: 0,
+      producto_id: {
+        id: null,
+        nombre: "",
+        fecha_vencimiento: "",
+        cliente_id: null,
+        lote_id: null
+      },
+      categoria_id: {
+        id: null,
+        nombre: "",
+        descripcion: "",
+        categoria_padre: null
+      },
       detalle: "",
     };
     this.mode = 0;
+    this.productos = [];
+    this.categorias = [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  productosList(){
+    this.productoService.list().subscribe(data => {
+      
+      this.productos=data
+      console.log(this.productos);
+      
+    })
+  }
+
+  categoriasList(){
+    this.categoriaService.list().subscribe(data => {
+      
+      this.categorias=data
+      console.log(this.categorias);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.categoriasList();
+    this.productosList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -54,8 +93,8 @@ export class ManageComponent implements OnInit {
     this.theFormGroup = this.theFormBuilder.group({
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
-      producto_id: [0, [Validators.required, Validators.min(1)]],
-      categoria_id: ["", [Validators.required, Validators.min(1)]],
+      producto_id: [null, [Validators.required]],
+      categoria_id: [null, [Validators.required]],
       detalle: [0, [Validators.required, Validators.maxLength(20)]],
     });
   }

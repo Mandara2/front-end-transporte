@@ -5,7 +5,10 @@ import { Conductor } from "src/app/models/conductor/conductor.model";
 import { Dueno } from "src/app/models/dueno/dueno.model";
 import { Gasto } from "src/app/models/gasto/gasto.model";
 import { Servicio } from "src/app/models/servicio/servicio.model";
+import { ConductorService } from "src/app/services/conductores/conductores.service";
+import { DuenoService } from "src/app/services/duenos/duenos.service";
 import { GastoService } from "src/app/services/gastos/gastos.service";
+import { ServicioService } from "src/app/services/servicios/servicios.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -15,12 +18,18 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   gasto: Gasto;
+  duenos: Dueno[]
+  conductores: Conductor[];
+  servicios: Servicio[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private gastosService: GastoService,
+    private duenoService: DuenoService,
+    private conductorService: ConductorService,
+    private servicioService: ServicioService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -28,17 +37,67 @@ export class ManageComponent implements OnInit {
     this.gasto = {
       id: 0,
       detalles: "",
-      dueno_id: 0,
-      conductor_id: 0,
-      servicio_id: 0,
+      dueno_id: {
+        id: null,
+        usuario_id: "",
+        telefono: "",
+        fecha_nacimiento: "",
+        conductor_id: null 
+      },
+      conductor_id: {
+        id: null,
+        usuario_id: "",
+        telefono: "",
+        numero_licencia: "",
+        fecha_nacimiento: "",
+        fecha_vencimiento_licencia: ""
+      },
+      servicio_id: {
+        id: null,
+        fecha: "",
+        descripcion: "",
+        administrador_id: null
+      },
     };
     this.mode = 0;
+    this.duenos = [];
+    this.conductores = [];
+    this.servicios = []
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  duenosList(){
+    this.duenoService.list().subscribe(data => {
+      
+      this.duenos=data
+      console.log(this.duenos);
+      
+    })
+  }
+
+  conductoresList(){
+    this.conductorService.list().subscribe(data => {
+      
+      this.conductores=data
+      console.log(this.conductores);
+      
+    })
+  }
+
+  servicioList(){
+    this.servicioService.list().subscribe(data => {
+      
+      this.servicios=data
+      console.log(this.servicios);
+      
+    })
+  }
+
   ngOnInit(): void {
-    const currentUrl = this.activateRoute.snapshot.url.join("/");
+    this.duenosList();
+    this.conductoresList();
+    this.servicioList();    const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
     } else if (currentUrl.includes("create")) {
@@ -57,9 +116,9 @@ export class ManageComponent implements OnInit {
       // primer elemento del vector, valor por defecto
       // lista, serán las reglas
       detalles: [0, [Validators.required, Validators.maxLength(40)]],
-      dueno_id: ["", [Validators.required, Validators.min(1)]],
-      conductor_id: ["", [Validators.required, Validators.min(1)]],
-      servicio_id: ["", [Validators.required, Validators.min(1)]],
+      dueno_id: [null, [Validators.required]],
+      conductor_id: [null, [Validators.required,]],
+      servicio_id: [null, [Validators.required,]],
     });
   }
 

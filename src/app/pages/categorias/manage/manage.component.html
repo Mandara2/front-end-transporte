@@ -88,34 +88,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Categoria padre</label></div>
+              <div class="col-4">Categoria padre:
+              </div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="categoria.categoria_padre"
-                  formControlName="categoria_padre"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.categoria_padre.errors &&
-                    (getTheFormGroup.categoria_padre.dirty ||
-                      getTheFormGroup.categoria_padre.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.categoria_padre.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.categoria_padre.errors.min"
-                    class="msnError"
-                    >Debe ser mayor de 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="categoria_padre" [(ngModel)]="categoria.categoria_padre">
+                  <option *ngFor="let option of categorias" [value]="option.id">{{option.nombre}}</option>
+                </select>
               </div>
             </div>
 

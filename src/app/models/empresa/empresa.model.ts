@@ -7,5 +7,5 @@ export class Empresa {
     tipo_empresa: string;
     direccion_fiscal?: string;
     cliente_id: number;
-    persona_natural_id: number;
+    persona_natural_id: PersonaNatural;
 }

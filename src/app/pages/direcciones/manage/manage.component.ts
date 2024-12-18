@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Direccion } from "src/app/models/direccion/direccion.model";
 import { Municipio } from "src/app/models/municipio/municipio.model";
 import { DireccionService } from "src/app/services/direcciones/direcciones.service";
+import { MunicipioService } from "src/app/services/municipios/municipios.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -13,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   direccion: Direccion;
+  municipios: Municipio[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private direccionesService: DireccionService,
+    private municipioService: MunicipioService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -30,14 +33,29 @@ export class ManageComponent implements OnInit {
       calle: "",
       numero_direccion: "",
       referencias: "",
-      municipio_id: 0,
+      municipio_id: {
+        id: null,
+        nombre: "",
+        codigo_postal: "",
+      },
     };
     this.mode = 0;
+    this.municipios = []
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  municipiosList(){
+    this.municipioService.list().subscribe(data => {
+      
+      this.municipios=data
+      console.log(this.municipios);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.municipiosList()
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -89,7 +107,7 @@ export class ManageComponent implements OnInit {
         ],
       ],
       referencias: ["", [Validators.minLength(2), Validators.maxLength(30)]],
-      municipio_id: [0, [Validators.required, Validators.min(1)]],
+      municipio_id: [null, [Validators.required]],
     });
   }
 
@@ -104,6 +122,17 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
+    
+    if (this.theFormGroup.invalid) {
+          this.trySend = true;
+          Swal.fire(
+            "Error en el formulario",
+            " Ingrese correctamente los datos solicitados",
+            "error"
+          );
+          return;
+        }
+      
     this.direccionesService.create(this.direccion).subscribe((data) => {
       Swal.fire("Creado", "Se ha creado exitosamente", "success");
       this.router.navigate(["direcciones/list"]);

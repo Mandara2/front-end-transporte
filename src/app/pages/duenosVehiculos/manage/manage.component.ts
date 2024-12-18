@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Dueno } from "src/app/models/dueno/dueno.model";
 import { DuenoVehiculo } from "src/app/models/duenoVehiculo/dueno-vehiculo.model";
 import { Vehiculo } from "src/app/models/vehiculo/vehiculo.model";
+import { DuenoService } from "src/app/services/duenos/duenos.service";
 import { DuenoVehiculoService } from "src/app/services/duenosVehiculos/duenos-vehiculos.service";
+import { VehiculoService } from "src/app/services/vehiculos/vehiculos.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -14,12 +16,16 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   duenoVehiculo: DuenoVehiculo;
+  duenos: Dueno[];
+  vehiculos: Vehiculo[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private duenoVehiculosService: DuenoVehiculoService,
+    private duenoService: DuenoService,
+    private vehiculoService: VehiculoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -28,15 +34,49 @@ export class ManageComponent implements OnInit {
       id: 0,
       fecha_adquisicion: "",
       porcentaje_propiedad: 0,
-      vehiculo_id: 0,
-      dueno_id: 0,
+      vehiculo_id: {
+        id: null,
+        matricula: "",
+        modelo: "",
+        capacidad_carga: 0,
+        tipo_carga: ""
+      },
+      dueno_id: {
+        id: null,
+        usuario_id: "",
+        telefono: "",
+        fecha_nacimiento: "",
+        conductor_id: null
+      },
     };
     this.mode = 0;
+    this.duenos = [];
+    this.vehiculos = [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  vehiculosList(){
+    this.vehiculoService.list().subscribe(data => {
+      
+      this.vehiculos=data
+      console.log(this.vehiculos);
+      
+    })
+  }
+
+  duenosList(){
+    this.duenoService.list().subscribe(data => {
+      
+      this.duenos=data
+      console.log(this.duenos);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.vehiculosList();
+    this.duenosList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -63,8 +103,8 @@ export class ManageComponent implements OnInit {
         "",
         [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
       ],
-      vehiculo_id: [0, [Validators.required, Validators.min(1)]],
-      dueno_id: [0, [Validators.required, Validators.min(1)]],
+      vehiculo_id: [null, [Validators.required]],
+      dueno_id: [null, [Validators.required]],
     });
   }
 

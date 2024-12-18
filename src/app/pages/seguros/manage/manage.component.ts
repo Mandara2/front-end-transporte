@@ -2,7 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Seguro } from "src/app/models/seguro/seguro.model";
+import { Vehiculo } from "src/app/models/vehiculo/vehiculo.model";
 import { SeguroService } from "src/app/services/seguros/seguros.service";
+import { VehiculoService } from "src/app/services/vehiculos/vehiculos.service";
 import Swal from "sweetalert2";
 
 @Component({
@@ -12,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   seguro: Seguro;
+  vehiculos: Vehiculo[]
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private seguroService: SeguroService,
+    private vehiculoService: VehiculoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -27,14 +31,31 @@ export class ManageComponent implements OnInit {
       fecha_inicio: "",
       fecha_fin: "",
       compania_aseguradora: "",
-      vehiculo_id: 0,
+      vehiculo_id: {
+        id: null,
+        matricula: "",
+        modelo: "",
+        capacidad_carga: 0,
+        tipo_carga: ""
+      },
     };
     this.mode = 0;
+    this.vehiculos = []
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  vehiculosList(){
+    this.vehiculoService.list().subscribe(data => {
+      
+      this.vehiculos=data
+      console.log(this.vehiculos);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.vehiculosList()
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -70,10 +91,9 @@ export class ManageComponent implements OnInit {
         ],
       ],
       vehiculo_id: [
-        "",
+        null,
         [
-          Validators.required, // Campo obligatorio
-          Validators.min(1), // Asegura que el ID sea positivo
+          Validators.required // Campo obligatorio // Asegura que el ID sea positivo
         ],
       ],
     });

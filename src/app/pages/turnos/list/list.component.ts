@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 })
 export class ListComponent implements OnInit {
   turnos: Turno[];
+  
   constructor(private turnosService: TurnoService, private router: Router) {
     this.turnos = [];
   }

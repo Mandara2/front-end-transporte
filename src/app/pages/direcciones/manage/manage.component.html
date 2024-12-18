@@ -148,21 +148,12 @@
             </div>
 
             <div class="row">
-              <div class="col-4"><label>Municipio id:</label></div>
+              <div class="col-4">Municipio:
+              </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="direccion.municipio_id"
-                  formControlName="municipio_id" />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div *ngIf="
-                    getTheFormGroup.municipio_id.errors &&
-                    (getTheFormGroup.municipio_id.dirty ||
-                      getTheFormGroup.municipio_id.touched ||
-                      trySend)
-                  ">
-                  <strong *ngIf="getTheFormGroup.municipio_id.errors.required" class="msnError">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.municipio_id.errors.min" class="msnError">debe ser mayor a 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="municipio_id" [(ngModel)]="direccion.municipio_id">
+                  <option *ngFor="let option of municipios" [value]="option.id">{{option.nombre}}</option>
+                </select>
               </div>
             </div>
 

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Contrato } from "src/app/models/contrato/contrato.model";
 import { Cuota } from "src/app/models/cuota/cuota.model";
+import { ContratoService } from "src/app/services/contratos/contratos.service";
 import { CuotaService } from "src/app/services/cuotas/cuotas.service";
 import Swal from "sweetalert2";
 
@@ -13,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   cuota: Cuota;
+  contratos: Contrato[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private cuotasService: CuotaService,
+    private contratoService: ContratoService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -28,14 +31,33 @@ export class ManageComponent implements OnInit {
       monto: 0,
       intereses: 0,
       numero: 0,
-      contrato_id: 0,
+      contrato_id: {
+        id: null,
+        fecha: "",
+        distancia_total: 0,
+        costo_total: 0,
+        cliente_id: null
+      },
     };
     this.mode = 0;
+    this.contratos = []
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  contratosList(){
+    this.contratoService.list().subscribe(data => {
+      
+      this.contratos=data
+      console.log(this.contratos);
+      
+    })
+  }
+
+
   ngOnInit(): void {
+    this.contratosList();
+
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -60,7 +82,7 @@ export class ManageComponent implements OnInit {
         0,
         [Validators.required, Validators.min(0)],
       ],
-      contrato_id: [0, [Validators.required, Validators.min(1)]],
+      contrato_id: [null, [Validators.required]],
     });
   }
 

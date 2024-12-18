@@ -21,65 +21,24 @@
                 <p>{{ categoriaProducto.id }}</p>
               </div>
             </div>
+
             <div class="row">
-              <div class="col-4"><label>Categoria Id:</label></div>
+              <div class="col-4">Categoria:
+              </div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="categoriaProducto.categoria_id"
-                  formControlName="categoria_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.categoria_id.errors &&
-                    (getTheFormGroup.categoria_id.dirty ||
-                      getTheFormGroup.categoria_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.categoria_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                  <strong
-                    *ngIf="getTheFormGroup.categoria_id.errors.min"
-                    class="msnError"
-                    >Debe tener ser mayor a 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="categoria_id" [(ngModel)]="categoriaProducto.categoria_id">
+                  <option *ngFor="let option of categorias" [value]="option.id">{{option.nombre}}</option>
+                </select>
               </div>
             </div>
+
             <div class="row">
-              <div class="col-4"><label>Producto id:</label></div>
+              <div class="col-4">Producto:
+              </div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="categoriaProducto.producto_id"
-                  formControlName="producto_id"
-                />
-                <div
-                  *ngIf="
-                    getTheFormGroup.producto_id.errors &&
-                    (getTheFormGroup.producto_id.dirty ||
-                      getTheFormGroup.producto_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.producto_id.errors.min"
-                    class="msnError"
-                    >Debe ser mayor de 0
-                  </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.producto_id.errors.required"
-                    class="msnError"
-                    >Requerido</strong
-                  >
-                </div>
+                <select class="form-control" formControlName="producto_id" [(ngModel)]="categoriaProducto.producto_id">
+                  <option *ngFor="let option of productos" [value]="option.id">{{option.nombre}}</option>
+                </select>
               </div>
             </div>
             <div class="row">

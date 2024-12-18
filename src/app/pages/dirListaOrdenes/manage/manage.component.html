@@ -85,66 +85,22 @@
             </div>
 
             <div class="row">
-              <div class="col-4"><label>ID Ruta:</label></div>
+              <div class="col-4">Ruta:
+              </div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="dirListaOrden.ruta_id"
-                  formControlName="ruta_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.ruta_id.errors &&
-                    (getTheFormGroup.ruta_id.dirty ||
-                      getTheFormGroup.ruta_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.ruta_id.errors.required"
-                    class="msnError"
-                    >Requerido
-                  </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.ruta_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="ruta_id" [(ngModel)]="dirListaOrden.ruta_id">
+                  <option *ngFor="let option of rutas" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-4"><label>ID Direccion:</label></div>
+              <div class="col-4">Dirección:
+              </div>
               <div class="col-8">
-                <input
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="dirListaOrden.direccion_id"
-                  formControlName="direccion_id"
-                />
-                <!-- 8. Vamos a configurar el HTML para la visualizacion de las alertas -->
-                <div
-                  *ngIf="
-                    getTheFormGroup.direccion_id.errors &&
-                    (getTheFormGroup.direccion_id.dirty ||
-                      getTheFormGroup.direccion_id.touched ||
-                      trySend)
-                  "
-                >
-                  <strong
-                    *ngIf="getTheFormGroup.direccion_id.errors.required"
-                    class="msnError"
-                    >Requerido
-                  </strong>
-                  <strong
-                    *ngIf="getTheFormGroup.direccion_id.errors.min"
-                    class="msnError"
-                    >debe ser mayor a 0
-                  </strong>
-                </div>
+                <select class="form-control" formControlName="direccion_id" [(ngModel)]="dirListaOrden.direccion_id">
+                  <option *ngFor="let option of direcciones" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 

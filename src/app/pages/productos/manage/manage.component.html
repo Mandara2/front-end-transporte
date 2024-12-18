@@ -52,39 +52,24 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Cliente ID:</label></div>
+              <div class="col-4">Cliente:
+              </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="producto.cliente_id"
-                  formControlName="cliente_id" />
-                <div *ngIf="
-                    getTheFormGroup.cliente_id.errors &&
-                    (getTheFormGroup.cliente_id.dirty ||
-                      getTheFormGroup.cliente_id.touched ||
-                      trySend)
-                  ">
-                  <strong *ngIf="getTheFormGroup.cliente_id.errors.required" class="msnError">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.cliente_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                </div>
+                <select class="form-control" formControlName="cliente_id" [(ngModel)]="producto.cliente_id">
+                  <option *ngFor="let option of clientes" [value]="option.id">{{option.id}}</option>
+                </select>
               </div>
             </div>
 
             <div class="row">
-                <div class="col-4"><label>Lote ID:</label></div>
-                <div class="col-8">
-                  <input type="text" class="form-control" [(ngModel)]="producto.lote_id"
-                    formControlName="lote_id" />
-                  <div *ngIf="
-                      getTheFormGroup.lote_id.errors &&
-                      (getTheFormGroup.lote_id.dirty ||
-                        getTheFormGroup.lote_id.touched ||
-                        trySend)
-                    ">
-                    <strong *ngIf="getTheFormGroup.lote_id.errors.required" class="msnError">Requerido</strong>
-                    <strong *ngIf="getTheFormGroup.lote_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                    
-                  </div>
-                </div>
+              <div class="col-4">Lote:
               </div>
+              <div class="col-8">
+                <select class="form-control" formControlName="lote_id" [(ngModel)]="producto.lote_id">
+                  <option *ngFor="let option of lotes" [value]="option.id">{{option.id}}</option>
+                </select>
+              </div>
+            </div>
 
             <div class="row">
               <div class="col-4"></div>

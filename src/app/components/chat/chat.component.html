@@ -15,7 +15,7 @@
   <div *ngIf="!chatIniciado" class="card-body">
     <form (ngSubmit)="iniciarChat()">
       <div class="form-group">
-        <label for="destinatario">Seleccionar destinatario:</label>
+        <label for="destinatario"><strong>Seleccionar destinatario:</strong></label>
         <input type="text" id="destinatario" class="form-control" 
                [(ngModel)]="destinatarioSeleccionado" name="destinatarioSeleccionado" required>
       </div>

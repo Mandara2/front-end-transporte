@@ -52,39 +52,24 @@
               </div>
             </div>
             <div class="row">
-              <div class="col-4"><label>Vehiculo ID:</label></div>
+              <div class="col-4">Vehiculo:
+              </div>
               <div class="col-8">
-                <input type="text" class="form-control" [(ngModel)]="operacion.vehiculo_id"
-                  formControlName="vehiculo_id" />
-                <div *ngIf="
-                    getTheFormGroup.vehiculo_id.errors &&
-                    (getTheFormGroup.vehiculo_id.dirty ||
-                      getTheFormGroup.vehiculo_id.touched ||
-                      trySend)
-                  ">
-                  <strong *ngIf="getTheFormGroup.vehiculo_id.errors.required" class="msnError">Requerido</strong>
-                  <strong *ngIf="getTheFormGroup.vehiculo_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                </div>
+                <select class="form-control" formControlName="vehiculo_id" [(ngModel)]="operacion.vehiculo_id">
+                  <option *ngFor="let option of vehiculos" [value]="option.id">{{option.matricula}}</option>
+                </select>
               </div>
             </div>
 
             <div class="row">
-                <div class="col-4"><label>Municipio ID:</label></div>
-                <div class="col-8">
-                  <input type="text" class="form-control" [(ngModel)]="operacion.municipio_id"
-                    formControlName="municipio_id" />
-                  <div *ngIf="
-                      getTheFormGroup.municipio_id.errors &&
-                      (getTheFormGroup.municipio_id.dirty ||
-                        getTheFormGroup.municipio_id.touched ||
-                        trySend)
-                    ">
-                    <strong *ngIf="getTheFormGroup.municipio_id.errors.required" class="msnError">Requerido</strong>
-                    <strong *ngIf="getTheFormGroup.municipio_id.errors.min" class="msnError">Debe ser mayor que 1</strong>
-                    
-                  </div>
-                </div>
+              <div class="col-4">Municipio:
               </div>
+              <div class="col-8">
+                <select class="form-control" formControlName="municipio_id" [(ngModel)]="operacion.municipio_id">
+                  <option *ngFor="let option of municipios" [value]="option.id">{{option.nombre}}</option>
+                </select>
+              </div>
+            </div>
 
             <div class="row">
               <div class="col-4"></div>

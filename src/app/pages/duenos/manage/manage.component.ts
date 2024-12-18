@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { log } from "console";
 import { Conductor } from "src/app/models/conductor/conductor.model";
 import { Dueno } from "src/app/models/dueno/dueno.model";
+import { ConductorService } from "src/app/services/conductores/conductores.service";
 import { DuenoService } from "src/app/services/duenos/duenos.service";
 import Swal from "sweetalert2";
 
@@ -14,12 +15,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   dueno: Dueno;
+  conductores: Conductor[];
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private duenosService: DuenoService,
+    private conductorService: ConductorService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -29,14 +32,32 @@ export class ManageComponent implements OnInit {
       usuario_id: "",
       telefono: "",
       fecha_nacimiento: "",
-      conductor_id: 0,
+      conductor_id: {
+        id: null,
+        usuario_id:"",
+        telefono: "",
+        numero_licencia: "",
+        fecha_vencimiento_licencia: "",
+        fecha_nacimiento: ""
+      },
     };
     this.mode = 0;
+    this.conductores = []
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  conductoresList(){
+    this.conductorService.list().subscribe(data => {
+      
+      this.conductores=data
+      console.log(this.conductores);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.conductoresList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -69,7 +90,7 @@ export class ManageComponent implements OnInit {
         "",
         [Validators.required, Validators.pattern(/^\d{2,4}-\d{2}-\d{2}$/)],
       ],
-      conductor_id: [0, [Validators.required, Validators.min(1)]],
+      conductor_id: [null, [Validators.required]],
     });
   }
 
@@ -85,47 +106,87 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    this.duenosService.create(this.dueno).subscribe((data) => {
-      Swal.fire("Creado", "Se ha creado exitosamente", "success");
-      this.router.navigate(["duenos/list"]);
-    });
-  }
+      if (this.theFormGroup.invalid) {
+        this.trySend = true;
+        Swal.fire(
+          "Formulario inválido",
+          "Por favor complete correctamente todos los campos.",
+          "error"
+        );
+        return;
+      }
+    
+      this.duenosService.create(this.dueno).subscribe({
+        next: (data) => {
+          Swal.fire("Éxito", "Se ha creado el dueño exitosamente", "success");
+          this.router.navigate(["duenos/list"]);
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            Swal.fire(
+              "Error",
+              error.error.error || "El conductor ya está asignado.",
+              "error"
+            );
+          } else {
+            Swal.fire(
+              "Error",
+              "Ocurrió un problema al crear el dueño.",
+              "error"
+            );
+            console.error("Error en la creación:", error);
+          }
+        },
+      });
+    }
   update() {
-    if (this.theFormGroup.invalid) {
-      this.trySend = true;
-      Swal.fire(
-        "Formulario invalido",
-        "Ingrese correctamente los datos",
-        "error"
-      );
-      return;
+      if (this.theFormGroup.invalid) {
+        this.trySend = true;
+        Swal.fire(
+          "Formulario inválido",
+          "Ingrese correctamente los datos.",
+          "error"
+        );
+        return;
+      }
+    
+      if (!this.dueno.id) {
+        Swal.fire(
+          "Error",
+          "No se pudo encontrar el dueño para actualizar.",
+          "error"
+        );
+        return;
+      }
+    
+      const updatedData = this.theFormGroup.value;
+      updatedData.id = this.dueno.id;
+    
+      this.duenosService.update(updatedData).subscribe({
+        next: (data) => {
+          Swal.fire(
+            "Éxito",
+            "Centro de distribución actualizado exitosamente.",
+            "success"
+          );
+          this.router.navigate(["duenos/list"]);
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            Swal.fire(
+              "Error",
+              error.error.error || "El conductor ya está asignado.",
+              "error"
+            );
+          } else {
+            Swal.fire(
+              "Error",
+              "No se pudo actualizar el dueño.",
+              "error"
+            );
+            console.error("Error en la actualización:", error);
+          }
+        },
+      });
     }
-
-    // Verifica si el vehículo tiene un id antes de realizar la actualización
-    if (!this.dueno.id) {
-      Swal.fire(
-        "Error",
-        "No se pudo encontrar el dueño para actualizar",
-        "error"
-      );
-      return;
-    }
-
-    // Obtiene los valores del formulario
-    const updateData = this.theFormGroup.value;
-
-    // Asegura que el id esté presente en el objeto de actualización
-    updateData.id = this.dueno.id;
-
-    this.duenosService.update(updateData).subscribe({
-      next: (data) => {
-        Swal.fire("Éxito", "Dueño actualizado exitosamente", "success");
-        this.router.navigate(["/duenos/list"]);
-      },
-      error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el dueño", "error");
-        console.error("Error al actualizar:", error);
-      },
-    });
-  }
 }

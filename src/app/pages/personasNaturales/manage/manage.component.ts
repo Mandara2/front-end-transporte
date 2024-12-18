@@ -1,7 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Cliente } from "src/app/models/cliente/cliente.model";
 import { PersonaNatural } from "src/app/models/personaNatural/persona-natural.model";
+import { ClienteService } from "src/app/services/cliente/cliente.service";
 import { PersonaNaturalService } from "src/app/services/personasNaturales/personas-naturales.service";
 import Swal from "sweetalert2";
 
@@ -12,12 +14,14 @@ import Swal from "sweetalert2";
 })
 export class ManageComponent implements OnInit {
   personaNatural: PersonaNatural;
+  clientes: Cliente[]
   mode: number;
   theFormGroup: FormGroup;
   trySend: boolean;
 
   constructor(
     private personaNaturalService: PersonaNaturalService,
+    private clienteService: ClienteService,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private theFormBuilder: FormBuilder //1. Vamos a inyectar FormBuilder: es el que establece las leyes que va a regir sobre este componente.
@@ -28,15 +32,30 @@ export class ManageComponent implements OnInit {
       identificacion: "",
       tipo_documento: "",
       fecha_nacimiento: "",
-      cliente_id: 0,
+      cliente_id: {
+        id: null,
+        telefono: "",
+        cantidad_pedidos_realizados: 0
+      },
      
     };
     this.mode = 0;
+    this.clientes = [];
     this.configFormGroup(); // 3. Vamos a llamar el metodo de configFormGroup *si este no se llama, mejor dicho no hizo nada*, e iniciamos la variable trySend = false
     this.trySend = false;
   }
 
+  clientesList(){
+    this.clienteService.list().subscribe(data => {
+      
+      this.clientes=data
+      console.log(this.clientes);
+      
+    })
+  }
+
   ngOnInit(): void {
+    this.clientesList();
     const currentUrl = this.activateRoute.snapshot.url.join("/");
     if (currentUrl.includes("view")) {
       this.mode = 1;
@@ -72,10 +91,9 @@ export class ManageComponent implements OnInit {
         ],
       ],
       cliente_id: [
-        "",
+        null,
         [
           Validators.required, // Campo obligatorio
-          Validators.min(1), // Número positivo
         ],
       ],
       usuario_id: [
@@ -98,63 +116,88 @@ export class ManageComponent implements OnInit {
   }
 
   create() {
-    if (this.theFormGroup.invalid) {
-      this.trySend = true;
-      Swal.fire(
-        "Error en el formulario",
-        " Ingrese correctamente los datos solicitados",
-        "error"
-      );
-      return;
+      if (this.theFormGroup.invalid) {
+        this.trySend = true;
+        Swal.fire(
+          "Formulario inválido",
+          "Por favor complete correctamente todos los campos.",
+          "error"
+        );
+        return;
+      }
+    
+      this.personaNaturalService.create(this.personaNatural).subscribe({
+        next: (data) => {
+          Swal.fire("Éxito", "Se ha creado la persona exitosamente", "success");
+          this.router.navigate(["personasNaturales/list"]);
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            Swal.fire(
+              "Error",
+              error.error.error || "El cliente ya está asignada a otra persona.",
+              "error"
+            );
+          } else {
+            Swal.fire(
+              "Error",
+              "Ocurrió un problema al crear la persona.",
+              "error"
+            );
+            console.error("Error en la creación:", error);
+          }
+        },
+      });
     }
-    console.log(this.personaNatural);
-
-    this.personaNaturalService.create(this.personaNatural).subscribe((data) => {
-      Swal.fire(
-        "Creado",
-        "Se ha creado la persona natural existosamente",
-        "success"
-      );
-      this.router.navigate(["personasNaturales/list"]); //Aqui me muevo para el theaters list
-    });
-  }
 
   update() {
-    if (this.theFormGroup.invalid) {
-      this.trySend = true;
-      Swal.fire(
-        "Formulario invalido",
-        "Ingrese correctamente los datos",
-        "error"
-      );
-      return;
+      if (this.theFormGroup.invalid) {
+        this.trySend = true;
+        Swal.fire(
+          "Formulario inválido",
+          "Ingrese correctamente los datos.",
+          "error"
+        );
+        return;
+      }
+    
+      if (!this.personaNatural.id) {
+        Swal.fire(
+          "Error",
+          "No se pudo encontrar el centro de distribución para actualizar.",
+          "error"
+        );
+        return;
+      }
+    
+      const updatedData = this.theFormGroup.value;
+      updatedData.id = this.personaNatural.id;
+    
+      this.personaNaturalService.update(updatedData).subscribe({
+        next: (data) => {
+          Swal.fire(
+            "Éxito",
+            "Persona actualizado exitosamente.",
+            "success"
+          );
+          this.router.navigate(["personasNaturales/list"]);
+        },
+        error: (error) => {
+          if (error.status === 409) {
+            Swal.fire(
+              "Error",
+              error.error.error || "El cliente ya está asignado a otra persona.",
+              "error"
+            );
+          } else {
+            Swal.fire(
+              "Error",
+              "No se pudo actualizar la persona.",
+              "error"
+            );
+            console.error("Error en la actualización:", error);
+          }
+        },
+      });
     }
-
-    // Verifica si el vehículo tiene un id antes de realizar la actualización
-    if (!this.personaNatural.id) {
-      Swal.fire(
-        "Error",
-        "No se pudo encontrar el vehículo para actualizar",
-        "error"
-      );
-      return;
-    }
-
-    // Obtiene los valores del formulario
-    const updateData = this.theFormGroup.value;
-
-    // Asegura que el id esté presente en el objeto de actualización
-    updateData.id = this.personaNatural.id;
-
-    this.personaNaturalService.update(updateData).subscribe({
-      next: (data) => {
-        Swal.fire("Éxito", "Vehículo actualizado exitosamente", "success");
-        this.router.navigate(["/personasNaturales/list"]);
-      },
-      error: (error) => {
-        Swal.fire("Error", "No se pudo actualizar el vehículo", "error");
-        console.error("Error al actualizar:", error);
-      },
-    });
-  }
 }
