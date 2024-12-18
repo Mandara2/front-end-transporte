@@ -51,9 +51,17 @@ export class SecurityInterceptor implements HttpInterceptor {
         },
       });
 
+      console.log("auth" +  authRequest);
+      
+
       return next.handle(authRequest).pipe( //Peitcion siga pero con el cambio de carta
+
+        
         catchError((err: HttpErrorResponse) => {
+          console.log("legue")
           if (err.status === 401) {
+            console.log("holaaaaaaaaaaaaaaaaaaaa");
+            
             Swal.fire({
               title: "No está autorizado para esta operación",
 
@@ -64,6 +72,8 @@ export class SecurityInterceptor implements HttpInterceptor {
 
             this.router.navigateByUrl("/dashboard");      
           } else if (err.status === 400) {
+            console.log("noooooooooooooooooo");
+            
             Swal.fire({
               title: "Existe un error, contacte al administrador",
 

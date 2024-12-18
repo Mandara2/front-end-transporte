@@ -12,12 +12,19 @@ export class AuthenticatedGuard implements CanActivate {
   ) {} 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(this.securityService.existSession()) {
-      this.router.navigate(["/login"])
+    state: RouterStateSnapshot
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if (this.securityService.existSession()) {
+      console.log("tienes permiso");
+      
+      // Si existe sesión, permite el acceso
       return true;
     } else {
+      console.log("nada mano");
+      
+      // Si no hay sesión, redirige al login
+      this.router.navigate(["/login"]);
       return false;
     }
-    }//Devuelve verdadero si existe la sesion
   }
+}  

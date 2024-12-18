@@ -39,6 +39,8 @@ export class SecurityService { //varuable global , necesita que se subscriban a 
     };
     localStorage.setItem('sesion', JSON.stringify(data)); //guardamos en el local storage
     this.setUser(data);
+    console.log("data" + data);
+    
   }
   /**
     * Permite actualizar la información del usuario

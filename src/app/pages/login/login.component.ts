@@ -41,6 +41,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   
     this.securityService.login(this.user).subscribe({
       next: (data) => {
+
+        console.log("Esta es la datttaaaaa" + data.token);
+        
         this.securityService.saveSession(data); // Guarda en el localStorage
         this.router.navigate(['dashboard']);
       },
