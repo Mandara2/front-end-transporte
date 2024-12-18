@@ -22,7 +22,7 @@ export class SecurityService { //varuable global , necesita que se subscriban a 
   * @returns Respuesta HTTP la cual indica si el usuario tiene permiso de acceso
   */
   login(user: User): Observable<any> {
-    return this.http.post<any>(`${environment.url_ms_security}/api/public/security/login2`, user);
+    return this.http.post<any>(`${environment.url_ms_security}/api/public/security/loginOld`, user);
   }
   /*
   Guardar la información de usuario en el local storage

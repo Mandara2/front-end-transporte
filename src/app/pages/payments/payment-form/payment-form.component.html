@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+    <div class="container mt-5">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0 text-white">Pago de Factura</h4>
+        </div>
+        <div class="card-body">
+          <!-- Mostrar detalles de la factura -->
+          <div *ngIf="factura; else noFactura">
+            <p><strong>Factura ID:</strong> {{ factura.id }}</p>
+            <p>
+              <strong>Fecha de generación:</strong> {{ factura.fecha_hora }}
+            </p>
+            <p><strong>Monto:</strong> ${{ factura.monto }}</p>
+            <p><strong>Detalles:</strong> {{ factura.detalles }}</p>
+
+            <!-- Verificar si la factura ya fue pagada -->
+            <div *ngIf="factura.estado === 'PAGADO'">
+              <p class="alert alert-success">
+                Esta factura ya fue <b class="">PAGADA</b>.
+              </p>
+            </div>
+
+            <!-- Mostrar selección de tarjeta si la factura no está PAGADA -->
+            <div *ngIf="factura.estado !== 'PAGADO'">
+              <div *ngIf="tarjetas.length === 0">
+                <p>
+                  No tienes tarjetas guardadas. Por favor, agrega una tarjeta
+                  antes de continuar con el pago.
+                </p>
+              </div>
+
+              <div *ngIf="tarjetas.length > 0">
+                <h3>Selecciona una tarjeta</h3>
+                <div *ngFor="let tarjeta of tarjetas">
+                  <label>
+                    <input
+                      type="radio"
+                      name="tarjeta"
+                      [value]="tarjeta.id"
+                      (click)="seleccionarTarjeta(tarjeta.id)"
+                    />
+                    Nro:{{ tarjeta.numeroTarjeta }} - Exp:
+                    {{ tarjeta.fechaExpiracion }} ({{ tarjeta.tipoTarjeta }}) -
+                    ID: {{ tarjeta.id }}
+                  </label>
+                </div>
+              </div>
+
+              <div
+                *ngIf="!selectedTarjetaId && tarjetas.length > 0"
+                class="alert alert-warning"
+              >
+                <strong>¡Atención!</strong> Por favor selecciona una tarjeta
+                para continuar con el pago.
+              </div>
+
+              <div *ngIf="tarjetas.length > 0 && selectedTarjetaId">
+                <button (click)="procesarPago()" class="btn btn-success">
+                  Pagar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mensaje cuando no hay factura -->
+          <ng-template #noFactura>
+            <p class="text-danger">
+              No se ha encontrado la factura. Por favor, regrese e inténtelo de
+              nuevo.
+            </p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

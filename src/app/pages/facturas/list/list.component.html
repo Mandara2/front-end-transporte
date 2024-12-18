@@ -41,6 +41,9 @@
                                 <td>{{actual.cuota_id}}</td>
                                 <td>{{actual.gasto_id}}</td>
                                 <td>
+                                    <button type="button" class="btn btn-success" (click)="pay(actual.id)">
+                                        <i class="bi bi-credit-card"></i> Pagar
+                                      </button>
                                     <button type="button" class="btn btn-primary" (click)="view(actual.id)">
                                         <i class="bi bi-eye"></i>
                                     </button>

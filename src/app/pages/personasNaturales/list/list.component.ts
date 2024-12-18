@@ -1,6 +1,8 @@
+import { query } from "@angular/animations";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Administrador } from "src/app/models/administrador/administrador.model";
+import { Factura } from "src/app/models/factura/factura.model";
 import { PersonaNatural } from "src/app/models/personaNatural/persona-natural.model";
 import { PersonaNaturalService } from "src/app/services/personasNaturales/personas-naturales.service";
 import Swal from "sweetalert2";

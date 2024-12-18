@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { LoginComponent } from '../../pages/login/login.component';
 import { RegisterComponent } from '../../pages/register/register.component';
+import { GmapComponent } from 'src/app/pages/Gmap/gmap/gmap.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -18,7 +19,8 @@ import { RegisterComponent } from '../../pages/register/register.component';
   ],
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    GmapComponent
   ]
 })
 export class AuthLayoutModule { }
